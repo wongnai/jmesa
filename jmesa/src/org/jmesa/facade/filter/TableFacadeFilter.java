@@ -31,24 +31,24 @@ import javax.servlet.http.HttpServletResponse;
  * TableFacade implementation. Very useful for controllers in frameworks that
  * try to keep the request and response inaccessable.
  * </p>
- * 
+ *
  * <p>
- *  <filter>
- *     <filter-name>TableFacadeFilter</filter-name>
- *     <filter-class>org.jmesa.facade.filter.TableFacadeFilter</filter-class>
- *  </filter>
- * 
- *  <filter-mapping>
- *     <filter-name>TableFacadeFilter</filter-name>
- *     <url-pattern>/*</url-pattern>
- * </filter-mapping>
+ *  &lt;filter&gt;
+ *     &lt;filter-name&gt;TableFacadeFilter&lt;/filter-name&gt;
+ *     &lt;filter-class&gt;org.jmesa.facade.filter.TableFacadeFilter&lt;/filter-class&gt;
+ *  &lt;/filter&gt;
+ *
+ *  &lt;filter-mapping&gt;
+ *     &lt;filter-name&gt;TableFacadeFilter&lt;/filter-name&gt;
+ *     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+ * &lt;/filter-mapping&gt;
  * <p>
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
 public class TableFacadeFilter implements Filter {
-		
+
     @Override
     public void init(FilterConfig config) throws ServletException {}
 
@@ -69,10 +69,10 @@ public class TableFacadeFilter implements Filter {
 
     public static class FilterThreadLocal {
 
-        private static ThreadLocal<FilterValue> tLocal = new ThreadLocal<FilterValue>();
+        private static ThreadLocal<FilterValue> tLocal = new ThreadLocal<>();
 
         static void set(HttpServletRequest request, HttpServletResponse response) {
-		
+
             if (request == null && response == null) {
                 tLocal.set(null);
                 return;
@@ -82,35 +82,35 @@ public class TableFacadeFilter implements Filter {
         }
 
         public static HttpServletRequest getHttpServletRequest() {
-		
-            FilterValue filterValue = (FilterValue) tLocal.get();
+
+            FilterValue filterValue = tLocal.get();
             return filterValue.getRequest();
         }
-        
+
         public static HttpServletResponse getHttpServletResponse() {
-		
-            FilterValue filterValue = (FilterValue) tLocal.get();
+
+            FilterValue filterValue = tLocal.get();
             return filterValue.getResponse();
         }
 
         private static class FilterValue {
-		
+
             private final HttpServletRequest request;
             private final HttpServletResponse response;
 
             public FilterValue(HttpServletRequest request, HttpServletResponse response) {
-		
+
                 this.request = request;
                 this.response = response;
             }
 
             public HttpServletRequest getRequest() {
-		
+
                 return request;
             }
 
             public HttpServletResponse getResponse() {
-		
+
                 return response;
             }
         }

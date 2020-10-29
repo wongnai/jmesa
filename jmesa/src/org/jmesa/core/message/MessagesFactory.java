@@ -19,21 +19,23 @@ import org.jmesa.web.WebContext;
 
 /**
  * A factory to create different Messages.
- * 
+ *
  * @since 2.3
  * @author Jeff Johnston
  */
 public class MessagesFactory {
-		
+
     private static final String JMESA_MESSAGES_LOCATION = "jmesaMessagesLocation";
 
     private MessagesFactory() {}
 
     /**
+     * @param webContext web context
+     *
      * @return The default messages.
      */
     public static Messages getMessages(WebContext webContext) {
-		
+
         String jmesaMessagesLocation = (String) webContext.getApplicationInitParameter(JMESA_MESSAGES_LOCATION);
         return new ResourceBundleMessages(jmesaMessagesLocation, webContext);
     }

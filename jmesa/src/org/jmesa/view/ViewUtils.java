@@ -26,14 +26,16 @@ import org.jmesa.worksheet.Worksheet;
  * @author Jeff Johnston
  */
 public class ViewUtils {
-		
+
     private ViewUtils() {}
 
     /**
-     * Convert camelCase text to a readable word. example: camelCaseToWord --> Camel Case To Word
+     * Convert camelCase text to a readable word. example: camelCaseToWord --&gt; Camel Case To Word
+     * @param camelCaseText  camel case text
+     * @return string
      */
     public static String camelCaseToWord(String camelCaseText) {
-		
+
         if (StringUtils.isEmpty(camelCaseText)) {
             return camelCaseText;
         }
@@ -63,7 +65,7 @@ public class ViewUtils {
      * Find out if the column is sitting on an even row.
      */
     public static boolean isRowEven(int rowcount) {
-		
+
         if (rowcount != 0 && (rowcount % 2) == 0) {
             return true;
         }
@@ -75,7 +77,7 @@ public class ViewUtils {
      * Find out if the column is sitting on an odd row.
      */
     public static boolean isRowOdd(int rowcount) {
-		
+
         if (rowcount != 0 && (rowcount % 2) == 0) {
             return false;
         }
@@ -87,7 +89,7 @@ public class ViewUtils {
      * @return Is true if any columns are filterable.
      */
     public static boolean isFilterable(List<HtmlColumn> columns) {
-		
+
         for (HtmlColumn column : columns) {
             if (column.isFilterable()) {
                 return true;
@@ -96,25 +98,25 @@ public class ViewUtils {
 
         return false;
     }
-    
+
     /**
      * @param exportTypes The array of export types to check.
      * @return Is true if there is an export to do.
      */
     public static boolean isExportable(String... exportTypes) {
-		
+
         return  exportTypes != null && exportTypes.length > 0;
     }
-    
+
     /**
      * @return Is true if there is a worksheet.
      */
     public static boolean isEditable(Worksheet worksheet) {
-		
+
         if (worksheet != null) {
             return true;
         }
 
         return false;
-    }    
+    }
 }

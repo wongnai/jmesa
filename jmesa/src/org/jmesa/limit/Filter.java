@@ -26,42 +26,42 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * the results based on the value. Or, in other words, it is simply the column
  * that the user is trying to filter and the value that they entered.
  * </p>
- * 
+ *
  * <p>
  * The property can use dot (.) notation to access nested classes. For example
  * if you have an object called President that is composed with another object
  * called Name then your property would be name.firstName
- * 
+ * </p>
+ *
  * <pre>
  * public class President {
  *     private Name name;
- * 
+ *
  *     public Name getName() {
  *         return name;
  *     }
  * }
- * 
+ *
  * public class Name {
  *     private String firstName;
- * 
+ *
  *     public String getFirstName() {
  *         return firstName;
  *     }
  * }
  * </pre>
- * 
- * </p>
- * 
+ *
+ *
  * @since 2.0
  * @author Jeff Johnston
  */
 public final class Filter implements Serializable {
-		
+
     private final String property;
     private final String value;
 
     public Filter(String property, String value) {
-		
+
         this.property = property;
         this.value = value;
     }
@@ -70,7 +70,7 @@ public final class Filter implements Serializable {
      * @return The Bean (Or Map) attribute used to reduce the results.
      */
     public String getProperty() {
-		
+
         return property;
     }
 
@@ -78,7 +78,7 @@ public final class Filter implements Serializable {
      * @return Will be used to reduce the results.
      */
     public String getValue() {
-		
+
         return value;
     }
 
@@ -88,7 +88,7 @@ public final class Filter implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-		
+
         if (o == this) {
             return true;
         }
@@ -104,7 +104,7 @@ public final class Filter implements Serializable {
 
     @Override
     public int hashCode() {
-		
+
         int result = 17;
         int prop = this.getProperty() == null ? 0 : this.getProperty().hashCode();
         result = result * 37 + prop;
@@ -113,7 +113,7 @@ public final class Filter implements Serializable {
 
     @Override
     public String toString() {
-		
+
         ToStringBuilder builder = new ToStringBuilder(this);
         builder.append("property", property);
         builder.append("value", value);

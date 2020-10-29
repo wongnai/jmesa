@@ -27,36 +27,36 @@ import org.jmesa.limit.Order;
 
 /**
  * Build up the parameters that is used by the LimitFactory.
- * 
+ *
  * @since 2.0
  * @author Jeff Johnston
  */
 public class ParametersBuilder {
-		
+
     private final String prefixId;
     private final Parameters parameters;
     private int sortCount;
 
     public ParametersBuilder(String id, Parameters parameters) {
-		
+
         this.prefixId = id + "_";
         this.parameters = parameters;
     }
 
     public void setPage(int page) {
-		
+
         String key = prefixId + Action.PAGE.toParam();
         parameters.addParameter(key, new Integer[] { page });
     }
 
     public void setMaxRows(int maxRows) {
-		
+
         String key = prefixId + Action.MAX_ROWS.toParam();
         parameters.addParameter(key, maxRows);
     }
 
     public void addFilter(String property, String value) {
-		
+
         String key = prefixId + Action.FILTER.toParam() + property;
         List<String> filterList = new ArrayList<String>();
         filterList.add(value);
@@ -67,14 +67,16 @@ public class ParametersBuilder {
      * Add a Sort parameter. Will increase the sort count.
      * Note: do not mix and match this and the addSort()
      * method that takes a position.
+     * @param order order
+     * @param property field
      */
     public void addSort(String property, Order order) {
-		
+
         addSort(++sortCount, property, order);
     }
-    
+
     public void addSort(int position, String property, Order order) {
-		
+
         String key = prefixId + Action.SORT.toParam() + position + "_" + property;
         parameters.addParameter(key, new String[] { order.toParam() });
     }
@@ -93,13 +95,13 @@ public class ParametersBuilder {
     }
 
     public void setFilterWorksheet() {
-		
+
         String key = prefixId + FILTER_WORKSHEET;
         parameters.addParameter(key, "true");
     }
 
     public void setSaveWorksheet() {
-		
+
         String key = prefixId + SAVE_WORKSHEET;
         parameters.addParameter(key, "true");
     }

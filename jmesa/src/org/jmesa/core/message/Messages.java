@@ -22,14 +22,19 @@ import java.io.Serializable;
  * @author Jeff Johnston
  */
 public interface Messages extends Serializable {
-		
+
     /**
      * Get the resource property.
+     * @param code code
+     * @return message
      */
     public String getMessage(String code);
 
     /**
      * Get the resource property.
+     * @param args  other args
+     * @param code code
+     * @return message
      */
     public String getMessage(String code, Object[] args);
 }

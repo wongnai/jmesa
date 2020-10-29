@@ -28,12 +28,15 @@ import static org.jmesa.facade.TableFacadeExceptions.validateViewIsNull;
 import static org.jmesa.facade.TableFacadeUtils.filterWorksheetItems;
 import static org.jmesa.facade.TableFacadeUtils.isClearingWorksheet;
 import static org.jmesa.limit.LimitConstants.LIMIT_ROWSELECT_MAXROWS;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.jmesa.core.CoreContext;
 import org.jmesa.core.CoreContextFactory;
 import org.jmesa.core.filter.FilterMatcher;
@@ -54,6 +57,7 @@ import org.jmesa.model.TableModel;
 import org.jmesa.util.ExportUtils;
 import org.jmesa.util.PreferencesUtils;
 import org.jmesa.util.SupportUtils;
+import org.jmesa.view.AbstractViewExporter;
 import org.jmesa.view.View;
 import org.jmesa.view.ViewExporter;
 import org.jmesa.view.component.Table;
@@ -114,7 +118,7 @@ import org.slf4j.LoggerFactory;
  * @author Jeff Johnston
  */
 public class TableFacade {
-		
+
     private Logger logger = LoggerFactory.getLogger(TableFacade.class);
 
     private final String id;
@@ -153,7 +157,7 @@ public class TableFacade {
      * @param request The servlet request object.
      */
     public TableFacade(String id, HttpServletRequest request) {
-		
+
         this.id = id;
         this.request = request;
     }
@@ -168,23 +172,24 @@ public class TableFacade {
      * @param response The servlet response object used for the exports.
      */
     public TableFacade(String id, HttpServletRequest request, HttpServletResponse response) {
-		
+
         this.id = id;
         this.request = request;
         this.response = response;
     }
 
     public String getId() {
-		
+
         return id;
     }
 
     /**
      * Set the comma separated list of export types. The currently supported types are
      * ExportType.CVS, ExportType.EXCEL, ExportType.JEXCEL, and ExportType.PDF.
+     * @param exportTypes types
      */
     public void setExportTypes(String... exportTypes) {
-		
+
         validateToolbarIsNull(toolbar, "exportTypes");
 
         this.exportTypes = exportTypes;
@@ -204,7 +209,7 @@ public class TableFacade {
      * Get the WebContext. If the WebContext does not exist then one will be created.
      */
     public WebContext getWebContext() {
-		
+
         if (webContext == null) {
             this.webContext = new HttpServletRequestWebContext(request);
         }
@@ -216,7 +221,7 @@ public class TableFacade {
      * Set the WebContext on the facade. This will override the WebContext if it was previously set.
      */
     public void setWebContext(WebContext webContext) {
-		
+
         this.webContext = webContext;
 
         Object backingObject = webContext.getBackingObject();
@@ -234,7 +239,7 @@ public class TableFacade {
      * @since 2.3
      */
     public void setEditable(boolean editable) {
-		
+
         validateItemsIsNull(items);
 
         this.editable = editable;
@@ -242,11 +247,11 @@ public class TableFacade {
 
     /**
      * Get the Worksheet.
-     * 
+     *
      * @since 2.3
      */
     public Worksheet getWorksheet() {
-		
+
         if (worksheet != null || !editable) {
             return worksheet;
         }
@@ -269,7 +274,7 @@ public class TableFacade {
      * Add a row to the worksheet.
      */
     public void addWorksheetRow() {
-		
+
     	addWorksheetRow(null);
     }
 
@@ -279,7 +284,7 @@ public class TableFacade {
      * @param item (has to be same object as in collection of setItems()).
      */
     public void addWorksheetRow(Object item) {
-		
+
         Worksheet ws = getWorksheet();
         if (ws != null) {
         	ws.addRow(item, getTable());
@@ -292,7 +297,7 @@ public class TableFacade {
      * Get the WorksheetState.
      */
     protected WorksheetState getWorksheetState() {
-		
+
     	if (worksheetState == null) {
     		return new SessionWorksheetState(id, getWebContext());
     	}
@@ -306,7 +311,7 @@ public class TableFacade {
      * @since 2.5.2
      */
     public void persistWorksheet(Worksheet worksheet) {
-		
+
     	getWorksheetState().persistWorksheet(worksheet);
     }
 
@@ -322,7 +327,7 @@ public class TableFacade {
      * </p>
      */
     public Limit getLimit() {
-		
+
         if (limit != null) {
             return limit;
         }
@@ -363,7 +368,7 @@ public class TableFacade {
      * Set the Limit on the facade. This will override the Limit if it was previously set.
      */
     public void setLimit(Limit limit) {
-		
+
         validateCoreContextIsNull(coreContext, "Limit");
 
         this.limit = limit;
@@ -376,7 +381,7 @@ public class TableFacade {
      * @return The totalRows to set on the Limit.
      */
     public RowSelect setTotalRows(int totalRows) {
-		
+
         RowSelect rowSelect;
 
         Limit l = getLimit();
@@ -387,14 +392,14 @@ public class TableFacade {
             LimitFactory limitFactory = new LimitFactory(id, getWebContext());
             rowSelect = limitFactory.createRowSelect(getMaxRows(), totalRows);
         }
-           
+
         l.setRowSelect(rowSelect);
 
         return rowSelect;
     }
 
     protected State getState() {
-		
+
         if (state != null) {
             return state;
         }
@@ -414,7 +419,7 @@ public class TableFacade {
      * Sets the State on the facade.
      */
     public void setState(State state) {
-		
+
         validateLimitIsNull(limit, "state");
 
         this.state = state;
@@ -430,7 +435,7 @@ public class TableFacade {
      * @param stateAttr The parameter that will be searched to see if the state should be used.
      */
     public void setStateAttr(String stateAttr) {
-		
+
         validateLimitIsNull(limit, "stateAttr");
 
         this.stateAttr = stateAttr;
@@ -444,7 +449,7 @@ public class TableFacade {
      * @param autoFilterAndSort True if should sort and filter the Collection of Beans (or Maps) automatically.
      */
     public void autoFilterAndSort(boolean autoFilterAndSort) {
-		
+
         validateCoreContextIsNull(coreContext, "autoFilterAndSort");
 
         this.autoFilterAndSort = autoFilterAndSort;
@@ -454,7 +459,7 @@ public class TableFacade {
      * Get the Messages. If the Messages does not exist then one will be created.
      */
     protected Messages getMessages() {
-		
+
         if (messages != null) {
             return messages;
         }
@@ -467,7 +472,7 @@ public class TableFacade {
      * Set the Messages on the facade. This will override the Messages if it was previously set.
      */
     public void setMessages(Messages messages) {
-		
+
         validateCoreContextIsNull(coreContext, "Messages");
 
         this.messages = messages;
@@ -478,7 +483,7 @@ public class TableFacade {
      * Get the Preferences. If the Preferences does not exist then one will be created.
      */
     protected Preferences getPreferences() {
-		
+
         if (preferences != null) {
             return preferences;
         }
@@ -492,7 +497,7 @@ public class TableFacade {
      * set.
      */
     public void setPreferences(Preferences preferences) {
-		
+
         validateCoreContextIsNull(coreContext, "Preferences");
 
         this.preferences = preferences;
@@ -504,7 +509,7 @@ public class TableFacade {
      * set.
      */
     public void addFilterMatcher(MatcherKey key, FilterMatcher matcher) {
-		
+
         validateCoreContextIsNull(coreContext, "FilterMatcher");
 
         if (filterMatchers == null) {
@@ -526,7 +531,7 @@ public class TableFacade {
      * </p>
      */
     public void addFilterMatcherMap(FilterMatcherMap filterMatcherMap) {
-		
+
         validateCoreContextIsNull(coreContext, "FilterMatcher");
 
         if (filterMatcherMap == null) {
@@ -547,7 +552,7 @@ public class TableFacade {
      * Set the ColumnSort on the facade. This will override the ColumnSort if it was previously set.
      */
     public void setColumnSort(ColumnSort columnSort) {
-		
+
         validateCoreContextIsNull(coreContext, "ColumnSort");
 
         this.columnSort = columnSort;
@@ -558,7 +563,7 @@ public class TableFacade {
      * Set the RowFilter on the facade. This will override the RowFilter if it was previously set.
      */
     public void setRowFilter(RowFilter rowFilter) {
-		
+
         validateCoreContextIsNull(coreContext, "RowFilter");
 
         this.rowFilter = rowFilter;
@@ -573,7 +578,7 @@ public class TableFacade {
      * @param items The Collecton of Beans (or Maps) to use.
      */
     public void setItems(Collection<?> items) {
-		
+
         validateCoreContextIsNull(coreContext, "items");
 
         if (editable) {
@@ -584,7 +589,7 @@ public class TableFacade {
     }
 
     protected int getMaxRows() {
-		
+
         if (maxRows == 0) {
             Preferences pref = getPreferences();
             String mr = pref.getPreference(LIMIT_ROWSELECT_MAXROWS);
@@ -599,7 +604,7 @@ public class TableFacade {
      * on one page. This will override the maxRows if it was previously set.
      */
     public void setMaxRows(int maxRows) {
-		
+
         validateCoreContextIsNull(coreContext, "maxRows");
 
         this.maxRows = maxRows;
@@ -609,7 +614,7 @@ public class TableFacade {
      * Get the CoreContext. If the CoreContext does not exist then one will be created.
      */
     public CoreContext getCoreContext() {
-		
+
         if (coreContext != null) {
             return coreContext;
         }
@@ -638,7 +643,7 @@ public class TableFacade {
      * Set the CoreContext on the facade. This will override the CoreContext if it was previously set.
      */
     public void setCoreContext(CoreContext coreContext) {
-		
+
         validateTableIsNull(table, "CoreContext");
 
         this.coreContext = coreContext;
@@ -649,9 +654,9 @@ public class TableFacade {
      * Get the Table. If the Table does not exist then one will be created.
      */
     protected Table getTable() {
-		
+
         validateTableIsNotNull(table);
-        
+
         return table;
     }
 
@@ -659,9 +664,9 @@ public class TableFacade {
      * Set the Table on the facade. This will override the Table if it was previously set.
      */
     public void setTable(Table table) {
-		
+
         validateViewIsNull(view, "Table");
-        
+
         TableFacadeUtils.initTable(this, table);
         this.table = table;
     }
@@ -670,11 +675,11 @@ public class TableFacade {
      * Get the Toolbar. If the Toolbar does not exist then one will be created.
      */
     protected Toolbar getToolbar() {
-		
+
         if (toolbar != null) {
             return toolbar;
         }
-        
+
         validateCoreContextIsNotNull(coreContext);
 
         this.toolbar = PreferencesUtils.<Toolbar>createClassFromPreferences(getCoreContext(), HtmlConstants.TOOLBAR);
@@ -691,7 +696,7 @@ public class TableFacade {
      * Set the Toolbar on the facade. This will override the Toolbar if it was previously set.
      */
     public void setToolbar(Toolbar toolbar) {
-		
+
         validateViewIsNull(view, "Toolbar");
 
         this.toolbar = toolbar;
@@ -707,7 +712,7 @@ public class TableFacade {
      * the values is the same as the maxRows set on the facade.
      */
     public void setMaxRowsIncrements(int... maxRowsIncrements) {
-		
+
         validateToolbarIsNull(toolbar, "maxRowsIncrements");
 
         this.maxRowsIncrements = maxRowsIncrements;
@@ -717,7 +722,7 @@ public class TableFacade {
      * Get the View. If the View does not exist then one will be created.
      */
     public View getView() {
-		
+
         if (view != null) {
             return view;
         }
@@ -734,7 +739,7 @@ public class TableFacade {
     }
 
     protected View getExportView(String exportType) {
-		
+
         View exportView = null;
 
         if (exportType == null) {
@@ -771,7 +776,7 @@ public class TableFacade {
      * Set the View on the facade. This will override the View if it was previously set.
      */
     public void setView(View view) {
-		
+
         this.view = view;
         SupportUtils.setTable(view, getTable());
         SupportUtils.setToolbar(view, getToolbar());
@@ -794,7 +799,7 @@ public class TableFacade {
      *         to the response and this method will return null.
      */
     public String render() {
-		
+
         Limit l = getLimit();
         View v = getView();
 
@@ -809,7 +814,7 @@ public class TableFacade {
     }
 
     protected void renderExport(String exportType, View view) {
-		
+
         validateResponseIsNotNull(response);
 
         try {
@@ -851,6 +856,10 @@ public class TableFacade {
                 }
 
                 ve.setFileName(exportFileName);
+
+              //added by xwx
+                String userAgent = request.getHeader("User-Agent");
+                ((AbstractViewExporter)ve).setUserAgent(userAgent);
 
                 ve.export();
             }

@@ -16,10 +16,16 @@
 package org.jmesa.view;
 
 import org.jmesa.core.CoreContextSupport;
+import org.jmesa.util.DownloadFileNameEncoder;
 import org.jmesa.web.HttpServletResponseSupport;
+
 import java.nio.charset.Charset;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.jmesa.core.CoreContext;
+
+
 import static org.jmesa.view.ExportConstants.ENCODING;
 
 /**
@@ -27,34 +33,50 @@ import static org.jmesa.view.ExportConstants.ENCODING;
  * @author Jeff Johnston
  */
 public abstract class AbstractViewExporter implements ViewExporter, CoreContextSupport, HttpServletResponseSupport {
-		
+
     private View view;
     private String fileName;
     private CoreContext coreContext;
     private HttpServletResponse response;
+	private String userAgent;
 
     public void responseHeaders()
             throws Exception {
 
         response.setContentType(getContextType());
         String encoding = getEncoding();
-        String fn = getFileName() + "." + getExtensionName();
-        fn = new String(fn.getBytes(encoding), encoding);
-        response.setHeader("Content-Disposition", "attachment;filename=\"" + fn + "\"");
+
+        if (encoding == null) {
+            encoding = Charset.defaultCharset().name();
+        }
+        String fn = new String(fileName.getBytes(encoding), encoding);
+        if(!fn.endsWith(getExtensionName())){
+        	fn += getExtensionName();
+        }
+
+        // added by xwx
+        fn = DownloadFileNameEncoder.codedFileName(getUserAgent(), fn, encoding);
+
+ //       String fn = getFileName() + "." + getExtensionName();
+   //     fn = new String(fn.getBytes(encoding), encoding);
+        //response.setHeader("Content-Disposition", "attachment;filename=\"" + fn + "\"");
+        response.setHeader("Content-Disposition", "attachment;filename\"" + fn + "\"");
         response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         response.setHeader("Pragma", "public");
         response.setDateHeader("Expires", (System.currentTimeMillis() + 1000));
     }
 
+
+
     @Override
     public View getView() {
-		
+
         return view;
     }
 
     @Override
     public void setView(View view) {
-		
+
         this.view = view;
     }
 
@@ -84,7 +106,7 @@ public abstract class AbstractViewExporter implements ViewExporter, CoreContextS
 
     @Override
     public HttpServletResponse getHttpServletResponse() {
-		
+
         return response;
     }
 
@@ -105,4 +127,17 @@ public abstract class AbstractViewExporter implements ViewExporter, CoreContextS
 
     protected abstract String getContextType();
     protected abstract String getExtensionName();
+
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public AbstractViewExporter setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+        return this;
+    }
+
+
+
 }
