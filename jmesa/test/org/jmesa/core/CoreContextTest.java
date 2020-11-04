@@ -15,7 +15,6 @@
  */
 package org.jmesa.core;
 
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,53 +39,55 @@ import org.jmesa.test.ParametersAdapter;
 import org.jmesa.test.ParametersBuilder;
 import org.jmesa.web.HttpServletRequestWebContext;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class CoreContextTest {
-		
+
 	private static final String ID = "pres";
 	private static final int MAX_ROWS = 20;
 	private static final int TOTAL_ROWS = 60;
-	
+
 	@Test
 	public void createCoreContext() {
-		
+
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		WebContext webContext = new HttpServletRequestWebContext(request);
 		webContext.setParameterMap(getParameters());
 		webContext.setLocale(Locale.US);
 		LimitFactory limitFactory = new LimitFactory(ID, webContext);
 		Limit limit = limitFactory.createLimit();
-		
+
 		RowSelect rowSelect = limitFactory.createRowSelect(MAX_ROWS, TOTAL_ROWS);
 		limit.setRowSelect(rowSelect);
 
 		RowFilter rowFilter = new DefaultRowFilter();
 		ColumnSort columnSort = new DefaultColumnSort();
-		
-		List<Object> data = new ArrayList<Object>();
-		
+
+		List<Object> data = new ArrayList<>();
+
 		Items items = new Items(data, limit, rowFilter, columnSort);
-		
+
 		Preferences preferences = new PropertiesPreferences("/org/jmesa/core/test.properties", webContext);
 		Messages messages = new ResourceBundleMessages("org.jmesa.core.message.testResourceBundle", webContext);
 
 		CoreContext coreContext = new CoreContext(items, limit, null, preferences, messages);
-		
+
 		assertNotNull(coreContext);
 	}
-	
+
 	private Map<?, ?> getParameters() {
-		
-		HashMap<String, Object> results = new HashMap<String, Object>();
+
+		HashMap<String, Object> results = new HashMap<>();
 		ParametersAdapter parametersAdapter = new ParametersAdapter(results);
 		createBuilder(parametersAdapter);
 		return results;
 	}
-	
+
 	private void createBuilder(Parameters parameters) {
-		
+
 		ParametersBuilder builder = new ParametersBuilder(ID, parameters);
 		builder.addSort("firstName", Order.ASC);
 		builder.addSort("lastName", Order.DESC);

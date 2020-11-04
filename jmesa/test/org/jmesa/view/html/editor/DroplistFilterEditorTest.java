@@ -15,8 +15,8 @@
  */
 package org.jmesa.view.html.editor;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,19 +30,19 @@ import org.jmesa.view.component.Column;
 import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.view.html.editor.DroplistFilterEditor.Option;
 import org.jmesa.web.WebContext;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.2
  * @author Jeff Johnston
  */
-@Ignore
+@Disabled
 public class DroplistFilterEditorTest extends AbstractTestCase {
 
     @Test
     public void getOptions() {
-		
+
         WebContext webContext = createWebContext();
         CoreContext coreContext = createCoreContext(webContext);
 
@@ -56,14 +56,14 @@ public class DroplistFilterEditorTest extends AbstractTestCase {
 
         Collection<Option> options = editor.getOptions();
 
-        assertNotNull("The options are null.", options);
-        assertTrue("Do not have the correct options size.", options.size() == 35);
+        assertNotNull(options, "The options are null.");
+        assertTrue(() -> options.size() == 35, "Do not have the correct options size.");
         assertTrue(options.iterator().next().getLabel().equals("Abraham"));
     }
-    
+
     @Test
     public void getPresetOption() {
-		
+
         WebContext webContext = createWebContext();
         CoreContext coreContext = createCoreContext(webContext);
 
@@ -78,17 +78,17 @@ public class DroplistFilterEditorTest extends AbstractTestCase {
         Map<String, String> testBean = new HashMap<String, String>();
         testBean.put("name.firstName", "Abraham");
         editor.addOption(testBean, "name.firstName", "name.firstName");
-        
+
         Collection<Option> options = editor.getOptions();
 
-        assertNotNull("The options are null.", options);
-        assertTrue("Do not have the correct options size.", options.size() == 1);
+        assertNotNull(options, "The options are null.");
+        assertTrue(()-> options.size() == 1, "Do not have the correct options size.");
         assertTrue(options.iterator().next().getLabel().equals("Abraham"));
     }
-    
+
     @Test
     public void getPresetOptions() {
-		
+
         WebContext webContext = createWebContext();
         CoreContext coreContext = createCoreContext(webContext);
 
@@ -102,12 +102,12 @@ public class DroplistFilterEditorTest extends AbstractTestCase {
 
         Collection<President> presidents = PresidentDao.getPresidents();
         editor.addOptions(presidents, "name.firstName", "name.firstName");
-        
+
         Collection<Option> options = editor.getOptions();
-        
-        assertNotNull("The options are null.", options);
-        assertTrue("Do not have the correct options size: " + options.size(), options.size() == 35);
-        
+
+        assertNotNull(options, "The options are null.");
+        assertTrue(()-> options.size() == 35, "Do not have the correct options size: " + options.size());
+
         Option option = options.iterator().next();
         assertTrue(option.getLabel().equals("Abraham"));
     }

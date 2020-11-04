@@ -15,22 +15,22 @@
  */
 package org.jmesa.view.html.toolbar;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.jmesa.core.CoreContext;
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class MaxRowsItemRendererTest extends AbstractTestCase {
-		
+
     @Test
     public void render() {
-		
+
         WebContext webContext = createWebContext();
         CoreContext coreContext = createCoreContext(webContext);
 

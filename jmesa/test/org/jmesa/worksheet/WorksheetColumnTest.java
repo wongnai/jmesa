@@ -15,7 +15,7 @@
  */
 package org.jmesa.worksheet;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
@@ -23,7 +23,7 @@ import org.jmesa.core.message.Messages;
 import org.jmesa.core.message.ResourceBundleMessages;
 import org.jmesa.web.HttpServletRequestWebContext;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -34,15 +34,15 @@ public class WorksheetColumnTest {
 
     @Test
     public void hasError() {
-		
+
         WorksheetColumn column = new WorksheetColumn("name.firstName", null);
         column.setError("Cannot be null value.");
-        assertTrue("The column does not have an error.", column.hasError());
+        assertTrue(column::hasError, "The column does not have an error.");
     }
 
     @Test
     public void hasErrorByKey() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         WebContext webContext = new HttpServletRequestWebContext(request);
         webContext.setLocale(Locale.US);
@@ -54,11 +54,11 @@ public class WorksheetColumnTest {
         worksheet.setMessages(messages);
         WorksheetRow row = new WorksheetRow(null);
         worksheet.addRow(row);
-        
+
         WorksheetColumn column = new WorksheetColumn("name.firstName", null);
         row.addColumn(column);
         column.setErrorKey("column.nullvalue");
 
-        assertTrue("The column does not have an error.", column.hasError());
+        assertTrue(column::hasError, "The column does not have an error.");
     }
 }

@@ -15,8 +15,8 @@
  */
 package org.jmesa.core.sort;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,65 +33,65 @@ import org.jmesa.test.AbstractTestCase;
 import org.jmesa.test.ParametersAdapter;
 import org.jmesa.test.ParametersBuilder;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class ColumnSortTest extends AbstractTestCase {
-		
+
 	@Test
 	public void sortItems() {
-		
+
 		WebContext webContext = createWebContext();
-        
+
         HashMap<String, Object> results = new HashMap<String, Object>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
         builder.addSort("name.firstName", Order.ASC);
         builder.addSort("name.lastName", Order.DESC);
 		webContext.setParameterMap(results);
-        
+
         LimitFactory limitFactory = new LimitFactory(ID, webContext);
         Limit limit = limitFactory.createLimit();
-		
+
 		MultiColumnSort itemsSort = new MultiColumnSort();
-		
+
 		Collection<?> items = PresidentDao.getPresidents();
 		items = itemsSort.sortItems(items, limit);
 
 		assertNotNull(items);
-		
+
 		Iterator<?> iterator = items.iterator();
-		
+
 		President first = (President)iterator.next();
-		assertTrue("the first sort order is wrong", first.getName().getFirstName().equals("Abraham"));
-		
+		assertTrue(() -> first.getName().getFirstName().equals("Abraham"), "the first sort order is wrong");
+
 		President second = (President)iterator.next();
-		assertTrue("the second sort order is wrong", second.getName().getLastName().equals("Johnson"));
+		assertTrue(()-> second.getName().getLastName().equals("Johnson"), "the second sort order is wrong");
 	}
 
     @SuppressWarnings("unchecked")
     @Test
     public void sortNullComposedItems() {
-		
+
         WebContext webContext = createWebContext();
-        
-        HashMap<String, Object> results = new HashMap<String, Object>();
+
+        HashMap<String, Object> results = new HashMap<>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
         builder.addSort("name.firstName", Order.ASC);
         builder.addSort("name.lastName", Order.DESC);
         webContext.setParameterMap(results);
-        
+
         LimitFactory limitFactory = new LimitFactory(ID, webContext);
         Limit limit = limitFactory.createLimit();
-        
+
         MultiColumnSort itemsSort = new MultiColumnSort();
-        
+
         Collection items = new ArrayList<President>();
-        
+
         President president = new President();
         Name  name = new Name("James", "Monroe");
         president.setName(name);
@@ -106,40 +106,40 @@ public class ColumnSortTest extends AbstractTestCase {
         name = new Name("James", "Madison");
         president.setName(name);
         items.add(president);
-        
+
         items = itemsSort.sortItems(items, limit);
 
         assertNotNull(items);
-        
+
         Iterator iterator = items.iterator();
-        
+
         President first = (President)iterator.next();
-        assertTrue("the first sort order is wrong", first.getName().getFirstName().equals("James"));
-        
+        assertTrue(()-> first.getName().getFirstName().equals("James"), "the first sort order is wrong");
+
         President second = (President)iterator.next();
-        assertTrue("the second sort order is wrong", second.getName().getLastName().equals("Madison"));
+        assertTrue(() -> second.getName().getLastName().equals("Madison"), "the second sort order is wrong");
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void sortEmptyComposedItems() {
-		
+
         WebContext webContext = createWebContext();
-        
-        HashMap<String, Object> results = new HashMap<String, Object>();
+
+        HashMap<String, Object> results = new HashMap<>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
         builder.addSort("name.firstName", Order.ASC);
         builder.addSort("name.lastName", Order.DESC);
         webContext.setParameterMap(results);
-        
+
         LimitFactory limitFactory = new LimitFactory(ID, webContext);
         Limit limit = limitFactory.createLimit();
-        
+
         MultiColumnSort itemsSort = new MultiColumnSort();
-        
+
         Collection items = new ArrayList<President>();
-        
+
         President president = new President();
         Name  name = new Name("James", "Monroe");
         president.setName(name);
@@ -158,35 +158,35 @@ public class ColumnSortTest extends AbstractTestCase {
         items = itemsSort.sortItems(items, limit);
 
         assertNotNull(items);
-        
+
         Iterator iterator = items.iterator();
-        
+
         President first = (President)iterator.next();
-        assertTrue("the first sort order is wrong", first.getName().getFirstName().equals(""));
-        
+        assertTrue(()-> first.getName().getFirstName().equals(""), "the first sort order is wrong");
+
         President second = (President)iterator.next();
-        assertTrue("the second sort order is wrong", second.getName().getLastName().equals("Monroe"));
+        assertTrue(() -> second.getName().getLastName().equals("Monroe"), "the second sort order is wrong");
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void sortNullItems() {
-		
+
         WebContext webContext = createWebContext();
-        
-        HashMap<String, Object> results = new HashMap<String, Object>();
+
+        HashMap<String, Object> results = new HashMap<>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
         builder.addSort("born", Order.ASC);
         webContext.setParameterMap(results);
-        
+
         LimitFactory limitFactory = new LimitFactory(ID, webContext);
         Limit limit = limitFactory.createLimit();
-        
+
         MultiColumnSort itemsSort = new MultiColumnSort();
-        
+
         Collection items = new ArrayList<President>();
-        
+
         President president = new President();
         Name name = new Name("Thomas", "Jefferson");
         president.setName(name);
@@ -208,35 +208,35 @@ public class ColumnSortTest extends AbstractTestCase {
         items = itemsSort.sortItems(items, limit);
 
         assertNotNull(items);
-        
+
         Iterator iterator = items.iterator();
-        
+
         President first = (President)iterator.next();
-        assertTrue("the first sort order is wrong", first.getName().getFirstName().equals("George"));
-        
+        assertTrue(()-> first.getName().getFirstName().equals("George"), "the first sort order is wrong");
+
         President second = (President)iterator.next();
-        assertTrue("the second sort order is wrong", second.getName().getLastName().equals("Jefferson"));
+        assertTrue(()-> second.getName().getLastName().equals("Jefferson"), "the second sort order is wrong");
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
     public void sortEmptyItems() {
-		
+
         WebContext webContext = createWebContext();
-        
+
         HashMap<String, Object> results = new HashMap<String, Object>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
         builder.addSort("term", Order.ASC);
         webContext.setParameterMap(results);
-        
+
         LimitFactory limitFactory = new LimitFactory(ID, webContext);
         Limit limit = limitFactory.createLimit();
-        
+
         MultiColumnSort itemsSort = new MultiColumnSort();
-        
+
         Collection items = new ArrayList<President>();
-        
+
         President president = new President();
         president.setTerm(""); // The empty object
         items.add(president);
@@ -248,17 +248,17 @@ public class ColumnSortTest extends AbstractTestCase {
         president = new President();
         president.setTerm("1797-1801");
         items.add(president);
-        
+
         items = itemsSort.sortItems(items, limit);
 
         assertNotNull(items);
-        
+
         Iterator iterator = items.iterator();
-        
+
         President first = (President)iterator.next();
-        assertTrue("the first sort order is wrong", first.getTerm().equals(""));
-        
+        assertTrue(() -> first.getTerm().equals(""), "the first sort order is wrong");
+
         President second = (President)iterator.next();
-        assertTrue("the second sort order is wrong", second.getTerm().equals("1797-1801"));
+        assertTrue(()->second.getTerm().equals("1797-1801"), "the second sort order is wrong");
     }
 }

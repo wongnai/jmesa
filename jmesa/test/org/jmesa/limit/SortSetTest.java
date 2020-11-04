@@ -15,37 +15,37 @@
  */
 package org.jmesa.limit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class SortSetTest {
-		
+
 
     @Test
     public void isSorted() {
-		
+
         SortSet sortSet = new SortSet();
         boolean sorted = sortSet.isSorted();
-        assertFalse("default constructor", sorted);
+        assertFalse(sorted, "default constructor");
 
         sortSet = getSortSet();
         sorted = sortSet.isSorted();
-        assertTrue("sorted", sorted);
+        assertTrue(sorted, "sorted");
     }
 
     @Test
     public void getSortOrder() {
-		
+
         SortSet sortSet = getSortSet();
         Order order = sortSet.getSortOrder("nickname");
         assertNotNull(order);
@@ -55,7 +55,7 @@ public class SortSetTest {
 
     @Test
     public void getSort() {
-		
+
         SortSet sortSet = getSortSet();
         Sort sort = sortSet.getSort("nickname");
         assertNotNull(sort);
@@ -64,7 +64,7 @@ public class SortSetTest {
     }
 
     private SortSet getSortSet() {
-		
+
         SortSet sortSet = new SortSet();
 
         sortSet.addSort(new Sort(2, "nickname", Order.DESC));

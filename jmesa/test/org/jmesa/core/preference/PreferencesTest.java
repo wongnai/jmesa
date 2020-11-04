@@ -15,11 +15,11 @@
  */
 package org.jmesa.core.preference;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
  * @author Jeff Johnston
  */
 public class PreferencesTest extends AbstractTestCase {
-    
+
     private Logger logger = LoggerFactory.getLogger( PreferencesTest.class );
-    
+
     @Test
     public void getPreference() {
-		
+
         WebContext webContext = createWebContext();
         Preferences preferences = new PropertiesPreferences("/org/jmesa/core/preference/test.properties", webContext);
         String preference = preferences.getPreference("test.data");

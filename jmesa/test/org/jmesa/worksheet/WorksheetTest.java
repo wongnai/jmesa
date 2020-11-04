@@ -15,21 +15,21 @@
  */
 package org.jmesa.worksheet;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.3
  * @author Jeff Johnston
  */
 public class WorksheetTest {
-		
+
     @Test
     public void removeRow() {
-		
+
 
         UniqueProperty firstRowMap = new UniqueProperty("id", "1");
         WorksheetRow firstRow = new WorksheetRow(firstRowMap);
@@ -48,16 +48,16 @@ public class WorksheetTest {
         worksheet.addRow(secondRow);
         worksheet.addRow(thirdRow);
 
-        assertTrue("The rows are not accounted for.", worksheet.getRows().size() == 3);
+        assertTrue(() -> worksheet.getRows().size() == 3, "The rows are not accounted for.");
 
         worksheet.removeRow(worksheet.getRow(secondRowMap));
 
-        assertTrue("The rows are not accounted for.", worksheet.getRows().size() == 2);
+        assertTrue(() -> worksheet.getRows().size() == 2, "The rows are not accounted for.");
 
         Iterator<WorksheetRow> iter = worksheet.getRows().iterator();
-        WorksheetRowStatus status = iter.next().getRowStatus();
-        assertTrue("The first row exists.",  status == WorksheetRowStatus.ADD || status == WorksheetRowStatus.REMOVE);
-        status = iter.next().getRowStatus();
-        assertTrue("The third row exists.",  status == WorksheetRowStatus.ADD || status == WorksheetRowStatus.REMOVE);
+        final WorksheetRowStatus status = iter.next().getRowStatus();
+        assertTrue(()-> status == WorksheetRowStatus.ADD || status == WorksheetRowStatus.REMOVE, "The first row exists.");
+        final WorksheetRowStatus status1 = iter.next().getRowStatus();
+        assertTrue(()->  status1 == WorksheetRowStatus.ADD || status1 == WorksheetRowStatus.REMOVE, "The third row exists.");
     }
 }

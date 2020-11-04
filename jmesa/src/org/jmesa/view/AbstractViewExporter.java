@@ -57,9 +57,6 @@ public abstract class AbstractViewExporter implements ViewExporter, CoreContextS
         // added by xwx
         fn = DownloadFileNameEncoder.codedFileName(getUserAgent(), fn, encoding);
 
- //       String fn = getFileName() + "." + getExtensionName();
-   //     fn = new String(fn.getBytes(encoding), encoding);
-        //response.setHeader("Content-Disposition", "attachment;filename=\"" + fn + "\"");
         response.setHeader("Content-Disposition", "attachment;filename\"" + fn + "\"");
         response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         response.setHeader("Pragma", "public");

@@ -15,7 +15,7 @@
  */
 package org.jmesa.worksheet;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.jmesa.core.CoreContext;
 import org.jmesa.test.AbstractTestCase;
@@ -23,19 +23,19 @@ import org.jmesa.view.component.Row;
 import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.view.html.component.HtmlRow;
 import org.jmesa.web.WebContext;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.3
  * @author Jeff Johnston
  */
-@Ignore
+@Disabled
 public class WorksheetCellEditorTest extends AbstractTestCase {
-		
+
     @Test
     public void getEditedValue() {
-		
+
         WebContext webContext = createWebContext();
         CoreContext coreContext = createCoreContext(webContext);
 
@@ -57,7 +57,7 @@ public class WorksheetCellEditorTest extends AbstractTestCase {
 
     @Override
     protected Worksheet getWorksheet() {
-		
+
         UniqueProperty firstRowMap = new UniqueProperty("id", "1");
         WorksheetRow firstRow = new WorksheetRow(firstRowMap);
         firstRow.setRowStatus(WorksheetRowStatus.MODIFY);
@@ -71,12 +71,12 @@ public class WorksheetCellEditorTest extends AbstractTestCase {
         thirdRow.setRowStatus(WorksheetRowStatus.MODIFY);
 
         Worksheet worksheet = new Worksheet(ID);
-        
+
         WorksheetColumn column = new WorksheetColumn("name.firstName", "");
         column.setChangedValue("Changed Name");
         firstRow.addColumn(column);
         worksheet.addRow(firstRow);
-        
+
         worksheet.addRow(secondRow);
         worksheet.addRow(thirdRow);
 

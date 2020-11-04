@@ -15,8 +15,8 @@
  */
 package org.jmesa.view.html.renderer;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.jmesa.core.CoreContext;
 import org.jmesa.core.President;
@@ -24,17 +24,17 @@ import org.jmesa.test.AbstractTestCase;
 import org.jmesa.view.html.component.HtmlRow;
 import org.jmesa.view.html.event.AbstractRowEvent;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.2
  * @author Jeff Johnston
  */
 public class HtmlRowRendererTest extends AbstractTestCase {
-		
+
     @Test
     public void renderWithRowSelect() {
-		
+
         WebContext webContext = createWebContext();
         CoreContext coreContext = createCoreContext(webContext);
 
@@ -43,7 +43,7 @@ public class HtmlRowRendererTest extends AbstractTestCase {
 
         row.setOnclick(new AbstractRowEvent() {
             @Override
-            public String execute(Object item, int rowcount) {		
+            public String execute(Object item, int rowcount) {
                 President president = (President) item;
                 Integer id = president.getId();
                 return "document.location='jmesa.org?id=" + id + "'";

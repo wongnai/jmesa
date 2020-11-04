@@ -15,8 +15,8 @@
  */
 package org.jmesa.util;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,7 +25,7 @@ import java.util.Map;
 import org.jmesa.core.President;
 import org.jmesa.core.PresidentDao;
 import org.jmesa.test.AbstractTestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.2
@@ -35,45 +35,45 @@ public class ItemUtilsTest extends AbstractTestCase {
 
     @Test
     public void getItemValueBean() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         President president = items.iterator().next();
         Object value = ItemUtils.getItemValue(president, "term");
-        assertNotNull("Cannot retrieve a bean value.", value);
+        assertNotNull(value, "Cannot retrieve a bean value.");
     }
 
     @Test
     public void getItemValueMap() {
-		
+
         Map<String, Serializable> president = getMap();
         Object value = ItemUtils.getItemValue(president, "term");
-        assertNotNull("Cannot retrieve a map value.", value);
+        assertNotNull(value, "Cannot retrieve a map value.");
     }
 
     @Test
     public void getItemValueBeanMap() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
-        President bean = items.iterator().next();        
-        
+        President bean = items.iterator().next();
+
         Map<String, Serializable> president = getMap();
         president.put(ItemUtils.JMESA_ITEM, bean);
         Object value = ItemUtils.getItemValue(president, "career");
-        
-        assertNotNull("Cannot retrieve a map bean value.", value);
+
+        assertNotNull(value, "Cannot retrieve a map bean value.");
     }
 
     @Test
     public void getItemValueBeanMapWithNullValue() {
-		
+
         Map<String, Serializable> president = getMap();
         Object value = ItemUtils.getItemValue(president, "career");
-        
-        assertNull("could retrieve a map bean value.", value);
+
+        assertNull(value, "could retrieve a map bean value.");
     }
-    
+
     private Map<String, Serializable> getMap() {
-		
+
         Map<String, Serializable> result = new HashMap<String, Serializable>();
         result.put("id", 1);
         result.put("term", "1789-1797");

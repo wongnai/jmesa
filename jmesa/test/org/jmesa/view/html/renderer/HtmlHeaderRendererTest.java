@@ -19,24 +19,24 @@ import org.jmesa.core.CoreContext;
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class HtmlHeaderRendererTest extends AbstractTestCase {
-		
+
 	@Test
 	public void getStyleClass() {
-		
+
 		WebContext webContext = createWebContext();
 		CoreContext coreContext = createCoreContext(webContext);
-		
+
 		HtmlColumn column = new HtmlColumn("firstName");
 		column.setWebContext(webContext);
 		column.setCoreContext(coreContext);
-		
+
 		HtmlHeaderRenderer headerRenderer = new HtmlHeaderRenderer();
         headerRenderer.setColumn(column);
 		headerRenderer.setWebContext(webContext);

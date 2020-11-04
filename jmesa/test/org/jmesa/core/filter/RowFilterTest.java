@@ -15,7 +15,7 @@
  */
 package org.jmesa.core.filter;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,17 +31,17 @@ import org.jmesa.test.AbstractTestCase;
 import org.jmesa.test.ParametersAdapter;
 import org.jmesa.test.ParametersBuilder;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class RowFilterTest extends AbstractTestCase {
-		
+
     @Test
     public void filterItems() {
-		
+
         FilterMatcherRegistry registry = new FilterMatcherRegistry();
         MatcherKey key = new MatcherKey(String.class);
         FilterMatcher match = new StringFilterMatcher();
@@ -51,13 +51,13 @@ public class RowFilterTest extends AbstractTestCase {
         itemsFilter.setFilterMatcherRegistry(registry);
 
         WebContext webContext = createWebContext();
-        
+
         Map<String, Object> results = new HashMap<String, Object>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
         builder.addFilter("name.fullName", "george");
         webContext.setParameterMap(results);
-        
+
         LimitFactory limitFactory = new LimitFactory(ID, webContext);
         Limit limit = limitFactory.createLimit();
 
@@ -70,7 +70,7 @@ public class RowFilterTest extends AbstractTestCase {
     @SuppressWarnings("unchecked")
     @Test
     public void filterNullItems() {
-		
+
         FilterMatcherRegistry registry = new FilterMatcherRegistry();
         MatcherKey key = new MatcherKey(String.class);
         FilterMatcher match = new StringFilterMatcher();
@@ -80,18 +80,18 @@ public class RowFilterTest extends AbstractTestCase {
         itemsFilter.setFilterMatcherRegistry(registry);
 
         WebContext webContext = createWebContext();
-        
+
         Map<String, Object> results = new HashMap<String, Object>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
         builder.addFilter("name.firstName", "James");
         webContext.setParameterMap(results);
-        
+
         LimitFactory limitFactory = new LimitFactory(ID, webContext);
         Limit limit = limitFactory.createLimit();
 
         Collection items = new ArrayList<President>();
-        
+
         President president = new President();
         Name  name = new Name("James", "Monroe");
         president.setName(name);
@@ -106,7 +106,7 @@ public class RowFilterTest extends AbstractTestCase {
         name = new Name("James", "Madison");
         president.setName(name);
         items.add(president);
-        
+
         president = new President();
         name = new Name("Andrew", "Jackson");
         president.setName(name);

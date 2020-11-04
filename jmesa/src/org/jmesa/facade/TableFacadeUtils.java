@@ -44,42 +44,42 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for the TableFacade.
- * 
+ *
  * @since 2.3
  * @author Jeff Johnston
  */
 public class TableFacadeUtils {
-		
+
     private static final Logger logger = LoggerFactory.getLogger(TableFacadeUtils.class);
 
     public static final String CLEARING_WORKSHEET = "cw_";
-    
+
     private TableFacadeUtils() {}
-    
+
     /**
      * @param id The table identifier.
      * @param webContext The web context.
      * @return Is true if the user is requesting to clear all the worksheet changes.
      */
     static boolean isClearingWorksheet(String id, WebContext webContext) {
-		
+
         String clearingWorksheet = webContext.getParameter(id + "_" + CLEARING_WORKSHEET);
         if (StringUtils.isNotEmpty(clearingWorksheet) && clearingWorksheet.equals("true")) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Filter the items by the rows in the worksheet.
-     * 
+     *
      * @param items The collection of beans or maps.
      * @param worksheet The current worksheet.
      * @return The filtered items.
      */
     static Collection<?> filterWorksheetItems(Collection<?> items, Worksheet worksheet) {
-		
+
         if (!worksheet.isFiltering()) {
             return items;
         }
@@ -115,8 +115,8 @@ public class TableFacadeUtils {
      * Spin through the components and inject the proper support classes. This is kind
      * of a mini IOC implementation.
      */
-    static void initTable(TableFacade tableFacade, Table table) {
-		
+    static void initTable(ContextSupport tableFacade, Table table) {
+
         WebContext webContext = tableFacade.getWebContext();
         CoreContext coreContext = tableFacade.getCoreContext();
 
@@ -171,7 +171,7 @@ public class TableFacadeUtils {
 
             if (column instanceof HtmlColumn) {
                 HtmlColumn htmlColumn = (HtmlColumn)column;
-                
+
                 WorksheetEditor worksheetEditor = htmlColumn.getWorksheetEditor();
                 if (worksheetEditor != null) {
                     init(worksheetEditor, webContext, coreContext);
@@ -194,7 +194,7 @@ public class TableFacadeUtils {
     }
 
     private static void init(Object obj, WebContext webContext, CoreContext coreContext) {
-		
+
         SupportUtils.setWebContext(obj, webContext);
         SupportUtils.setCoreContext(obj, coreContext);
     }

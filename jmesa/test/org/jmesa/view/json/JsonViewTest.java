@@ -13,14 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jmesa.view.csv;
+package org.jmesa.view.json;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import org.jmesa.core.CoreContext;
 import org.jmesa.model.TableModel;
 import org.jmesa.test.AbstractTestCase;
@@ -33,11 +27,19 @@ import org.jmesa.view.component.Table;
 import org.jmesa.web.WebContext;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
 /**
- * @since 2.0
- * @author Jeff Johnston
+ * @since 4.1
+ * @author xwx
  */
-public class CsvViewTest extends AbstractTestCase {
+public class JsonViewTest extends AbstractTestCase {
 
     @Test
     public void render() {
@@ -49,7 +51,7 @@ public class CsvViewTest extends AbstractTestCase {
         CoreContext coreContext = createCoreContext(webContext);
 
         assertTrue(coreContext.getLimit().hasExport());
-        assertTrue(coreContext.getLimit().getExportType().equals(TableModel.CSV));
+        assertTrue(coreContext.getLimit().getExportType().equals(TableModel.JSON));
 
         // create the table
         Table table = new Table();
@@ -74,18 +76,20 @@ public class CsvViewTest extends AbstractTestCase {
         row.addColumn(careerColumn);
 
         // create the view
-        CsvView view = new CsvView();
+        JsonView view = new JsonView();
         view.setCoreContext(coreContext);
         view.setTable(table);
 
-        Object csv = view.render();
+        Object json = view.render();
 
-        assertNotNull(csv);
+        System.out.println(json);
+
+        assertNotNull(json);
     }
 
     private Map<?, ?> getParameters() {
 
-        Map<String, Object> results = new HashMap<String, Object>();
+        Map<String, Object> results = new HashMap<>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         createBuilder(parametersAdapter);
         return results;
@@ -94,7 +98,9 @@ public class CsvViewTest extends AbstractTestCase {
     private void createBuilder(Parameters parameters) {
 
         ParametersBuilder builder = new ParametersBuilder(ID, parameters);
-        builder.setExportType(TableModel.CSV);
+        builder.setExportType(TableModel.JSON);
+        builder.setMaxRows(7);
+        builder.setPage(2);
     }
 
     @Test
@@ -102,9 +108,9 @@ public class CsvViewTest extends AbstractTestCase {
 
         String value = "I have a \"quote\"";
 
-        CsvView csvView = new CsvView();
+        JsonView jsonView = new JsonView();
 
-        String result = csvView.escapeValue(value);
+        String result = jsonView.escapeValue(value);
 
         assertTrue(result.equals("I have a \"\"quote\"\""));
     }

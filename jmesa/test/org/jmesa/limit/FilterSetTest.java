@@ -15,34 +15,34 @@
  */
 package org.jmesa.limit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class FilterSetTest {
-		
+
     @Test
     public void isFiltered() {
-		
+
         FilterSet filterSet = new FilterSet();
         boolean filterable = filterSet.isFiltered();
-        assertFalse("default constructor", filterable);
+        assertFalse(filterable, "default constructor");
 
         filterSet = getFilterSet();
         filterable = filterSet.isFiltered();
-        assertTrue("filtered", filterable);
+        assertTrue(filterable, "filtered");
     }
 
     @Test
     public void getFilterValue() {
-		
+
         FilterSet filterSet = getFilterSet();
         String nickname = filterSet.getFilterValue("nickname");
         assertNotNull(nickname);
@@ -51,7 +51,7 @@ public class FilterSetTest {
 
     @Test
     public void getFilter() {
-		
+
         FilterSet filterSet = getFilterSet();
         Filter filter = filterSet.getFilter("nickname");
         assertNotNull(filter);
@@ -59,7 +59,7 @@ public class FilterSetTest {
     }
 
     private FilterSet getFilterSet() {
-		
+
         FilterSet filters = new FilterSet();
         filters.addFilter(new Filter("fullName", "George Washington"));
         filters.addFilter(new Filter("nickname", "Father Of His Country"));

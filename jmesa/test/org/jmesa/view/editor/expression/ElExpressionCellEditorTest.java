@@ -23,7 +23,7 @@ import javax.servlet.jsp.el.VariableResolver;
 import junit.framework.Assert;
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.view.editor.expression.ElExpressionCellEditor.VariableResolverMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @version 2.4
@@ -45,7 +45,7 @@ public class ElExpressionCellEditorTest extends AbstractTestCase {
 
     @Test
     public void testGetValue() {
-		
+
         Object item = getVariableContext();
 
         CellEditor editor = new ElExpressionCellEditor(new Expression(Language.EL, "item", "item.one + item.two"));
@@ -62,7 +62,7 @@ public class ElExpressionCellEditorTest extends AbstractTestCase {
     }
 
     protected Map<?, ?> getVariableContext() {
-		
+
         Integer one = new Integer(1);
         Integer two = new Integer(2);
         Map<String, Integer> item = new HashMap<String, Integer>();

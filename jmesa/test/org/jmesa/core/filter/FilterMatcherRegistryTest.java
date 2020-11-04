@@ -15,39 +15,40 @@
  */
 package org.jmesa.core.filter;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
 import org.jmesa.test.AbstractTestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class FilterMatcherRegistryTest extends AbstractTestCase {
-		
+
     @Test
     public void getMatchWithDateObject() {
-		
+
         FilterMatcherRegistry registry = new FilterMatcherRegistry();
-        
+
         registry.addFilterMatcher(new MatcherKey(Object.class), new StringFilterMatcher());
         registry.addFilterMatcher(new MatcherKey(Date.class), new DateFilterMatcher());
-        
+
         MatcherKey key = new MatcherKey(Timestamp.class);
         FilterMatcher result = registry.getFilterMatcher(key);
-        
+
         assertNotNull(result);
         assertTrue(result instanceof DateFilterMatcher);
     }
 
     @Test
     public void getMatchWithObject() {
-		
+
         FilterMatcherRegistry registry = new FilterMatcherRegistry();
         registry.addFilterMatcher(new MatcherKey(Object.class), new StringFilterMatcher());
         MatcherKey key = new MatcherKey(String.class, "name");
@@ -57,7 +58,7 @@ public class FilterMatcherRegistryTest extends AbstractTestCase {
 
     @Test
 	public void getMatchWithType() {
-		
+
 		FilterMatcherRegistry registry = new FilterMatcherRegistry();
 		registry.addFilterMatcher(new MatcherKey(String.class), new StringFilterMatcher());
 		MatcherKey key = new MatcherKey(String.class, "name");
@@ -67,7 +68,7 @@ public class FilterMatcherRegistryTest extends AbstractTestCase {
 
 	@Test
 	public void getMatchKeyWithProperty() {
-		
+
 		FilterMatcherRegistry registry = new FilterMatcherRegistry();
 		registry.addFilterMatcher(new MatcherKey(String.class, "name"), new StringFilterMatcher());
 		MatcherKey key = new MatcherKey(String.class, "name");
@@ -77,7 +78,7 @@ public class FilterMatcherRegistryTest extends AbstractTestCase {
 
 	@Test
 	public void getMatchKeyWithErrors() {
-		
+
 		FilterMatcherRegistry registry = new FilterMatcherRegistry();
 		registry.addFilterMatcher(new MatcherKey(Date.class), new StringFilterMatcher());
 		MatcherKey key = new MatcherKey(String.class);

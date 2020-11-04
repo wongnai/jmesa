@@ -15,11 +15,11 @@
  */
 package org.jmesa.view.html;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.view.html.component.HtmlColumn;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0

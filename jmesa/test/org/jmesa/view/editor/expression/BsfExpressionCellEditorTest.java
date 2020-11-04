@@ -15,11 +15,11 @@
  */
 package org.jmesa.view.editor.expression;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.awt.Dimension;
 import org.jmesa.core.CoreContext;
 import org.jmesa.test.AbstractTestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @version 2.4
@@ -29,7 +29,7 @@ public class BsfExpressionCellEditorTest extends AbstractTestCase {
 
     @Test
     public void testSetItemVariableName() {
-		
+
         CoreContext ctx = createCoreContext(createWebContext());
 
         // First just test a basic expression
@@ -43,7 +43,7 @@ public class BsfExpressionCellEditorTest extends AbstractTestCase {
 
     @Test
     public void testGetValue() {
-		
+
         CoreContext ctx = createCoreContext(createWebContext());
 
         // First just test a basic expression

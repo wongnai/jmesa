@@ -15,13 +15,13 @@
  */
 package org.jmesa.limit.state;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.jmesa.limit.Limit;
 import org.jmesa.web.HttpServletRequestWebContext;
 import org.jmesa.web.WebContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -29,12 +29,12 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Jeff Johnston
  */
 public class SessionStateTest {
-		
+
     private static String ID = "pres";
 
     @Test
     public void retrieveLimitFromParameter() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         WebContext webContext = new HttpServletRequestWebContext(request);
 
@@ -47,18 +47,18 @@ public class SessionStateTest {
 
         Limit limit = state.retrieveLimit();
 
-        assertNull("The limit is not null.", limit); // should be null until pass parameter
+        assertNull(limit, "The limit is not null."); // should be null until pass parameter
 
         request.addParameter("restore", "true");
 
         limit = state.retrieveLimit();
 
-        assertNotNull("The limit is null.", limit); // should now not be null
+        assertNotNull(limit, "The limit is null."); // should now not be null
     }
 
     @Test
     public void retrieveLimitFromRequest() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         WebContext webContext = new HttpServletRequestWebContext(request);
 
@@ -71,12 +71,12 @@ public class SessionStateTest {
 
         Limit limit = state.retrieveLimit();
 
-        assertNull("The limit is not null.", limit); // should be null until pass parameter
+        assertNull(limit, "The limit is not null."); // should be null until pass parameter
 
         request.setAttribute("restore", "true");
 
         limit = state.retrieveLimit();
 
-        assertNotNull("The limit is null.", limit); // should now not be null
+        assertNotNull(limit, "The limit is null."); // should now not be null
     }
 }

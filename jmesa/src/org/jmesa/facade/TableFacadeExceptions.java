@@ -25,7 +25,7 @@ import org.jmesa.view.html.toolbar.Toolbar;
 
 /**
  * Helper to contain all the exceptions returned from the TableFacade.
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
@@ -34,7 +34,7 @@ final class TableFacadeExceptions {
     private TableFacadeExceptions() {}
 
     static void validateCoreContextIsNull(CoreContext coreContext, String object) {
-		
+
         if (coreContext != null) {
             throw new IllegalStateException(
                 "It is too late to set the " + object + ". You need to set the " + object + " before using the CoreContext.");
@@ -42,7 +42,7 @@ final class TableFacadeExceptions {
     }
 
     static void validateCoreContextIsNotNull(CoreContext coreContext) {
-		
+
         if (coreContext == null) {
             throw new IllegalStateException(
                 "The CoreContext is null. You need to set the coreContext on the facade.");
@@ -50,15 +50,15 @@ final class TableFacadeExceptions {
     }
 
     static void validateTableIsNull(Table table, String object) {
-		
+
         if (table != null) {
             throw new IllegalStateException(
                 "It is too late to set the " + object + ". You need to set the " + object + " before using the Table.");
         }
     }
-    
+
     static void validateTableIsNotNull(Table table) {
-		
+
         if (table == null) {
             throw new IllegalStateException(
                 "The Table is null. You need to set the table on the facade.");
@@ -66,7 +66,7 @@ final class TableFacadeExceptions {
     }
 
     static void validateViewIsNull(View view, String object) {
-		
+
         if (view != null) {
             throw new IllegalStateException(
                 "It is too late to set the " + object + ". You need to set the " + object + " before using the View.");
@@ -74,7 +74,7 @@ final class TableFacadeExceptions {
     }
 
     static void validateToolbarIsNull(Toolbar toolbar, String object) {
-		
+
         if (toolbar != null) {
             throw new IllegalStateException(
                 "It is too late to set the " + object + ". You need to set the " + object + " before using the Toolbar.");
@@ -82,7 +82,7 @@ final class TableFacadeExceptions {
     }
 
     static void validateLimitIsNull(Limit limit, String object) {
-		
+
         if (limit != null) {
             throw new IllegalStateException(
                 "It is too late to set the " + object + ". You need to set the " + object + " before using the Limit.");
@@ -90,7 +90,7 @@ final class TableFacadeExceptions {
     }
 
     static void validateRowSelectIsNotNull(Limit limit) {
-		
+
         if (limit.getRowSelect() == null) {
             throw new IllegalStateException(
                 "The RowSelect is null. You need to set the totalRows on the facade.");
@@ -98,7 +98,7 @@ final class TableFacadeExceptions {
     }
 
     static void validateItemsIsNull(Collection<?> items) {
-		
+
         if (items != null) {
             throw new IllegalStateException(
                 "It is too late to set editable. You need to set editable before using the Limit.");
@@ -106,14 +106,14 @@ final class TableFacadeExceptions {
     }
 
     static void validateItemsIsNotNull(Collection<?> items) {
-		
+
         if (items == null) {
             throw new IllegalStateException("The items are null. You need to set the items on the facade (or model).");
         }
     }
 
-    static void validateResponseIsNotNull(HttpServletResponse response) {
-		
+    static void validateResponseIsNotNull(Object response) {
+
         if (response == null) {
             throw new IllegalStateException("The HttpServletResponse is null. You need to call the " +
                     "TableFacade constructor (or factory) with the response object.");

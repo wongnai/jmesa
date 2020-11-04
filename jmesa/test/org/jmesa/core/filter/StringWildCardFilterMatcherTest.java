@@ -15,10 +15,10 @@
  */
 package org.jmesa.core.filter;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 4.0
@@ -26,7 +26,7 @@ import org.junit.Test;
  */
 /**
  * @author jward
- * 
+ *
  */
 public class StringWildCardFilterMatcherTest {
 
@@ -87,51 +87,51 @@ public class StringWildCardFilterMatcherTest {
 
         evaluate = match.evaluate("george)", "george");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("george)", "george)");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("george)", "GEORGE)");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("ge)", "GE*)");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("ge)", "GE*");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("george", "GE*RGE");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("GEORGE", "ge?rge");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("GEORGE", "ge?r*e");
         assertTrue(evaluate);
 
         evaluate = match.evaluate("WASHINGTON", "w*s?i*g?on");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("WASHINGTON", "w*s?i*t?n");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("WASHINGTON", "w*s?i*g?n");
         assertFalse(evaluate);
-        
+
         evaluate = match.evaluate("WASHING", "w*s?i*g?");
         assertFalse(evaluate);
-        
+
         evaluate = match.evaluate("WASHINGTON", "w*s?i*g?");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("WASHINGTON", "w*h?n*o?");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("WASHINGTON", "w*h?n*o?*");
         assertTrue(evaluate);
-        
+
         evaluate = match.evaluate("GEORGE", "ge)rge");
         assertFalse(evaluate);
-        
+
     }
 }

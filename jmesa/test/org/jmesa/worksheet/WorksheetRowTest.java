@@ -15,21 +15,21 @@
  */
 package org.jmesa.worksheet;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.3
  * @author Jeff Johnston
  */
 public class WorksheetRowTest {
-		
+
     @Test
     public void removeColumn() {
-		
+
         WorksheetColumn firstName = new WorksheetColumn("name.firstName", null);
         WorksheetColumn born = new WorksheetColumn("born", null);
         WorksheetColumn lastName = new WorksheetColumn("name.lastName", null);

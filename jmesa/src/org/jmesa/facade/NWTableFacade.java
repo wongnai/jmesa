@@ -15,28 +15,6 @@
  */
 package org.jmesa.facade;
 
-import static org.jmesa.facade.TableFacadeExceptions.validateCoreContextIsNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateCoreContextIsNotNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateItemsIsNotNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateItemsIsNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateLimitIsNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateTableIsNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateTableIsNotNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateToolbarIsNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateResponseIsNotNull;
-import static org.jmesa.facade.TableFacadeExceptions.validateViewIsNull;
-import static org.jmesa.facade.TableFacadeUtils.filterWorksheetItems;
-import static org.jmesa.facade.TableFacadeUtils.isClearingWorksheet;
-import static org.jmesa.limit.LimitConstants.LIMIT_ROWSELECT_MAXROWS;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.jmesa.core.CoreContext;
 import org.jmesa.core.CoreContextFactory;
 import org.jmesa.core.filter.FilterMatcher;
@@ -57,7 +35,6 @@ import org.jmesa.model.TableModel;
 import org.jmesa.util.ExportUtils;
 import org.jmesa.util.PreferencesUtils;
 import org.jmesa.util.SupportUtils;
-import org.jmesa.view.AbstractViewExporter;
 import org.jmesa.view.View;
 import org.jmesa.view.ViewExporter;
 import org.jmesa.view.component.Table;
@@ -83,6 +60,16 @@ import org.jmesa.worksheet.state.SessionWorksheetState;
 import org.jmesa.worksheet.state.WorksheetState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import static org.jmesa.facade.TableFacadeExceptions.*;
+import static org.jmesa.facade.TableFacadeUtils.filterWorksheetItems;
+import static org.jmesa.facade.TableFacadeUtils.isClearingWorksheet;
+import static org.jmesa.limit.LimitConstants.LIMIT_ROWSELECT_MAXROWS;
 
 /**
  * <p>
@@ -117,13 +104,13 @@ import org.slf4j.LoggerFactory;
  * @since 2.1
  * @author Jeff Johnston
  */
-public class TableFacade implements WorksheetSupport, ContextSupport {
+public class NWTableFacade implements WorksheetSupport, ContextSupport{
 
-    private Logger logger = LoggerFactory.getLogger(TableFacade.class);
+    private Logger logger = LoggerFactory.getLogger(NWTableFacade.class);
 
     private final String id;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+    private Map<String,String[]> request;
+    private Map<String, Object>  response;
     private int maxRows;
     private Collection<?> items;
     private String[] exportTypes;
@@ -156,7 +143,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
      * @param id The unique identifier for this table.
      * @param request The servlet request object.
      */
-    public TableFacade(String id, HttpServletRequest request) {
+    public NWTableFacade(String id, Map<String,String[]> request) {
 
         this.id = id;
         this.request = request;
@@ -171,7 +158,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
      * @param request The servlet request object.
      * @param response The servlet response object used for the exports.
      */
-    public TableFacade(String id, HttpServletRequest request, HttpServletResponse response) {
+    public NWTableFacade(String id, Map<String,String[]> request, Map<String, Object> response) {
 
         this.id = id;
         this.request = request;
@@ -208,7 +195,6 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
     /**
      * Get the WebContext. If the WebContext does not exist then one will be created.
      */
-    @Override
     public WebContext getWebContext() {
 
         if (webContext == null) {
@@ -226,8 +212,8 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
         this.webContext = webContext;
 
         Object backingObject = webContext.getBackingObject();
-        if (backingObject instanceof HttpServletRequest) {
-            request = (HttpServletRequest) backingObject;
+        if (backingObject instanceof Map) {
+            request = (Map<String,String[]>) backingObject;
         }
     }
 
@@ -622,7 +608,6 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
     /**
      * Get the CoreContext. If the CoreContext does not exist then one will be created.
      */
-    @Override
     public CoreContext getCoreContext() {
 
         if (coreContext != null) {
@@ -692,7 +677,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
 
         validateCoreContextIsNotNull(coreContext);
 
-        this.toolbar = PreferencesUtils.createClassFromPreferences(getCoreContext(), HtmlConstants.TOOLBAR);
+        this.toolbar = PreferencesUtils.<Toolbar>createClassFromPreferences(getCoreContext(), HtmlConstants.TOOLBAR);
         SupportUtils.setTable(toolbar, getTable());
         SupportUtils.setCoreContext(toolbar, getCoreContext());
         SupportUtils.setWebContext(toolbar, getWebContext());
@@ -858,18 +843,12 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
 
                 SupportUtils.setWebContext(ve, getWebContext());
                 SupportUtils.setCoreContext(ve, getCoreContext());
-                SupportUtils.setHttpServletRequest(ve, request);
-                SupportUtils.setHttpServletResponse(ve, response);
 
                 if (exportFileName == null) {
                     exportFileName = ExportUtils.exportFileName(getView());
                 }
 
                 ve.setFileName(exportFileName);
-
-              //added by xwx
-                String userAgent = request.getHeader("User-Agent");
-                ((AbstractViewExporter)ve).setUserAgent(userAgent);
 
                 ve.export();
             }

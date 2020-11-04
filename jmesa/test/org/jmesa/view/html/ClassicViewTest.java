@@ -15,7 +15,7 @@
  */
 package org.jmesa.view.html;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.jmesa.core.CoreContext;
 import org.jmesa.facade.TableFacade;
@@ -24,21 +24,21 @@ import org.jmesa.test.AbstractTestCase;
 import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.view.html.component.HtmlRow;
 import org.jmesa.view.html.component.HtmlTable;
-import org.jmesa.view.html.toolbar.SimpleToolbar; 
+import org.jmesa.view.html.toolbar.SimpleToolbar;
 import org.jmesa.web.WebContext;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
-@Ignore
+@Disabled
 public class ClassicViewTest extends AbstractTestCase {
-		
+
     @Test
     public void render() {
-		
+
         WebContext webContext = createWebContext();
         CoreContext coreContext = createCoreContext(webContext);
 
@@ -73,7 +73,7 @@ public class ClassicViewTest extends AbstractTestCase {
 
         HtmlColumn careerColumn = new HtmlColumn("career");
         row.addColumn(careerColumn);
-        
+
         tableFacade.setTable(table);
 
         // create the view

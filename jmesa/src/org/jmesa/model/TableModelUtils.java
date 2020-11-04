@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jmesa.facade.WorksheetSupport;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.limit.Limit;
 import org.jmesa.limit.LimitActionFactory;
@@ -48,32 +49,32 @@ import com.google.gson.reflect.TypeToken;
  * @author Jeff Johnston
  */
 public class TableModelUtils {
-		
+
     public static String LIMIT_ATTR = "_LIMIT_ATTR";
     private static final Gson GSON = new Gson();
 
     protected TableModelUtils(){}
 
     public static boolean isExporting(String id, HttpServletRequest request) {
-		
+
         return getExportType(id, request) != null;
     }
 
     public static String getExportType(String id, HttpServletRequest request) {
-		
+
         LimitActionFactory actionFactory = new LimitActionFactory(id, request.getParameterMap());
         return actionFactory.getExportType();
     }
 
     public static Limit getLimit(String id, HttpServletRequest request, Collection<?> items) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request);
         tableFacade.setItems(items);
         return tableFacade.getLimit();
     }
 
     public static Limit getLimit(String id, String stateAttr, HttpServletRequest request, Collection<?> items) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request);
         tableFacade.setItems(items);
         tableFacade.setStateAttr(stateAttr);
@@ -81,7 +82,7 @@ public class TableModelUtils {
     }
 
     public static Collection<?> getItems(String id, String stateAttr, HttpServletRequest request, PageItems pageItems) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request);
         tableFacade.setStateAttr(stateAttr);
         tableFacade.autoFilterAndSort(false);
@@ -91,7 +92,7 @@ public class TableModelUtils {
     }
 
     public static Collection<?> getItems(String id, HttpServletRequest request, PageItems pageItems) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request);
         tableFacade.autoFilterAndSort(false);
         Collection<?> items = getItems(tableFacade, pageItems);
@@ -99,8 +100,8 @@ public class TableModelUtils {
         return items;
     }
 
-    protected static Collection<?> getItems(TableFacade tableFacade, PageItems pageItems) {
-		
+    protected static Collection<?> getItems(WorksheetSupport tableFacade, PageItems pageItems) {
+
         Limit limit = tableFacade.getLimit();
         int totalRows = pageItems.getTotalRows(limit);
         if (limit.hasRowSelect()) {
@@ -115,13 +116,13 @@ public class TableModelUtils {
     }
 
     public static boolean saveWorksheet(String id, HttpServletRequest request, WorksheetSaver worksheetSaver) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request);
         return saveWorksheet(tableFacade, worksheetSaver);
     }
 
-    protected static boolean saveWorksheet(TableFacade tableFacade, WorksheetSaver worksheetSaver) {
-		
+    protected static boolean saveWorksheet(WorksheetSupport tableFacade, WorksheetSaver worksheetSaver) {
+
         tableFacade.setEditable(true);
         Worksheet worksheet = tableFacade.getWorksheet();
         if (worksheet.isSaving() && worksheet.hasChanges()) {
@@ -132,7 +133,7 @@ public class TableModelUtils {
     }
 
     public static void clearWorksheet(String id, HttpServletRequest request) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request);
         tableFacade.setEditable(true);
         Worksheet worksheet = tableFacade.getWorksheet();
@@ -140,7 +141,7 @@ public class TableModelUtils {
     }
 
     public static Table createTable(String... columnProperties) {
-		
+
         Table table = new Table();
 
         Row row = new Row();
@@ -156,7 +157,7 @@ public class TableModelUtils {
     }
 
     public static HtmlTable createHtmlTable(String... columnProperties) {
-		
+
         HtmlTable htmlTable = new HtmlTable();
 
         HtmlRow htmlRow = new HtmlRow();
@@ -172,7 +173,7 @@ public class TableModelUtils {
     }
 
     public static Table createExportTable(String columnInfoJson) {
-        
+
         Table table = new Table();
         Row row = new Row();
 
@@ -187,10 +188,10 @@ public class TableModelUtils {
             try {
                 Map<String, String> properties = entry.getValue();
                 title = properties.get("title");
-                
+
                 cellEditorFQN = properties.get("cellEditor");
                 cellEditorClass = Class.forName(cellEditorFQN);
-                
+
                 Column column = new Column(entry.getKey());
                 column.title(title);
                 CellEditor cellEditor = (CellEditor)cellEditorClass.newInstance();
@@ -208,10 +209,10 @@ public class TableModelUtils {
             } catch (IllegalAccessException e) {
                 throw new RuntimeException("Cannot create instance of " + cellEditorFQN + " for column " + title, e);
             }
-            
+
         }
-        table.setRow(row);   
-        
+        table.setRow(row);
+
         return table;
     }
 }

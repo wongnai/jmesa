@@ -27,12 +27,12 @@ import org.jmesa.worksheet.UniqueProperty;
  * @author Jeff Johnston
  */
 public class Row extends AbstractContextSupport {
-		
+
     private String uniqueProperty;
 
     private RowRenderer rowRenderer;
 
-    private List<Column> columns = new ArrayList<Column>();
+    private List<Column> columns = new ArrayList<>();
 
     /**
      * The property that uniquely identifies the row.
@@ -42,13 +42,13 @@ public class Row extends AbstractContextSupport {
 
         return uniqueProperty;
     }
-    
+
     /**
      * @param item The Bean (or Map) for the current row.
      * @since 2.3
      */
     public UniqueProperty getUniqueProperty(Object item) {
-		
+
         if (uniqueProperty != null) {
             Object value = ItemUtils.getItemValue(item, uniqueProperty);
             if (value != null) {
@@ -64,18 +64,18 @@ public class Row extends AbstractContextSupport {
      * @since 2.3
      */
     public void setUniqueProperty(String uniqueProperty) {
-		
+
         this.uniqueProperty = uniqueProperty;
     }
 
 	public Row uniqueProperty(String uniqueProperty) {
-		
+
 		setUniqueProperty(uniqueProperty);
 		return this;
 	}
 
     public Column getColumn(String property) {
-		
+
         for (Column column : columns) {
             if (column.getProperty() == null) {
                 continue;
@@ -85,40 +85,40 @@ public class Row extends AbstractContextSupport {
                 return column;
             }
         }
-        
+
         throw new IllegalStateException("The column property [" + property + "] does not exist.");
     }
 
     public Column getColumn(int index) {
-		
+
         return columns.get(index);
     }
 
     public Row addColumn(Column column) {
-		
+
         column.setRow(this);
         columns.add(column);
         return this;
     }
 
     public List<Column> getColumns() {
-		
+
         return columns;
     }
 
     public RowRenderer getRowRenderer() {
-		
+
         return rowRenderer;
     }
 
     public void setRowRenderer(RowRenderer rowRenderer) {
-		
+
         this.rowRenderer = rowRenderer;
         this.rowRenderer.setRow(this);
     }
-    
+
 	public Row rowRenderer(RowRenderer rowRenderer) {
-		
+
 		setRowRenderer(rowRenderer);
 		return this;
 	}

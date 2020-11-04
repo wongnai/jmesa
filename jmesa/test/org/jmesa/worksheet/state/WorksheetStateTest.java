@@ -15,14 +15,14 @@
  */
 package org.jmesa.worksheet.state;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.jmesa.limit.Limit;
 import org.jmesa.web.HttpServletRequestWebContext;
 import org.jmesa.web.WebContext;
 import org.jmesa.worksheet.Worksheet;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -30,12 +30,12 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Jeff Johnston
  */
 public class WorksheetStateTest {
-		
+
     private static String ID = "pres";
 
     @Test
     public void retrieveWorksheet() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         WebContext webContext = new HttpServletRequestWebContext(request);
 
@@ -46,11 +46,11 @@ public class WorksheetStateTest {
         Worksheet worksheet = new Worksheet(ID);
         worksheet.setWebContext(webContext);
 
-        assertNull("The worksheet is not null.", state.retrieveWorksheet());
+        assertNull(state.retrieveWorksheet(),"The worksheet is not null." );
 
         state.persistWorksheet(worksheet);
 
-        assertNotNull("The worksheet is null.", state.retrieveWorksheet());
+        assertNotNull(state.retrieveWorksheet(), "The worksheet is null.");
     }
 
 }

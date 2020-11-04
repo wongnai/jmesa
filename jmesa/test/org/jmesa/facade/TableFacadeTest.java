@@ -15,10 +15,6 @@
  */
 package org.jmesa.facade;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import java.util.Collection;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -44,28 +40,30 @@ import org.jmesa.view.html.toolbar.SimpleToolbar;
 import org.jmesa.view.html.toolbar.Toolbar;
 import org.jmesa.web.HttpServletRequestWebContext;
 import org.jmesa.web.WebContext;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @since 2.1
  * @author Jeff Johnston
  */
-@Ignore
+@Disabled
 public class TableFacadeTest extends AbstractTestCase {
 
     private static final String ID = "pres";
 
     @Test
     public void createHtmlTableFacade() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -77,17 +75,17 @@ public class TableFacadeTest extends AbstractTestCase {
 
         String html = facade.render();
         assertNotNull(html);
-        assertTrue("There is no html rendered", html.length() > 0);
+        assertTrue(() -> html.length() > 0, "There is no html rendered");
     }
 
     @Test
     public void getWebContext() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -103,15 +101,15 @@ public class TableFacadeTest extends AbstractTestCase {
         WebContext webContextToSet = new HttpServletRequestWebContext(request);
         facade.setWebContext(webContextToSet); // The WebContext set should now
         // be the one used.
-        assertTrue("The web context is not the same.", webContextToSet == facade.getWebContext());
+        assertTrue(() -> webContextToSet == facade.getWebContext(), "The web context is not the same.");
     }
 
     @Test
     public void getCoreContextWithItemsNotSet() {
-		
+
         HttpServletRequest request = new MockHttpServletRequest();
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -131,18 +129,18 @@ public class TableFacadeTest extends AbstractTestCase {
 
     @Test
     public void getCoreContext() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         CoreContext coreContext = facade.getCoreContext();
         assertNotNull(coreContext);
 
         CoreContext coreContextToSet = createCoreContext(facade.getWebContext());
         facade.setCoreContext(coreContextToSet); // The WebContext set should
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -151,14 +149,14 @@ public class TableFacadeTest extends AbstractTestCase {
         row.addColumn(new HtmlColumn("career"));
         table.setRow(row);
         facade.setTable(table);
-        
+
         // now be the one used.
-        assertTrue("The core context is not the same.", coreContextToSet == facade.getCoreContext());
+        assertTrue(() -> coreContextToSet == facade.getCoreContext(), "The core context is not the same.");
     }
 
     @Test
     public void addFilterMatcher() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -168,7 +166,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -178,7 +176,7 @@ public class TableFacadeTest extends AbstractTestCase {
         row.addColumn(new HtmlColumn("born"));
         table.setRow(row);
         facade.setTable(table);
-        
+
         MatcherKey key = new MatcherKey(Date.class);
         DateFilterMatcher matcher = new DateFilterMatcher("yyyy/MM", facade.getWebContext());
         facade.addFilterMatcher(key, matcher);
@@ -187,18 +185,18 @@ public class TableFacadeTest extends AbstractTestCase {
 
         Collection<?> filteredObjects = facade.getCoreContext().getPageItems();
         assertNotNull(filteredObjects);
-        assertTrue("There are two many filtered items.", filteredObjects.size() == 1);
+        assertTrue(() -> filteredObjects.size() == 1, "There are two many filtered items.");
     }
 
     @Test
     public void getLimit() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter("restore", "true");
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -222,12 +220,12 @@ public class TableFacadeTest extends AbstractTestCase {
         LimitFactory limitFactory = new LimitFactory(ID, facade.getWebContext());
         Limit limitToSet = limitFactory.createLimit();
         facade.setLimit(limitToSet); // The Limit set should now be the one used.
-        assertTrue("The limit is not the same.", limitToSet == facade.getLimit());
+        assertTrue(() -> limitToSet == facade.getLimit(), "The limit is not the same.");
     }
 
     @Test
     public void getLimitAndExportable() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -237,7 +235,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -250,19 +248,19 @@ public class TableFacadeTest extends AbstractTestCase {
         Limit limit = facade.getLimit();
         assertNotNull(limit);
         assertNotNull(limit.getRowSelect());
-        assertTrue("The limit is not exportable.", limit.hasExport());
-        assertTrue("The limit maxRows is not the same as the totalRows.", limit.getRowSelect().getMaxRows() == limit.getRowSelect().getTotalRows());
+        assertTrue(limit::hasExport, "The limit is not exportable.");
+        assertTrue(() -> limit.getRowSelect().getMaxRows() == limit.getRowSelect().getTotalRows(), "The limit maxRows is not the same as the totalRows.");
     }
 
     @Test
     public void getLimitAndNotExportable() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
 
         HttpServletRequest request = new MockHttpServletRequest();
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -275,19 +273,19 @@ public class TableFacadeTest extends AbstractTestCase {
         Limit limit = facade.getLimit();
         assertNotNull(limit);
         assertNotNull(limit.getRowSelect());
-        assertTrue("The limit is exportable.", !limit.hasExport());
-        assertTrue("The limit maxRows is the same as the totalRows.", limit.getRowSelect().getMaxRows() != limit.getRowSelect().getTotalRows());
+        assertFalse(limit::hasExport, "The limit is exportable.");
+        assertTrue(()-> limit.getRowSelect().getMaxRows() != limit.getRowSelect().getTotalRows(), "The limit maxRows is the same as the totalRows.");
     }
 
     @Test
     public void getLimitWithState() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         MockHttpServletRequest request = new MockHttpServletRequest();
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -305,7 +303,7 @@ public class TableFacadeTest extends AbstractTestCase {
         assertNotNull(request.getSession().getAttribute("pres_LIMIT"));
 
         TableFacade facadeWithState = TableFacadeFactory.createTableFacade("pres", request);
-        
+
         facadeWithState.setStateAttr("restore");
         request.addParameter("restore", "true");
 
@@ -315,7 +313,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
     @Test
     public void setRowSelectAndExportable() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         SpringParametersAdapter parameters = new SpringParametersAdapter(request);
         ParametersBuilder builder = new ParametersBuilder(ID, parameters);
@@ -325,7 +323,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -340,13 +338,13 @@ public class TableFacadeTest extends AbstractTestCase {
         Limit limit = facade.getLimit();
         assertNotNull(limit);
         assertNotNull(limit.getRowSelect());
-        assertTrue("The limit is not exportable.", limit.hasExport());
-        assertTrue("The limit maxRows is not the same as the totalRows.", limit.getRowSelect().getMaxRows() == limit.getRowSelect().getTotalRows());
+        assertTrue(limit::hasExport, "The limit is not exportable.");
+        assertTrue(() -> limit.getRowSelect().getMaxRows() == limit.getRowSelect().getTotalRows(), "The limit maxRows is not the same as the totalRows.");
     }
 
     @Test
     public void getTableAndNoRowSelect() {
-		
+
         HttpServletRequest request = new MockHttpServletRequest();
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
 
@@ -369,7 +367,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
     @Test
     public void getTableAndNotExportable() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
 
@@ -390,7 +388,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
     @Test
     public void getTableAndExportable() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         SpringParametersAdapter parameters = new SpringParametersAdapter(request);
         ParametersBuilder builder = new ParametersBuilder(ID, parameters);
@@ -400,7 +398,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -409,13 +407,13 @@ public class TableFacadeTest extends AbstractTestCase {
         row.addColumn(new HtmlColumn("career"));
         table.setRow(row);
         facade.setTable(table);
-        
+
         assertNotNull(facade.getTable());
     }
 
     @Test
     public void getToolbar() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
 
@@ -439,18 +437,18 @@ public class TableFacadeTest extends AbstractTestCase {
         toolbarToSet.setCoreContext(facade.getCoreContext());
         facade.setToolbar(toolbarToSet); // The toolbar set should now be the
         // one used.
-        assertTrue("The toolbar is not the same.", toolbarToSet == facade.getToolbar());
+        assertTrue(()-> toolbarToSet == facade.getToolbar(), "The toolbar is not the same.");
     }
 
     @Test
     public void getToolbarMaxRowsIncrements() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -468,13 +466,13 @@ public class TableFacadeTest extends AbstractTestCase {
 
     @Test
     public void getView() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -490,12 +488,12 @@ public class TableFacadeTest extends AbstractTestCase {
         HtmlView viewToSet = new HtmlView();
         viewToSet.setHtmlSnippets(new HtmlSnippets((HtmlTable) facade.getTable(), facade.getToolbar(), facade.getCoreContext()));
         facade.setView(viewToSet); // The view set should now be the one used.
-        assertTrue("The view is not the same.", viewToSet == facade.getView());
+        assertTrue(()->viewToSet == facade.getView(), "The view is not the same.");
     }
 
     @Test
     public void getViewAndExportable() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         SpringParametersAdapter parameters = new SpringParametersAdapter(request);
         ParametersBuilder builder = new ParametersBuilder(ID, parameters);
@@ -505,7 +503,7 @@ public class TableFacadeTest extends AbstractTestCase {
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -522,13 +520,13 @@ public class TableFacadeTest extends AbstractTestCase {
 
     @Test
     public void render() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -540,12 +538,12 @@ public class TableFacadeTest extends AbstractTestCase {
 
         String html = facade.render();
         assertNotNull(html);
-        assertTrue("Did not return any markup.", html.length() > 0);
+        assertTrue(()->html.length() > 0, "Did not return any markup.");
     }
 
     @Test
     public void renderWithFactory() {
-		
+
         Collection<President> items = PresidentDao.getPresidents();
         HttpServletRequest request = new MockHttpServletRequest();
 
@@ -564,11 +562,11 @@ public class TableFacadeTest extends AbstractTestCase {
 
         String html = facade.render();
         assertNotNull(html);
-        assertTrue("Did not return any markup.", html.length() > 0);
+        assertTrue(()-> html.length() > 0, "Did not return any markup.");
     }
 
     public void renderAndExportable() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         SpringParametersAdapter parameters = new SpringParametersAdapter(request);
         ParametersBuilder builder = new ParametersBuilder(ID, parameters);
@@ -577,11 +575,11 @@ public class TableFacadeTest extends AbstractTestCase {
         Collection<President> items = PresidentDao.getPresidents();
 
         MockHttpServletResponse response = new MockHttpServletResponse();
-        assertTrue("The response is not empty.", response.getContentAsByteArray().length == 0);
+        assertTrue(()-> response.getContentAsByteArray().length == 0, "The response is not empty.");
 
         TableFacade facade = TableFacadeFactory.createTableFacade("pres", request, response);
         facade.setItems(items);
-        
+
         HtmlTable table = new HtmlTable();
         HtmlRow row = new HtmlRow();
         row.addColumn(new HtmlColumn("name.firstName"));
@@ -595,17 +593,17 @@ public class TableFacadeTest extends AbstractTestCase {
 
         String markup = facade.render();
         assertNull(markup);
-        assertTrue("There are no contents in the export.", response.getContentAsByteArray().length > 0);
+        assertTrue(()-> response.getContentAsByteArray().length > 0, "There are no contents in the export.");
     }
 
     @Test
     public void getMaxRows() {
-		
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         TableFacade facade = new TableFacade(ID, request);
 
         int maxRows = facade.getMaxRows();
-        
-        assertTrue("The maxRows is not set.", maxRows == 15);
+
+        assertTrue(()-> maxRows == 15, "The maxRows is not set.");
     }
 }
