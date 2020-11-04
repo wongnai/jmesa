@@ -112,6 +112,6 @@ public class JsonViewTest extends AbstractTestCase {
 
         String result = jsonView.escapeValue(value);
 
-        assertTrue(result.equals("I have a \"\"quote\"\""));
+        assertTrue(result.equals("I have a \\\"quote\\\""));
     }
 }

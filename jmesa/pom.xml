@@ -77,6 +77,8 @@
         <project.reporting.outputEncoding>
             UTF-8
         </project.reporting.outputEncoding>
+
+        <jacksonVersion>2.11.3</jacksonVersion>
     </properties>
 
     <build>
@@ -151,6 +153,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
                 <version>${surefirePluginVersion}</version>
             </plugin>
             <plugin>
@@ -454,6 +457,17 @@
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jacksonVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jacksonVersion}</version>
         </dependency>
 
 

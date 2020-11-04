@@ -30,10 +30,10 @@ import java.util.Map;
  * @author Jeff Johnston
  */
 public class PresidentDao {
-		
+
 
     public static Collection<President> getPresidents() {
-		
+
         List<President> presidents = new ArrayList<President>();
 
         President president = new President();
@@ -155,7 +155,7 @@ public class PresidentDao {
 
         president = new President();
         president.setId(10);
-        name = new Name("John", "Tyler", "Accidental President, His Accidency");
+        name = new Name("John's\"sun\"\n\ff\b&abc\\", "Tyler", "Accidental President, His Accidency");
         president.setName(name);
         president.setTerm("1841-45");
         president.setBorn(getDate("03/29/1790"));
@@ -593,7 +593,7 @@ public class PresidentDao {
     }
 
     public static Collection<Map<?, ?>> getPresidentsAsListOfMaps() {
-		
+
 
         List<Map<?, ?>> results = new ArrayList<Map<?, ?>>();
 
@@ -616,7 +616,7 @@ public class PresidentDao {
     }
 
     public static Date getDate(String date) {
-		
+
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
             Calendar calendar = Calendar.getInstance();

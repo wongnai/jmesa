@@ -15,6 +15,8 @@
  */
 package org.jmesa.view.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.renderer.CellRenderer;
@@ -34,29 +36,35 @@ public class JsonView extends AbstractExportView {
 
     @Override
     public Object render() {
+        try {
+            StringBuilder results = new StringBuilder();
 
-        StringBuilder results = new StringBuilder();
+            List<Column> columns = getTable().getRow().getColumns();
 
-        List<Column> columns = getTable().getRow().getColumns();
+            results.append("{\n\"caption\":\"").append(escapeValue(getTable().getCaption())).append("\",\n");
+            addColumnTitles(results, columns);
+            addTableData(results, columns);
+            addParams(results, columns);
 
-        results.append("{\n\"caption\":\"").append(escapeValue(getTable().getCaption())).append("\",\n");
-        addColumnTitles(results, columns);
-        addTableData(results, columns);
-        addParams(results, columns);
+            results.append("}\n");
 
-        results.append("}\n");
-
-        return results.toString();
+            return results.toString();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private void addParams(StringBuilder results, List<Column> columns) {
 
     }
 
-    private void addTableData(StringBuilder results, List<Column> columns) {
+    private void addTableData(StringBuilder results, List<Column> columns) throws JsonProcessingException {
         int rowcount = 0;
         results.append("\"data\": [");
         Collection<?> items = getCoreContext().getPageItems();
+        ObjectMapper mapper = new ObjectMapper();
+
 
         for (Object item : items ) {
             rowcount++;
@@ -69,11 +77,18 @@ public class JsonView extends AbstractExportView {
                 Object value = cellRenderer.render(item, rowcount);
                 results.append("\"").append(escapeValue(column.getProperty())).append("\"");
                 results.append(":");
-                if (value == null) {
-                    results.append("null");
-                } else {
-                    results.append("\"").append(escapeValue(value)).append("\"");
-                }
+                String jsonString = mapper.writeValueAsString(value);
+                results.append(jsonString);
+
+//                if (value == null) {
+//                    results.append("null");
+//                } else if (value instanceof Boolean) {
+//                    results.append(value);
+//                }else if (value instanceof Number) {
+//                    results.append(value);
+//                }else{
+//                    results.append("\"").append(escapeValue(value)).append("\"");
+//                }
                 if (bodyIterator.hasNext()) {
                     results.append(",\n");
                 }
@@ -107,6 +122,47 @@ public class JsonView extends AbstractExportView {
         }
 
         String stringval = String.valueOf(value);
-        return stringval.replaceAll("\"", "\"\"");
+        return escapeJavascript(stringval);
+    }
+
+    private String escapeJavascript(CharSequence t) {
+        StringBuilder e = new StringBuilder();
+        for(int a = 0; a < t.length(); a++) {
+            e.append(javascriptEscapeCode(t.charAt(a)));
+        }
+        return e.toString();
+    }
+
+    /**
+     * https://docs.oracle.com/javase/tutorial/java/data/characters.html
+     * @param t
+     * @return
+     */
+    private CharSequence javascriptEscapeCode(char t) {
+        switch (t) {
+            case '\r':
+                return "\\r";
+            case '\n':
+                return "\\n";
+            // \v vertical tab
+            // case '\\0x00b':
+            //     return "\\v";
+            case '\'':
+                return "\\'";
+            case '"':
+                return "\\\"";
+           // case '&':
+           //     return "\\&";
+            case '\\':
+                return "\\\\";
+            case '\t':
+                return "\\t";
+            case '\b':
+                return "\\b";
+            case '\f':
+                return "\\f";
+            default:
+                return t+"";
+        }
     }
 }
