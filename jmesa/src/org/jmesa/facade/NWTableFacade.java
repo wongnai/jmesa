@@ -49,6 +49,8 @@ import org.jmesa.view.html.HtmlView;
 import org.jmesa.view.html.toolbar.Toolbar;
 import org.jmesa.view.jexcel.JExcelView;
 import org.jmesa.view.jexcel.JExcelViewExporter;
+import org.jmesa.view.json.JsonView;
+import org.jmesa.view.json.JsonViewExporter;
 import org.jmesa.view.pdf.PdfView;
 import org.jmesa.view.pdf.PdfViewExporter;
 import org.jmesa.view.pdfp.PdfPView;
@@ -753,6 +755,8 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
             exportView = new PdfView();
         } else if (exportType.equals(TableModel.PDFP)) {
             exportView= new PdfPView();
+        }else if (exportType.equals(TableModel.JSON)) {
+            exportView= new JsonView();
         } else {
             throw new IllegalStateException("Not a valid export type.");
         }
@@ -833,6 +837,8 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
                     ve = new PdfViewExporter();
                 } else if (exportType.equals(TableModel.PDFP)) {
                     ve = new PdfPViewExporter();
+                } else if (exportType.equals(TableModel.JSON)) {
+                    ve = new JsonViewExporter();
                 } else {
                     throw new IllegalStateException("Not a valid export type.");
                 }

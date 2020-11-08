@@ -80,15 +80,6 @@ public class JsonView extends AbstractExportView {
                 String jsonString = mapper.writeValueAsString(value);
                 results.append(jsonString);
 
-//                if (value == null) {
-//                    results.append("null");
-//                } else if (value instanceof Boolean) {
-//                    results.append(value);
-//                }else if (value instanceof Number) {
-//                    results.append(value);
-//                }else{
-//                    results.append("\"").append(escapeValue(value)).append("\"");
-//                }
                 if (bodyIterator.hasNext()) {
                     results.append(",\n");
                 }
