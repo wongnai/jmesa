@@ -26,43 +26,43 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * results based on the order. Or, in other words, it is simply the column that
  * the user is trying to sort in the order specified.
  * </p>
- * 
+ *
  * <p>
  * The property can use dot (.) notation to access nested classes. For example
  * if you have an object called President that is composed with another object
  * called Name then your property would be name.firstName
- * 
+ *
  * <pre>
  * public class President {
  *     private Name name;
- * 
+ *
  *     public Name getName() {
  *         return name;
  *     }
  * }
- * 
+ *
  * public class Name {
  *     private String firstName;
- * 
+ *
  *     public String getFirstName() {
  *         return firstName;
  *     }
  * }
  * </pre>
- * 
+ *
  * </p>
- * 
+ *
  * @since 2.0
  * @author Jeff Johnston
  */
 public final class Sort implements Serializable, Comparable<Sort> {
-		
+
     private final int position;
     private final String property;
     private final Order order;
 
     public Sort(int position, String property, Order order) {
-		
+
         this.position = position;
         this.property = property;
         this.order = order;
@@ -72,7 +72,7 @@ public final class Sort implements Serializable, Comparable<Sort> {
      * @return The Bean (Or Map) attribute used to reduce the results.
      */
     public String getProperty() {
-		
+
         return property;
     }
 
@@ -80,7 +80,7 @@ public final class Sort implements Serializable, Comparable<Sort> {
      * @return Will be used to sort the results.
      */
     public Order getOrder() {
-		
+
         return order;
     }
 
@@ -88,7 +88,7 @@ public final class Sort implements Serializable, Comparable<Sort> {
      * @return The placement of the Sort within the SortSet.
      */
     public int getPosition() {
-		
+
         return position;
     }
 
@@ -100,8 +100,9 @@ public final class Sort implements Serializable, Comparable<Sort> {
      * if two Sort objects have the same position they better have the same
      * property.
      */
+    @Override
     public int compareTo(Sort sort) {
-		
+
         if (this.getPosition() < sort.getPosition()) {
             return -1;
         }
@@ -119,7 +120,7 @@ public final class Sort implements Serializable, Comparable<Sort> {
      */
     @Override
     public boolean equals(Object o) {
-		
+
         if (o == this) {
             return true;
         }
@@ -135,7 +136,7 @@ public final class Sort implements Serializable, Comparable<Sort> {
 
     @Override
     public int hashCode() {
-		
+
         int result = 17;
         int prop = this.getProperty() == null ? 0 : this.getProperty().hashCode();
         result = result * 37 + prop;
@@ -144,7 +145,7 @@ public final class Sort implements Serializable, Comparable<Sort> {
 
     @Override
     public String toString() {
-		
+
         ToStringBuilder builder = new ToStringBuilder(this);
         builder.append("position", position);
         builder.append("property", property);
