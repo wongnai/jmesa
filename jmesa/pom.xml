@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.1.0-RC1</version>
+    <version>4.1.0-RC2</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -213,6 +213,7 @@
                     <sourceFileExcludes>
                         <sourceFileExclude>**/module-info.java</sourceFileExclude>
                     </sourceFileExcludes>
+                    <source>1.8</source>
                 </configuration>
             </plugin>
         </plugins>

@@ -15,8 +15,10 @@
  */
 package org.jmesa.web;
 
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
@@ -42,7 +44,12 @@ public class HttpServletRequestWebContext implements WebContext {
     public HttpServletRequestWebContext(HttpServletRequest request) {
 
         this.request = request;
-        this.ctx = request.getSession().getServletContext();
+        HttpSession session= request.getSession();
+        if(session!=null) {
+            this.ctx = session.getServletContext();
+        }else{
+            this.ctx = null;
+        }
     }
 
     /**
@@ -62,25 +69,33 @@ public class HttpServletRequestWebContext implements WebContext {
 
     @Override
     public Object getApplicationInitParameter(String name) {
-
+        if(ctx==null) {
+            return null;
+        }
         return ctx.getInitParameter(name);
     }
 
     @Override
     public Object getApplicationAttribute(String name) {
-
+        if(ctx==null) {
+            return null;
+        }
         return ctx.getAttribute(name);
     }
 
     @Override
     public void setApplicationAttribute(String name, Object value) {
-
+        if(ctx==null) {
+            return ;
+        }
         ctx.setAttribute(name, value);
     }
 
     @Override
     public void removeApplicationAttribute(String name) {
-
+        if(ctx==null) {
+            return ;
+        }
         ctx.removeAttribute(name);
     }
 
@@ -151,20 +166,28 @@ public class HttpServletRequestWebContext implements WebContext {
 
     @Override
     public Object getSessionAttribute(String name) {
-
-        return request.getSession().getAttribute(name);
+        HttpSession session= request.getSession();
+        if(session!=null) {
+            return session.getAttribute(name);
+        }
+        return null;
     }
+
 
     @Override
     public void setSessionAttribute(String name, Object value) {
-
-        request.getSession().setAttribute(name, value);
+        HttpSession session= request.getSession();
+        if(session!=null) {
+            session.setAttribute(name, value);
+        }
     }
 
     @Override
     public void removeSessionAttribute(String name) {
-
-        request.getSession().removeAttribute(name);
+        HttpSession session= request.getSession();
+        if(session!=null) {
+            session.removeAttribute(name);
+        }
     }
 
     @Override
