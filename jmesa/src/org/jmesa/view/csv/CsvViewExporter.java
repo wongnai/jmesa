@@ -18,27 +18,32 @@ package org.jmesa.view.csv;
 import javax.servlet.ServletOutputStream;
 import org.jmesa.view.AbstractViewExporter;
 
+import java.io.OutputStream;
+
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class CsvViewExporter extends AbstractViewExporter {
-		
+
     @Override
     public void export()
             throws Exception {
-        
         responseHeaders();
+        export(getHttpServletResponse().getOutputStream());
+    }
+
+    @Override
+    public void export(OutputStream out) throws Exception {
         String viewData = (String) getView().render();
         byte[] contents = (viewData).getBytes();
-        ServletOutputStream outputStream = getHttpServletResponse().getOutputStream();
-        outputStream.write(contents);
-        outputStream.flush();
+        out.write(contents);
+        out.flush();
     }
 
     @Override
     protected String getContextType() {
-		
+
         return "text/csv";
     }
 

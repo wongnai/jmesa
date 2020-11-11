@@ -42,6 +42,7 @@ public abstract class AbstractViewExporter implements ViewExporter, CoreContextS
 
     public void responseHeaders()
             throws Exception {
+        assert response != null;
 
         response.setContentType(getContextType());
         String encoding = getEncoding();

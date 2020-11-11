@@ -15,35 +15,35 @@
  */
 package org.jmesa.core.message;
 
-import org.jmesa.web.WebContext;
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
+import org.jmesa.web.WebContext;
 
 /**
  * The Struts 2 specific messages. Will use the default messages if they are not defined in Struts 2.
  *
- * @since 2.3.3
  * @author Oscar Perez
+ * @since 2.3.3
  */
 public class Struts2Messages implements Messages {
-		
-    private Messages defaultMessages;
-    private WebContext webContext;
+
+    private final Messages defaultMessages;
+    private final WebContext webContext;
 
     public Struts2Messages(Messages defaultMessages, WebContext webContext) {
-		
+
         this.defaultMessages = defaultMessages;
         this.webContext = webContext;
     }
 
     @Override
     public String getMessage(String code) {
-		
+
         return this.getMessage(code, null);
     }
 
     @Override
     public String getMessage(String code, Object[] args) {
-		
+
         String message = LocalizedTextUtil.findDefaultText(code, webContext.getLocale(), args);
         if (message == null) {
             return defaultMessages.getMessage(code, args);

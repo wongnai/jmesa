@@ -15,24 +15,25 @@
  */
 package org.jmesa.web;
 
-import javax.servlet.jsp.PageContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.jsp.PageContext;
+
 /**
- * @since 2.3.4
  * @author Jeff Johnston
+ * @since 2.3.4
  */
 public class JspPageSpringWebContext extends JspPageWebContext implements SpringWebContext {
-		
+
     public JspPageSpringWebContext(PageContext pageContext) {
-		
+
         super(pageContext);
     }
 
     @Override
     public ApplicationContext getApplicationContext() {
-		
+
         return WebApplicationContextUtils.getWebApplicationContext(getPageContext().getServletContext());
     }
 }

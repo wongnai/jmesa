@@ -53,6 +53,7 @@ import org.jmesa.limit.LimitFactory;
 import org.jmesa.limit.RowSelect;
 import org.jmesa.limit.state.SessionState;
 import org.jmesa.limit.state.State;
+import org.jmesa.model.ExportTypes;
 import org.jmesa.model.TableModel;
 import org.jmesa.util.ExportUtils;
 import org.jmesa.util.PreferencesUtils;
@@ -758,19 +759,19 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
             throw new IllegalStateException("The export type is null.");
         }
 
-        if (exportType.equals(TableModel.CSV)) {
+        if (exportType.equals(ExportTypes.CSV)) {
             exportView = new CsvView(",");
-        } else if (exportType.equals(TableModel.EXCEL)) {
+        } else if (exportType.equals(ExportTypes.EXCEL)) {
             exportView = new ExcelView();
-        } else if (exportType.equals(TableModel.EXCEL_2007)) {
+        } else if (exportType.equals(ExportTypes.EXCEL_2007)) {
             exportView = new Excel2007View();
-        } else if (exportType.equals(TableModel.JEXCEL)) {
+        } else if (exportType.equals(ExportTypes.JEXCEL)) {
             exportView = new JExcelView();
-        } else if (exportType.equals(TableModel.PDF)) {
+        } else if (exportType.equals(ExportTypes.PDF)) {
             exportView = new PdfView();
-        } else if (exportType.equals(TableModel.PDFP)) {
+        } else if (exportType.equals(ExportTypes.PDFP)) {
             exportView= new PdfPView();
-        } else if (exportType.equals(TableModel.JSON)) {
+        } else if (exportType.equals(ExportTypes.JSON)) {
             exportView= new JsonView();
         } else {
             throw new IllegalStateException("Not a valid export type.");
@@ -840,19 +841,19 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
                     throw new IllegalStateException("The export type is null.");
                 }
 
-                if (exportType.equals(TableModel.CSV)) {
+                if (exportType.equals(ExportTypes.CSV)) {
                     ve = new CsvViewExporter();
-                } else if (exportType.equals(TableModel.EXCEL)) {
+                } else if (exportType.equals(ExportTypes.EXCEL)) {
                     ve = new ExcelViewExporter();
-                } else if (exportType.equals(TableModel.EXCEL_2007)) {
+                } else if (exportType.equals(ExportTypes.EXCEL_2007)) {
                     ve = new Excel2007ViewExporter();
-                } else if (exportType.equals(TableModel.JEXCEL)) {
+                } else if (exportType.equals(ExportTypes.JEXCEL)) {
                     ve = new JExcelViewExporter();
-                } else if (exportType.equals(TableModel.PDF)) {
+                } else if (exportType.equals(ExportTypes.PDF)) {
                     ve = new PdfViewExporter();
-                } else if (exportType.equals(TableModel.PDFP)) {
+                } else if (exportType.equals(ExportTypes.PDFP)) {
                     ve = new PdfPViewExporter();
-                }else if (exportType.equals(TableModel.JSON)) {
+                }else if (exportType.equals(ExportTypes.JSON)) {
                     ve = new JsonViewExporter();
                 }  else {
                     throw new IllegalStateException("Not a valid export type.");

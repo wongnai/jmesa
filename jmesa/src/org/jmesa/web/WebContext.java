@@ -20,31 +20,52 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface WebContext {
-		
-    public Object getApplicationInitParameter(String name);
-    public Object getApplicationAttribute(String name);
-    public void setApplicationAttribute(String name, Object value);
-    public void removeApplicationAttribute(String name);
-    public Object getPageAttribute(String name);
-    public void setPageAttribute(String name, Object value);
-    public void removePageAttribute(String name);
-    public String getParameter(String name);
-    public Map<?,?> getParameterMap();
-    public void setParameterMap(Map<?,?> parameterMap);
-    public Object getRequestAttribute(String name);
-    public void setRequestAttribute(String name, Object value);
-    public void removeRequestAttribute(String name);
-    public Object getSessionAttribute(String name);
-    public void setSessionAttribute(String name, Object value);
-    public void removeSessionAttribute(String name);
-    public Writer getWriter();
-    public Locale getLocale();
-    public void setLocale(Locale locale);
-    public String getContextPath();
-    public String getRealPath(String path);
-    public Object getBackingObject();
+
+    Object getApplicationInitParameter(String name);
+
+    Object getApplicationAttribute(String name);
+
+    void setApplicationAttribute(String name, Object value);
+
+    void removeApplicationAttribute(String name);
+
+    Object getPageAttribute(String name);
+
+    void setPageAttribute(String name, Object value);
+
+    void removePageAttribute(String name);
+
+    String getParameter(String name);
+
+    Map<?, ?> getParameterMap();
+
+    void setParameterMap(Map<?, ?> parameterMap);
+
+    Object getRequestAttribute(String name);
+
+    void setRequestAttribute(String name, Object value);
+
+    void removeRequestAttribute(String name);
+
+    Object getSessionAttribute(String name);
+
+    void setSessionAttribute(String name, Object value);
+
+    void removeSessionAttribute(String name);
+
+    Writer getWriter();
+
+    Locale getLocale();
+
+    void setLocale(Locale locale);
+
+    String getContextPath();
+
+    String getRealPath(String path);
+
+    Object getBackingObject();
 }

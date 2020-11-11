@@ -15,15 +15,23 @@
  */
 package org.jmesa.view;
 
+import java.io.OutputStream;
+
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public interface ViewExporter {
-		
-    public View getView();
-    public void setView(View view);
-    public String getFileName();
-    public void setFileName(String fileName);
-    public void export() throws Exception;
+    View getView();
+    void setView(View view);
+    String getFileName();
+    void setFileName(String fileName);
+    void export() throws Exception;
+
+    /**
+     * @since 4.1
+     * @param out output file etc. to that stream
+     * @throws Exception any error
+     */
+    void export(OutputStream out) throws Exception;
 }

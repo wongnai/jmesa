@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.jmesa.core.CoreContext;
 import org.jmesa.facade.TableFacade;
+import org.jmesa.model.ExportTypes;
 import org.jmesa.model.TableModel;
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.view.html.component.HtmlColumn;
@@ -82,7 +83,7 @@ public class ClassicViewTest extends AbstractTestCase {
         toolbar.setTable(table);
         toolbar.setWebContext(webContext);
         toolbar.setCoreContext(coreContext);
-        toolbar.setExportTypes(TableModel.CSV);
+        toolbar.setExportTypes(ExportTypes.CSV);
         HtmlView view = new HtmlView();
         view.setTable(table);
         view.setToolbar(toolbar);

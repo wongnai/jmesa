@@ -15,19 +15,19 @@
  */
 package org.jmesa.core.filter;
 
-import java.util.Collection;
-
 import org.jmesa.limit.Limit;
 
+import java.util.Collection;
+
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class DefaultRowFilter implements RowFilter {
-		
+
     @Override
     public Collection<?> filterItems(Collection<?> items, Limit limit) {
-        
+
         return items;
     }
 }

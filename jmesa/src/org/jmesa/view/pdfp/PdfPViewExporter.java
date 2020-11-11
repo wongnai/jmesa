@@ -16,6 +16,7 @@
 package org.jmesa.view.pdfp;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.jmesa.view.AbstractViewExporter;
@@ -28,10 +29,16 @@ import com.lowagie.text.pdf.PdfWriter;
  * @author Ismail Seyfi
  */
 public class PdfPViewExporter extends AbstractViewExporter {
-		
+
     @Override
     public void export() throws Exception {
-		
+        HttpServletResponse response = getHttpServletResponse();
+        ServletOutputStream out = response.getOutputStream();
+        export(out);
+    }
+
+    @Override
+    public void export(OutputStream out) throws Exception {
         com.lowagie.text.Document document = new com.lowagie.text.Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -42,21 +49,17 @@ public class PdfPViewExporter extends AbstractViewExporter {
         document.add(pdfView.render());
         document.close();
         responseHeaders();
-        HttpServletResponse response = getHttpServletResponse();
-        ServletOutputStream out = response.getOutputStream();
         baos.writeTo(out);
         out.flush();
     }
 
     @Override
     protected String getContextType() {
-		
         return "application/pdf";
     }
 
     @Override
     protected String getExtensionName() {
-
         return "pdf";
     }
 }

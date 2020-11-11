@@ -15,41 +15,42 @@
  */
 package org.jmesa.core.filter;
 
-import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 import org.jmesa.web.WebContext;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
+
 /**
  * The date filter matcher for Joda Time dates.
  *
- * @since 2.4.4
  * @author Jeff Johnston
+ * @since 2.4.4
  */
 public class DateTimeFilterMatcher extends DateFilterMatcher {
-		
-    private Logger logger = LoggerFactory.getLogger(DateTimeFilterMatcher.class);
+
+    private final Logger logger = LoggerFactory.getLogger(DateTimeFilterMatcher.class);
 
     public DateTimeFilterMatcher() {
-		
-    	// default constructor
+
+        // default constructor
     }
 
     public DateTimeFilterMatcher(String pattern) {
-		
+
         super(pattern);
     }
 
     public DateTimeFilterMatcher(String pattern, WebContext webContext) {
-		
+
         super(pattern, webContext);
     }
 
     @Override
     public boolean evaluate(Object itemValue, String filterValue) {
-		
+
         if (itemValue == null) {
             return false;
         }
@@ -78,10 +79,6 @@ public class DateTimeFilterMatcher extends DateFilterMatcher {
 
         String item = String.valueOf(itemValue);
         String filter = String.valueOf(filterValue);
-        if (StringUtils.contains(item, filter)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.contains(item, filter);
     }
 }

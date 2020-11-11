@@ -15,15 +15,15 @@
  */
 package org.jmesa.core.filter;
 
-import java.util.Collection;
-
 import org.jmesa.limit.Limit;
 
+import java.util.Collection;
+
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface RowFilter {
-		
-    public Collection<?> filterItems(Collection<?> items, Limit limit);
+
+    Collection<?> filterItems(Collection<?> items, Limit limit);
 }

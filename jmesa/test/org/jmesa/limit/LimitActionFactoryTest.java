@@ -26,6 +26,7 @@ import org.jmesa.test.ParametersBuilder;
 import org.jmesa.web.WebContext;
 import org.jmesa.web.HttpServletRequestWebContext;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -38,35 +39,35 @@ public class LimitActionFactoryTest {
     private static final int MAX_ROWS = 20;
     private static final int PAGE = 3;
 
-    private LimitActionFactory limitActionFactory;
+    private LimitActionFactoryMapImpl limitActionFactoryMapImpl;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         WebContext webContext = new HttpServletRequestWebContext(request);
         webContext.setParameterMap(getParameters());
-        limitActionFactory = new LimitActionFactory(ID, webContext.getParameterMap());
+        limitActionFactoryMapImpl = new LimitActionFactoryMapImpl(ID, webContext.getParameterMap());
     }
 
     @Test
     public void getMaxRows() {
 
-        int maxRows = limitActionFactory.getMaxRows();
+        int maxRows = limitActionFactoryMapImpl.getMaxRows();
         assertTrue(maxRows == MAX_ROWS);
     }
 
     @Test
     public void getPage() {
 
-        int page = limitActionFactory.getPage();
+        int page = limitActionFactoryMapImpl.getPage();
         assertTrue(page == PAGE);
     }
 
     @Test
     public void getFilterSet() {
 
-        FilterSet filterSet = limitActionFactory.getFilterSet();
+        FilterSet filterSet = limitActionFactoryMapImpl.getFilterSet();
         assertNotNull(filterSet);
         assertTrue(filterSet.getFilters().size() == 2);
     }
@@ -74,12 +75,12 @@ public class LimitActionFactoryTest {
     @Test
     public void getSortSet() {
 
-        SortSet sortSet = limitActionFactory.getSortSet();
+        SortSet sortSet = limitActionFactoryMapImpl.getSortSet();
         assertNotNull(sortSet);
         assertTrue(sortSet.getSorts().size() == 2);
     }
 
-    private Map<String, ?> getParameters() {
+    private static Map<String, ?> getParameters() {
 
         HashMap<String, Object> results = new HashMap<String, Object>();
         ParametersBuilder builder = new ParametersBuilder(ID, new ParametersAdapter(results));

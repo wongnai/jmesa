@@ -22,12 +22,13 @@ import org.jmesa.worksheet.Worksheet;
  * Abstracts out where the Worksheet is being held so that the servlet and facade can work with the
  * Worksheet transparently.
  * </p>
- * 
- * @since 2.3
+ *
  * @author Jeff Johnston
+ * @since 2.3
  */
 public interface WorksheetState {
-		
-    public Worksheet retrieveWorksheet();
-    public void persistWorksheet(Worksheet worksheet);
+
+    Worksheet retrieveWorksheet();
+
+    void persistWorksheet(Worksheet worksheet);
 }

@@ -19,16 +19,16 @@ import org.jmesa.web.WebContext;
 
 /**
  * A factory to create different Preferences.
- * 
- * @since 2.3
+ *
  * @author Jeff Johnston
+ * @since 2.3
  */
 public class PreferencesFactory {
-		
+
     private static final String JMESA_PREFERENCES_LOCATION = "jmesaPreferencesLocation";
 
     public static Preferences getPreferences(WebContext webContext) {
-		
+
         String jmesaPreferencesLocation = (String) webContext.getApplicationInitParameter(JMESA_PREFERENCES_LOCATION);
         return new PropertiesPreferences(jmesaPreferencesLocation, webContext);
     }

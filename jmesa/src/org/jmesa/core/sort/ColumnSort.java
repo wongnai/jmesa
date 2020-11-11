@@ -15,15 +15,15 @@
  */
 package org.jmesa.core.sort;
 
-import java.util.Collection;
-
 import org.jmesa.limit.Limit;
 
+import java.util.Collection;
+
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface ColumnSort {
-		
-    public Collection<?> sortItems(Collection<?> items, Limit limit);
+
+    Collection<?> sortItems(Collection<?> items, Limit limit);
 }

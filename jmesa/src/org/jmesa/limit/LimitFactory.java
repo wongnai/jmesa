@@ -18,6 +18,8 @@ package org.jmesa.limit;
 import org.jmesa.limit.state.State;
 import org.jmesa.web.WebContext;
 
+import java.util.Map;
+
 /**
  * <p>
  * Constructs a Limit and a RowSelect object.
@@ -83,8 +85,8 @@ import org.jmesa.web.WebContext;
  * @author Jeff Johnston
  */
 public class LimitFactory {
-		
-    private final LimitActionFactory limitActionFactory;
+
+    private final LimitActionFactory limitActionFactoryMapImpl;
     private State state;
 
     /**
@@ -92,12 +94,22 @@ public class LimitFactory {
      * @param webContext The adapter for the servlet request.
      */
     public LimitFactory(String id, WebContext webContext) {
-		
-        this.limitActionFactory = new LimitActionFactory(id, webContext.getParameterMap());
+
+        this.limitActionFactoryMapImpl = new LimitActionFactoryMapImpl(id, webContext.getParameterMap());
+    }
+
+    public LimitFactory(String id, String json) {
+
+        this.limitActionFactoryMapImpl = new LimitActionFactoryJsonImpl(id, json);
+    }
+
+    public LimitFactory(String id, Map<String, Object> json) {
+
+        this.limitActionFactoryMapImpl = new LimitActionFactoryJsonImpl(id, json);
     }
 
     public void setState(State state) {
-		
+
         this.state = state;
     }
 
@@ -120,22 +132,22 @@ public class LimitFactory {
      * </p>
      */
     public Limit createLimit() {
-		
+
         Limit limit = getStateLimit();
 
         if (limit != null) {
             return limit;
         }
 
-        limit = new Limit(limitActionFactory.getId());
+        limit = new Limit(limitActionFactoryMapImpl.getId());
 
-        FilterSet filterSet = limitActionFactory.getFilterSet();
+        FilterSet filterSet = limitActionFactoryMapImpl.getFilterSet();
         limit.setFilterSet(filterSet);
 
-        SortSet sortSet = limitActionFactory.getSortSet();
+        SortSet sortSet = limitActionFactoryMapImpl.getSortSet();
         limit.setSortSet(sortSet);
 
-        String exportType = limitActionFactory.getExportType();
+        String exportType = limitActionFactoryMapImpl.getExportType();
         limit.setExportType(exportType);
 
         if (state != null && !limit.hasExport()) {
@@ -162,8 +174,8 @@ public class LimitFactory {
      * @param totalRows The total rows across all the pages.
      */
     public RowSelect createRowSelect(int maxRows, int totalRows) {
-		
-        int page = limitActionFactory.getPage();
+
+        int page = limitActionFactoryMapImpl.getPage();
 
         maxRows = getMaxRows(maxRows);
 
@@ -199,7 +211,7 @@ public class LimitFactory {
      * @return The created Limit that is populated with the RowSelect object.
      */
     public Limit createLimitAndRowSelect(int maxRows, int totalRows) {
-		
+
         Limit limit = createLimit();
 
         if (limit.hasRowSelect()) {
@@ -218,8 +230,8 @@ public class LimitFactory {
     }
 
     private int getMaxRows(int maxRows) {
-		
-        Integer currentMaxRows = limitActionFactory.getMaxRows();
+
+        Integer currentMaxRows = limitActionFactoryMapImpl.getMaxRows();
         if (currentMaxRows == null) {
             return maxRows;
         }
@@ -228,7 +240,7 @@ public class LimitFactory {
     }
 
     private Limit getStateLimit() {
-		
+
         if (state != null) {
             Limit l = state.retrieveLimit();
             if (l != null) {

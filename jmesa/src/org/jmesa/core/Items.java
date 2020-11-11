@@ -15,10 +15,6 @@
  */
 package org.jmesa.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.jmesa.core.filter.RowFilter;
 import org.jmesa.core.sort.ColumnSort;
 import org.jmesa.limit.Limit;
@@ -26,21 +22,25 @@ import org.jmesa.limit.RowSelect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class Items {
-    
-    private Logger logger = LoggerFactory.getLogger(Items.class);
 
-    private Collection<?> allItems;
-    private Collection<?> filteredItems;
+    private final Logger logger = LoggerFactory.getLogger(Items.class);
+
+    private final Collection<?> allItems;
+    private final Collection<?> filteredItems;
     private Collection<?> pageItems;
-    private Collection<?> sortedItems;
+    private final Collection<?> sortedItems;
 
     public Items(Collection<?> items, Limit limit, RowFilter rowFilter, ColumnSort columnSort) {
-		
+
         this.allItems = new ArrayList<Object>(items); // copy for thread safety
 
         this.filteredItems = rowFilter.filterItems(allItems, limit);
@@ -59,27 +59,27 @@ public class Items {
     }
 
     public Collection<?> getAllItems() {
-		
+
         return allItems;
     }
 
     public Collection<?> getFilteredItems() {
-		
+
         return filteredItems;
     }
 
     public Collection<?> getPageItems() {
-		
+
         return pageItems;
     }
 
     public void setPageItems(Collection<?> pageItems) {
-		
+
         this.pageItems = pageItems;
     }
 
     public Collection<?> getSortedItems() {
-		
+
         return sortedItems;
     }
 
@@ -91,7 +91,7 @@ public class Items {
      * @param limit
      */
     private void recalculateRowSelect(Collection<?> filteredItems, Limit limit) {
-		
+
         RowSelect rowSelect = limit.getRowSelect();
         int page = rowSelect.getPage();
         int maxRows = rowSelect.getMaxRows();
@@ -100,7 +100,7 @@ public class Items {
     }
 
     private Collection<?> getPageItems(Collection<?> items, Limit limit) {
-		
+
         int rowStart = limit.getRowSelect().getRowStart();
         int rowEnd = limit.getRowSelect().getRowEnd();
 

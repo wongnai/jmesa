@@ -16,6 +16,7 @@
 package org.jmesa.view.pdf;
 
 import java.io.ByteArrayInputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,14 +38,20 @@ import org.xhtmlrenderer.resource.FSEntityResolver;
  * @author Paul Horn
  */
 public class PdfViewExporter extends AbstractViewExporter implements HttpServletRequestSupport {
-		
+
     private static Logger logger = LoggerFactory.getLogger(PdfViewExporter.class);
-    
+
     private HttpServletRequest request;
 
     @Override
     public void export() throws Exception {
-		
+        HttpServletResponse response = getHttpServletResponse();
+        export(response.getOutputStream());
+    }
+
+    @Override
+    public void export(OutputStream out) throws Exception {
+
         String string = (String) getView().render();
 
         byte[] contents = null;
@@ -91,7 +98,7 @@ public class PdfViewExporter extends AbstractViewExporter implements HttpServlet
      * @return The base url to the web application.
      */
     private String getBaseUrl() {
-		
+
         if (request != null) {
             return request.getRequestURL().toString();
         }
@@ -112,7 +119,7 @@ public class PdfViewExporter extends AbstractViewExporter implements HttpServlet
 
     @Override
     protected String getContextType() {
-		
+
         return "application/pdf";
     }
 

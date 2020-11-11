@@ -16,11 +16,12 @@
 package org.jmesa.core;
 
 /**
- * @since 2.5.1
  * @author Jeff Johnston
+ * @since 2.5.1
  */
 public interface IdSupport {
-		
-    public String getId();
-    public void setId(String id);
+
+    String getId();
+
+    void setId(String id);
 }

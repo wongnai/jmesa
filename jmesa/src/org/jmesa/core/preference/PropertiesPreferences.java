@@ -15,32 +15,32 @@
  */
 package org.jmesa.core.preference;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jmesa.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public final class PropertiesPreferences implements Preferences {
-		
+
     private final Logger logger = LoggerFactory.getLogger(PropertiesPreferences.class);
 
     private static final String JMESA_PROPERTIES = "jmesa.properties";
 
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
     public PropertiesPreferences(String preferencesLocation, WebContext webContext) {
-		
+
         try {
             InputStream resourceAsStream = getInputStream(JMESA_PROPERTIES, webContext);
             try {
@@ -85,13 +85,13 @@ public final class PropertiesPreferences implements Preferences {
 
     @Override
     public String getPreference(String name) {
-		
+
         return (String) properties.get(name);
     }
 
     @Override
     public String toString() {
-		
+
         ToStringBuilder builder = new ToStringBuilder(this);
         builder.append("properties", properties);
         return builder.toString();

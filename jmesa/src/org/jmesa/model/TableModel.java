@@ -29,9 +29,8 @@ import org.jmesa.core.message.Messages;
 import org.jmesa.core.preference.Preferences;
 import org.jmesa.core.sort.ColumnSort;
 import org.jmesa.facade.TableFacade;
-import org.jmesa.limit.ExportType;
 import org.jmesa.limit.Limit;
-import org.jmesa.limit.LimitActionFactory;
+import org.jmesa.limit.LimitActionFactoryMapImpl;
 import static org.jmesa.model.TableModelUtils.getItems;
 import org.jmesa.limit.state.State;
 import org.jmesa.view.View;
@@ -45,15 +44,7 @@ import org.jmesa.worksheet.Worksheet;
  * @since 3.0
  * @author Jeff Johnston
  */
-public class TableModel {
-
-    public static final String CSV = "csv";
-    public static final String EXCEL = "excel";
-    public static final String EXCEL_2007 = "excel2007";
-    public static final String JEXCEL = "jexcel";
-    public static final String PDF = "pdf";
-    public static final String PDFP = "pdfp";
-    public static final String JSON = "json";
+public class TableModel{
 
     private String id;
     private HttpServletRequest request;
@@ -88,7 +79,6 @@ public class TableModel {
     protected TableModel() {}
 
     public TableModel(String id, HttpServletRequest request) {
-
         this.id = id;
         this.request = request;
         this.tableFacade = new TableFacade(id, request);
@@ -172,23 +162,6 @@ public class TableModel {
         this.exportTypes = exportTypes;
     }
 
-    /**
-     * @deprecated Use the ExportTypes method that takes a list of Strings. For convenience
-     *             the TableModel contains a list of static export types.
-     */
-    @Deprecated
-    public void setExportTypes(ExportType... exportTypes) {
-
-        String[] result = new String[exportTypes.length];
-
-        int i = 0;
-        for (ExportType exportType: exportTypes) {
-            result[i++] = exportType.name();
-        }
-
-        this.exportTypes = result;
-    }
-
     public void setExportFileName(String exportFileName) {
 
         this.exportFileName = exportFileName;
@@ -222,7 +195,7 @@ public class TableModel {
     public void addFilterMatcher(MatcherKey key, FilterMatcher matcher) {
 
         if (filterMatchers == null) {
-            filterMatchers = new HashMap<MatcherKey, FilterMatcher>();
+            filterMatchers = new HashMap<>();
         }
         filterMatchers.put(key, matcher);
     }
@@ -290,7 +263,7 @@ public class TableModel {
 
     public String getExportType() {
 
-        LimitActionFactory actionFactory = new LimitActionFactory(id, request.getParameterMap());
+        LimitActionFactoryMapImpl actionFactory = new LimitActionFactoryMapImpl(id, request.getParameterMap());
         return actionFactory.getExportType();
     }
 

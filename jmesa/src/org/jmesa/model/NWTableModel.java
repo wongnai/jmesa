@@ -23,18 +23,17 @@ import org.jmesa.core.message.Messages;
 import org.jmesa.core.preference.Preferences;
 import org.jmesa.core.sort.ColumnSort;
 import org.jmesa.facade.NWTableFacade;
-import org.jmesa.facade.TableFacade;
-import org.jmesa.limit.ExportType;
 import org.jmesa.limit.Limit;
-import org.jmesa.limit.LimitActionFactory;
+import org.jmesa.limit.LimitActionFactoryMapImpl;
 import org.jmesa.limit.state.State;
 import org.jmesa.view.View;
 import org.jmesa.view.ViewExporter;
 import org.jmesa.view.component.Table;
 import org.jmesa.view.html.toolbar.Toolbar;
-import org.jmesa.web.WebContext;
+import org.jmesa.worksheet.NBWorksheet;
 import org.jmesa.worksheet.Worksheet;
 
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,17 +45,9 @@ import static org.jmesa.model.TableModelUtils.getItems;
  * @since 3.0
  * @author Jeff Johnston
  */
-public class NoWebTableModel {
-
-    public static final String CSV = "csv";
-    public static final String EXCEL = "excel";
-    public static final String EXCEL_2007 = "excel2007";
-    public static final String JEXCEL = "jexcel";
-    public static final String PDF = "pdf";
-    public static final String PDFP = "pdfp";
-
+public class NWTableModel {
     private String id;
-    private Map<String,String[]> params;
+    private Map<String,Object> params;
     private Collection<?> items;
     private PageItems pageItems;
     private AllItems allItems;
@@ -85,50 +76,22 @@ public class NoWebTableModel {
     private NWTableFacade tableFacade;
 
     // only used to subclass the model
-    protected NoWebTableModel() {}
+    protected NWTableModel() {}
 
-    public NoWebTableModel(String id, Map<String,String[]> params) {
+    public NWTableModel(String id, Map<String,Object> params) {
 
         this.id = id;
         this.params= params;
         this.tableFacade = new NWTableFacade(id, params);
     }
 
-    public NoWebTableModel(String id, Map<String,String[]> params , Map<String, Object> response) {
-
-        this.id = id;
-        this.params= params;
-        this.tableFacade = new NWTableFacade(id, params, response);
-    }
-
-    public NoWebTableModel(String id, WebContext webContext) {
-
-        this.tableFacade = new NWTableFacade(id, null);
-        tableFacade.setWebContext(webContext);
-        setHttpServletRequest(tableFacade);
-    }
-
-    public NoWebTableModel(String id, WebContext webContext, Map<String, Object> response) {
-
-        this.tableFacade = new NWTableFacade(id, null, response);
-        tableFacade.setWebContext(webContext);
-        setHttpServletRequest(tableFacade);
-    }
 
     protected void setTableFacade(NWTableFacade tableFacade) {
 
         this.tableFacade = tableFacade;
         this.id = tableFacade.getId();
-        setHttpServletRequest(tableFacade);
     }
 
-    private void setHttpServletRequest(NWTableFacade tableFacade) {
-
-        Object backingObject = tableFacade.getWebContext().getBackingObject();
-        if (backingObject instanceof Map) {
-            params = (Map) backingObject;
-        }
-    }
 
     /**
      * The most common way to set the items. If you need
@@ -172,22 +135,6 @@ public class NoWebTableModel {
         this.exportTypes = exportTypes;
     }
 
-    /**
-     * @deprecated Use the ExportTypes method that takes a list of Strings. For convenience
-     *             the TableModel contains a list of static export types.
-     */
-    @Deprecated
-    public void setExportTypes(ExportType... exportTypes) {
-
-        String[] result = new String[exportTypes.length];
-
-        int i = 0;
-        for (ExportType exportType: exportTypes) {
-            result[i++] = exportType.name();
-        }
-
-        this.exportTypes = result;
-    }
 
     public void setExportFileName(String exportFileName) {
 
@@ -222,7 +169,7 @@ public class NoWebTableModel {
     public void addFilterMatcher(MatcherKey key, FilterMatcher matcher) {
 
         if (filterMatchers == null) {
-            filterMatchers = new HashMap<MatcherKey, FilterMatcher>();
+            filterMatchers = new HashMap<>();
         }
         filterMatchers.put(key, matcher);
     }
@@ -290,7 +237,7 @@ public class NoWebTableModel {
 
     public String getExportType() {
 
-        LimitActionFactory actionFactory = new LimitActionFactory(id, params);
+        LimitActionFactoryMapImpl actionFactory = new LimitActionFactoryMapImpl(id, params);
         return actionFactory.getExportType();
     }
 
@@ -300,7 +247,7 @@ public class NoWebTableModel {
      * @return An html generated table will return the String markup. An export will be written out
      *         to the response and this method will return null.
      */
-    public String render() {
+    public String render(OutputStream out) {
 
         tableFacade.setEditable(editable);
 
@@ -387,7 +334,7 @@ public class NoWebTableModel {
             tableFacade.setView(view);
         }
 
-        Worksheet worksheet = tableFacade.getWorksheet();
+        NBWorksheet worksheet = tableFacade.getWorksheet();
         if (editable && worksheet.isAddingRow()) {
         	if (addedRowObject != null) {
         		tableFacade.addWorksheetRow(addedRowObject);
@@ -396,6 +343,6 @@ public class NoWebTableModel {
         	}
         }
 
-        return tableFacade.render();
+        return tableFacade.render(out);
     }
 }

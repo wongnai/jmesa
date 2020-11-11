@@ -16,7 +16,7 @@
 package org.jmesa.view.json;
 
 import org.jmesa.core.CoreContext;
-import org.jmesa.model.TableModel;
+import org.jmesa.model.ExportTypes;
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.test.Parameters;
 import org.jmesa.test.ParametersAdapter;
@@ -51,7 +51,7 @@ public class JsonViewTest extends AbstractTestCase {
         CoreContext coreContext = createCoreContext(webContext);
 
         assertTrue(coreContext.getLimit().hasExport());
-        assertTrue(coreContext.getLimit().getExportType().equals(TableModel.JSON));
+        assertTrue(coreContext.getLimit().getExportType().equals(ExportTypes.JSON));
 
         // create the table
         Table table = new Table();
@@ -98,7 +98,7 @@ public class JsonViewTest extends AbstractTestCase {
     private void createBuilder(Parameters parameters) {
 
         ParametersBuilder builder = new ParametersBuilder(ID, parameters);
-        builder.setExportType(TableModel.JSON);
+        builder.setExportType(ExportTypes.JSON);
         builder.setMaxRows(7);
         builder.setPage(2);
     }

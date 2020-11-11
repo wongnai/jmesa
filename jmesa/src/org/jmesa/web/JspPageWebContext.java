@@ -15,85 +15,84 @@
  */
 package org.jmesa.web;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 import java.io.Writer;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
-
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class JspPageWebContext implements WebContext {
-		
-    private PageContext pageContext;
+
+    private final PageContext pageContext;
     private Map<?, ?> parameterMap;
     private Locale locale;
 
     public JspPageWebContext(PageContext pageContext) {
-		
+
         this.pageContext = pageContext;
     }
 
     protected PageContext getPageContext() {
-		
+
         return pageContext;
     }
 
     @Override
     public Object getApplicationInitParameter(String name) {
-		
+
         return pageContext.getServletContext().getInitParameter(name);
     }
 
     @Override
     public Object getApplicationAttribute(String name) {
-		
+
         return pageContext.getServletContext().getAttribute(name);
     }
 
     @Override
     public void setApplicationAttribute(String name, Object value) {
-		
+
         pageContext.getServletContext().setAttribute(name, value);
     }
 
     @Override
     public void removeApplicationAttribute(String name) {
-		
+
         pageContext.getServletContext().removeAttribute(name);
     }
 
     @Override
     public Object getPageAttribute(String name) {
-		
+
         return pageContext.getAttribute(name);
     }
 
     @Override
     public void setPageAttribute(String name, Object value) {
-		
+
         pageContext.setAttribute(name, value);
     }
 
     @Override
     public void removePageAttribute(String name) {
-		
+
         pageContext.removeAttribute(name);
     }
 
     @Override
     public String getParameter(String name) {
-		
+
         return pageContext.getRequest().getParameter(name);
     }
 
     @Override
     public Map<?, ?> getParameterMap() {
-		
+
         if (parameterMap != null) {
             return parameterMap;
         }
@@ -103,55 +102,55 @@ public class JspPageWebContext implements WebContext {
 
     @Override
     public void setParameterMap(Map<?, ?> parameterMap) {
-		
+
         this.parameterMap = parameterMap;
     }
 
     @Override
     public Object getRequestAttribute(String name) {
-		
+
         return pageContext.getRequest().getAttribute(name);
     }
 
     @Override
     public void setRequestAttribute(String name, Object value) {
-		
+
         pageContext.getRequest().setAttribute(name, value);
     }
 
     @Override
     public void removeRequestAttribute(String name) {
-		
+
         pageContext.getRequest().removeAttribute(name);
     }
 
     @Override
     public Object getSessionAttribute(String name) {
-		
+
         return pageContext.getSession().getAttribute(name);
     }
 
     @Override
     public void setSessionAttribute(String name, Object value) {
-		
+
         pageContext.getSession().setAttribute(name, value);
     }
 
     @Override
     public void removeSessionAttribute(String name) {
-		
+
         pageContext.getSession().removeAttribute(name);
     }
 
     @Override
     public Writer getWriter() {
-		
+
         return pageContext.getOut();
     }
 
     @Override
     public Locale getLocale() {
-		
+
         if (locale != null) {
             return locale;
         }
@@ -161,7 +160,7 @@ public class JspPageWebContext implements WebContext {
 
     @Override
     public void setLocale(Locale locale) {
-		
+
         if (this.locale == null) {
             this.locale = locale;
         }
@@ -169,7 +168,7 @@ public class JspPageWebContext implements WebContext {
 
     @Override
     public String getContextPath() {
-		
+
         ServletRequest request = pageContext.getRequest();
         if (request instanceof HttpServletRequest) {
             return ((HttpServletRequest) request).getContextPath();
@@ -180,7 +179,7 @@ public class JspPageWebContext implements WebContext {
 
     @Override
     public String getRealPath(String path) {
-		
+
         if (pageContext.getRequest() instanceof HttpServletRequest) {
             return ((HttpServletRequest) pageContext.getRequest()).getSession().getServletContext().getRealPath(path);
         }
@@ -190,7 +189,7 @@ public class JspPageWebContext implements WebContext {
 
     @Override
     public PageContext getBackingObject() {
-		
+
         return pageContext;
     }
 }

@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import jxl.write.WritableWorkbook;
 import org.jmesa.view.AbstractViewExporter;
 
+import java.io.OutputStream;
+
 /**
  * <p>
  *  Output the JExcel results out to the response.
@@ -28,28 +30,32 @@ import org.jmesa.view.AbstractViewExporter;
  * @author Paul Horn
  */
 public class JExcelViewExporter extends AbstractViewExporter {
-		
+
     @Override
     public void export()
             throws Exception {
-        
         HttpServletResponse response = getHttpServletResponse();
-        JExcelView view = (JExcelView) getView();
-        view.setOutputStream(response.getOutputStream());
-        WritableWorkbook workbook = (WritableWorkbook) view.render();
         responseHeaders();
+        export(response.getOutputStream());
+    }
+
+    @Override
+    public void export(OutputStream out) throws Exception {
+        JExcelView view = (JExcelView) getView();
+        view.setOutputStream(out);
+        WritableWorkbook workbook = (WritableWorkbook) view.render();
         workbook.write();
-        response.getOutputStream().flush();
+        out.flush();
         workbook.close();
     }
 
+    @Override
     protected String getContextType() {
-		
         return "application/vnd.ms-excel;charset=UTF-8";
     }
 
+    @Override
     protected String getExtensionName() {
-
         return "xls";
     }
 }

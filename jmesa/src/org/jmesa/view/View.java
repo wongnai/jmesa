@@ -18,12 +18,14 @@ package org.jmesa.view;
 import org.jmesa.view.component.Table;
 
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface View {
-		
-    public Table getTable();
-    public void setTable(Table table);
-    public Object render();
+
+    Table getTable();
+
+    void setTable(Table table);
+
+    Object render();
 }

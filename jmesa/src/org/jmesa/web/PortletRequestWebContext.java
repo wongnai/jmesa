@@ -15,29 +15,28 @@
  */
 package org.jmesa.web;
 
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-
 /**
  * A JMesa context created in a portlet environment.
- * 
+ * <p>
  * By default, session attributes are stored in APPLICATION_SCOPE.  This
  * behavior can be overriden during construction or using setSessionScope().
  *
- * @version 2.3.4
  * @author bgould
+ * @version 2.3.4
  */
 public class PortletRequestWebContext implements WebContext {
-		
+
     private final PortletRequest request;
     private final PortletContext context;
-    private int sessionScope;
+    private final int sessionScope;
     private Map<?, ?> parameterMap;
     private Locale locale;
 
@@ -48,7 +47,7 @@ public class PortletRequestWebContext implements WebContext {
      * constructor.</p>
      */
     public PortletRequestWebContext(PortletRequest request) {
-		
+
         this(request, request.getPortletSession().getPortletContext(), PortletSession.APPLICATION_SCOPE);
     }
 
@@ -57,7 +56,7 @@ public class PortletRequestWebContext implements WebContext {
      * allows a default session scope to be set.
      */
     public PortletRequestWebContext(PortletRequest request, PortletContext context, int sessionScope) {
-		
+
         this.request = request;
         this.context = context;
         this.sessionScope = sessionScope;
@@ -65,49 +64,49 @@ public class PortletRequestWebContext implements WebContext {
 
     @Override
     public Object getApplicationAttribute(String name) {
-		
+
         return this.getPortletContext().getAttribute(name);
     }
 
     @Override
     public String getApplicationInitParameter(String name) {
-		
+
         return this.getPortletContext().getInitParameter(name);
     }
 
     @Override
     public void removeApplicationAttribute(String name) {
-		
+
         this.getPortletContext().removeAttribute(name);
     }
 
     @Override
     public void setApplicationAttribute(String name, Object value) {
-		
+
         this.getPortletContext().setAttribute(name, value);
     }
 
     @Override
     public Object getPageAttribute(String name) {
-		
+
         return getBackingObject().getAttribute(name);
     }
 
     @Override
     public void setPageAttribute(String name, Object value) {
-		
+
         getBackingObject().setAttribute(name, value);
     }
 
     @Override
     public void removePageAttribute(String name) {
-		
+
         getBackingObject().removeAttribute(name);
     }
 
     @Override
     public String getParameter(String name) {
-		
+
         if (parameterMap != null) {
             String[] values = WebContextUtils.getValueAsArray(parameterMap.get(name));
             if (values != null && values.length > 0) {
@@ -120,7 +119,7 @@ public class PortletRequestWebContext implements WebContext {
 
     @Override
     public Map<?, ?> getParameterMap() {
-		
+
         if (parameterMap != null) {
             return parameterMap;
         }
@@ -130,55 +129,55 @@ public class PortletRequestWebContext implements WebContext {
 
     @Override
     public void setParameterMap(Map<?, ?> parameterMap) {
-		
+
         this.parameterMap = parameterMap;
     }
 
     @Override
     public Object getRequestAttribute(String name) {
-		
+
         return getBackingObject().getAttribute(name);
     }
 
     @Override
     public void setRequestAttribute(String name, Object value) {
-		
+
         getBackingObject().setAttribute(name, value);
     }
 
     @Override
     public void removeRequestAttribute(String name) {
-		
+
         getBackingObject().removeAttribute(name);
     }
 
     @Override
     public Object getSessionAttribute(String name) {
-		
+
         return getBackingObject().getPortletSession().getAttribute(name, sessionScope);
     }
 
     @Override
     public void setSessionAttribute(String name, Object value) {
-		
+
         getBackingObject().getPortletSession().setAttribute(name, value, sessionScope);
     }
 
     @Override
     public void removeSessionAttribute(String name) {
-		
+
         getBackingObject().getPortletSession().removeAttribute(name, sessionScope);
     }
 
     @Override
     public Writer getWriter() {
-		
+
         return new StringWriter();
     }
 
     @Override
     public Locale getLocale() {
-		
+
         if (locale != null) {
             return locale;
         }
@@ -188,7 +187,7 @@ public class PortletRequestWebContext implements WebContext {
 
     @Override
     public void setLocale(Locale locale) {
-		
+
         if (this.locale == null) {
             this.locale = locale;
         }
@@ -196,24 +195,24 @@ public class PortletRequestWebContext implements WebContext {
 
     @Override
     public String getContextPath() {
-		
+
         return getBackingObject().getContextPath();
     }
 
     @Override
     public String getRealPath(String path) {
-		
+
         return getPortletContext().getRealPath(path);
     }
 
     public PortletContext getPortletContext() {
-		
+
         return context;
     }
 
     @Override
     public PortletRequest getBackingObject() {
-		
+
         return request;
     }
 }

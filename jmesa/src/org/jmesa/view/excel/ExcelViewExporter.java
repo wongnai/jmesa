@@ -18,24 +18,30 @@ package org.jmesa.view.excel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.jmesa.view.AbstractViewExporter;
 
+import java.io.OutputStream;
+
 /**
  * @since 2.1
  * @author jeff jie
  */
 public class ExcelViewExporter extends AbstractViewExporter {
-		
+
     @Override
     public void export()
             throws Exception {
-
-        HSSFWorkbook workbook = (HSSFWorkbook) this.getView().render();
         responseHeaders();
-        workbook.write(getHttpServletResponse().getOutputStream());
+        export(getHttpServletResponse().getOutputStream());
+    }
+
+    @Override
+    public void export(OutputStream out) throws Exception {
+        HSSFWorkbook workbook = (HSSFWorkbook) this.getView().render();
+        workbook.write(out);
     }
 
     @Override
     protected String getContextType() {
-		
+
         return "application/vnd.ms-excel;charset=UTF-8";
     }
 

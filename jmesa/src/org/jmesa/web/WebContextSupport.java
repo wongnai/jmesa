@@ -17,12 +17,13 @@ package org.jmesa.web;
 
 /**
  * Support to handle the WebContext.
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface WebContextSupport {
-		
-    public WebContext getWebContext();
-    public void setWebContext(WebContext webContext);
+
+    WebContext getWebContext();
+
+    void setWebContext(WebContext webContext);
 }

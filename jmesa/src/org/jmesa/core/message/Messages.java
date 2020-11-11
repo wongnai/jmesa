@@ -18,23 +18,25 @@ package org.jmesa.core.message;
 import java.io.Serializable;
 
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface Messages extends Serializable {
 
     /**
      * Get the resource property.
+     *
      * @param code code
      * @return message
      */
-    public String getMessage(String code);
+    String getMessage(String code);
 
     /**
      * Get the resource property.
-     * @param args  other args
+     *
+     * @param args other args
      * @param code code
      * @return message
      */
-    public String getMessage(String code, Object[] args);
+    String getMessage(String code, Object[] args);
 }

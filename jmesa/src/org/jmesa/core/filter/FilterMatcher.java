@@ -19,39 +19,36 @@ package org.jmesa.core.filter;
  * <p>
  * Used to filter out values.
  * </p>
- * 
+ *
  * <p>
  * The following is a String matching example:
  * </p>
- * 
+ *
  * <pre>
- * public boolean evaluate(Object itemValue, String matchValue) {		
+ * public boolean evaluate(Object itemValue, String matchValue) {
  *     String value = StringUtils.lowerCase((String) itemValue);
  *     if (StringUtils.contains(value, matchValue)) {
  *         return true;
  *     }
- * 
+ *
  *     return false;
  * }
  * </pre>
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface FilterMatcher {
-		
+
     /**
      * <p>
      * Take the current item value and evaluate whether or not it is the same as
      * the match value.
      * </p>
-     * 
-     * @param itemValue
-     *            The value that will be performing the match against.
-     * @param filterValue
-     *            The value to match with.
-     * 
+     *
+     * @param itemValue   The value that will be performing the match against.
+     * @param filterValue The value to match with.
      * @return Is true if the itemValue and the matchValue are the same.
      */
-    public boolean evaluate(Object itemValue, String filterValue);
+    boolean evaluate(Object itemValue, String filterValue);
 }

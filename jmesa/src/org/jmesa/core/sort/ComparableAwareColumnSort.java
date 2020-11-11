@@ -15,34 +15,35 @@
  */
 package org.jmesa.core.sort;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.jmesa.limit.Limit;
+import org.jmesa.limit.Order;
 import org.jmesa.limit.Sort;
 import org.jmesa.limit.SortSet;
-import org.jmesa.limit.Order;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import static org.jmesa.util.ItemUtils.getPropertyClassType;
 
 /**
- * @since 2.3.5
  * @author David Sills
+ * @since 2.3.5
  */
 public class ComparableAwareColumnSort implements ColumnSort {
-		
-    private Logger logger = LoggerFactory.getLogger(ComparableAwareColumnSort.class);
+
+    private final Logger logger = LoggerFactory.getLogger(ComparableAwareColumnSort.class);
 
     @SuppressWarnings("unchecked")
     @Override
     public Collection<?> sortItems(Collection<?> items, Limit limit) {
-		
+
         if (items.isEmpty()) {
             return items;
         }

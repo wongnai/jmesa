@@ -25,39 +25,39 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * The class type is required. The column property is optional and is also used
  * to match up to a more specific filter.
  * </p>
- * 
+ *
  * <p>
  * For instance you could just register a class type, such as a Date, and use
  * that across all tables. However, if you have a custom date to handle for a
  * specific column property than you could specify the id and/or property value.
  * </p>
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class MatcherKey {
-		
+
     private final Class<?> type;
     private final String property;
 
     /**
      * The more generic constructor.
-     * 
+     *
      * @param type The class type to match against.
      */
     public MatcherKey(Class<?> type) {
-		
+
         this(type, null);
     }
 
     /**
      * The most specific constructor.
-     * 
-     * @param type The class type to match against.
+     *
+     * @param type     The class type to match against.
      * @param property The column property to match against.
      */
     public MatcherKey(Class<?> type, String property) {
-		
+
         this.type = type;
         this.property = property;
     }
@@ -66,7 +66,7 @@ public class MatcherKey {
      * @return The class type to match against.
      */
     public String getProperty() {
-		
+
         return property;
     }
 
@@ -74,13 +74,13 @@ public class MatcherKey {
      * @return The column property to match against.
      */
     public Class<?> getType() {
-		
+
         return type;
     }
 
     @Override
     public boolean equals(Object o) {
-		
+
         if (o == this) {
             return true;
         }
@@ -96,13 +96,13 @@ public class MatcherKey {
 
     @Override
     public int hashCode() {
-		
+
         return new HashCodeBuilder(17, 37).append(getType()).append(getProperty()).toHashCode();
     }
 
     @Override
     public String toString() {
-		
+
         return new ToStringBuilder(this).append("type", getType()).append("property", getProperty()).toString();
     }
 

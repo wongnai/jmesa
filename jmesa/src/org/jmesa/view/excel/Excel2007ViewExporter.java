@@ -18,20 +18,26 @@ package org.jmesa.view.excel;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jmesa.view.AbstractViewExporter;
 
+import java.io.OutputStream;
+
 public class Excel2007ViewExporter extends AbstractViewExporter {
 
     @Override
     public void export()
             throws Exception {
-
-        XSSFWorkbook workbook = (XSSFWorkbook) this.getView().render();
         responseHeaders();
-        workbook.write(getHttpServletResponse().getOutputStream());
+        export(getHttpServletResponse().getOutputStream());
+    }
+
+    @Override
+    public void export(OutputStream out) throws Exception {
+        XSSFWorkbook workbook = (XSSFWorkbook) this.getView().render();
+        workbook.write(out);
     }
 
     @Override
     protected String getContextType() {
-		
+
         return "application/vnd.ms-excel;charset=UTF-8";
     }
 
@@ -39,5 +45,5 @@ public class Excel2007ViewExporter extends AbstractViewExporter {
     protected String getExtensionName() {
 
         return "xlsx";
-    }    
+    }
 }

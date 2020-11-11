@@ -17,12 +17,13 @@ package org.jmesa.core;
 
 /**
  * Support to handle the CoreContext.
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface CoreContextSupport {
-		
-    public CoreContext getCoreContext();
-    public void setCoreContext(CoreContext coreContext);
+
+    CoreContext getCoreContext();
+
+    void setCoreContext(CoreContext coreContext);
 }

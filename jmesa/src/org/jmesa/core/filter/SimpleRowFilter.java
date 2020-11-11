@@ -15,32 +15,34 @@
  */
 package org.jmesa.core.filter;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.jmesa.limit.Filter;
+import org.jmesa.limit.FilterSet;
+import org.jmesa.limit.Limit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.CollectionUtils;
-import org.jmesa.limit.Filter;
-import org.jmesa.limit.FilterSet;
-import org.jmesa.limit.Limit;
+
 import static org.jmesa.util.ItemUtils.getPropertyClassType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class SimpleRowFilter implements RowFilter, FilterMatcherRegistrySupport {
-		
-    private Logger logger = LoggerFactory.getLogger(SimpleRowFilter.class);
+
+    private final Logger logger = LoggerFactory.getLogger(SimpleRowFilter.class);
 
     private FilterMatcherRegistry registry;
 
     @Override
     public Collection<?> filterItems(Collection<?> items, Limit limit) {
-		
+
         FilterSet filterSet = limit.getFilterSet();
         boolean filtered = filterSet.isFiltered();
 
@@ -57,7 +59,7 @@ public class SimpleRowFilter implements RowFilter, FilterMatcherRegistrySupport 
     }
 
     protected Map<Filter, FilterMatcher> getFilterMatchers(Collection<?> items, FilterSet filterSet) {
-		
+
         Map<Filter, FilterMatcher> filterMatchers = new HashMap<Filter, FilterMatcher>();
 
         if (items == null || !items.iterator().hasNext()) {
@@ -80,19 +82,19 @@ public class SimpleRowFilter implements RowFilter, FilterMatcherRegistrySupport 
     }
 
     protected Predicate getPredicate(Map<Filter, FilterMatcher> filterMatchers, FilterSet filterSet) {
-		
+
         return new FilterPredicate(filterMatchers, filterSet);
     }
 
     @Override
     public FilterMatcherRegistry getFilterMatcherRegistry() {
-		
+
         return registry;
     }
 
     @Override
     public void setFilterMatcherRegistry(FilterMatcherRegistry registry) {
-		
+
         this.registry = registry;
     }
 }

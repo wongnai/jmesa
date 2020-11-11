@@ -15,45 +15,44 @@
  */
 package org.jmesa.web;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.ServletContext;
-
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class HttpServletRequestWebContext implements WebContext {
 
     private final HttpServletRequest request;
-	private final ServletContext ctx;
-    private Map<?,?> parameterMap;
+    private final ServletContext ctx;
+    private Map<?, ?> parameterMap;
     private Locale locale;
 
-	public HttpServletRequestWebContext(HttpServletRequest request, ServletContext ctx) {
+    public HttpServletRequestWebContext(HttpServletRequest request, ServletContext ctx) {
 
-		this.request = request;
-		this.ctx = ctx;
-	}
+        this.request = request;
+        this.ctx = ctx;
+    }
 
     public HttpServletRequestWebContext(HttpServletRequest request) {
 
         this.request = request;
-		this.ctx = request.getSession().getServletContext();
+        this.ctx = request.getSession().getServletContext();
     }
 
     /**
-     * @since 4.1
      * @param map
+     * @since 4.1
      */
     public HttpServletRequestWebContext(Map<String, String[]> map) {
-	    this.request =null;
-	    this.ctx = null;
-        this.parameterMap= map;
+        this.request = null;
+        this.ctx = null;
+        this.parameterMap = map;
     }
 
 
@@ -117,7 +116,7 @@ public class HttpServletRequestWebContext implements WebContext {
     }
 
     @Override
-    public Map<?,?> getParameterMap() {
+    public Map<?, ?> getParameterMap() {
 
         if (parameterMap != null) {
             return parameterMap;
@@ -127,7 +126,7 @@ public class HttpServletRequestWebContext implements WebContext {
     }
 
     @Override
-    public void setParameterMap(Map<?,?> parameterMap) {
+    public void setParameterMap(Map<?, ?> parameterMap) {
 
         this.parameterMap = parameterMap;
     }

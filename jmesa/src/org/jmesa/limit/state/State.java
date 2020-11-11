@@ -23,7 +23,7 @@ import org.jmesa.limit.Limit;
  * can be retrieved at a later time. This is useful so a user can return to a specific table with it
  * filtered, sorted, and paged exactly like they left it.
  * </p>
- * 
+ *
  * @since 2.0
  * @author Jeff Johnston
  */
@@ -31,11 +31,11 @@ public interface State {
     /**
      * @return The Limit that will be used to render the table.
      */
-    public Limit retrieveLimit();
+    Limit retrieveLimit();
 
     /**
      * @param limit The Limit that represents the current state of the table. Typically the Limit is
      *            persisted (long term or temporary) by being keyed with the table id.
      */
-    public void persistLimit(Limit limit);
+    void persistLimit(Limit limit);
 }

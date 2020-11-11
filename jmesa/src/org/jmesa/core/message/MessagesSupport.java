@@ -16,11 +16,12 @@
 package org.jmesa.core.message;
 
 /**
- * @since 3.0
  * @author Jeff Johnston
+ * @since 3.0
  */
 public interface MessagesSupport {
-		
-    public Messages getMessages();
-    public void setMessages(Messages messages);
+
+    Messages getMessages();
+
+    void setMessages(Messages messages);
 }

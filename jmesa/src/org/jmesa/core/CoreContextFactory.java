@@ -15,15 +15,7 @@
  */
 package org.jmesa.core;
 
-import java.util.Collection;
-import java.util.Map;
-
-import org.jmesa.core.filter.DefaultRowFilter;
-import org.jmesa.core.filter.FilterMatcher;
-import org.jmesa.core.filter.FilterMatcherMap;
-import org.jmesa.core.filter.FilterMatcherRegistry;
-import org.jmesa.core.filter.MatcherKey;
-import org.jmesa.core.filter.RowFilter;
+import org.jmesa.core.filter.*;
 import org.jmesa.core.message.Messages;
 import org.jmesa.core.message.MessagesFactory;
 import org.jmesa.core.preference.Preferences;
@@ -36,11 +28,14 @@ import org.jmesa.util.SupportUtils;
 import org.jmesa.web.WebContext;
 import org.jmesa.worksheet.Worksheet;
 
+import java.util.Collection;
+import java.util.Map;
+
 /**
  * Used to create a CoreContext object.
  *
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class CoreContextFactory {
 
@@ -48,13 +43,13 @@ public class CoreContextFactory {
     private final static String ROW_FILTER = "rowFilter";
     private final static String FILTER_MATCHER_MAP = "filterMatcherMap";
 
-    private WebContext webContext;
+    private final WebContext webContext;
     private FilterMatcherRegistry registry;
     private RowFilter rowFilter;
     private ColumnSort columnSort;
     private Preferences preferences;
     private Messages messages;
-    private boolean autoFilterAndSort;
+    private final boolean autoFilterAndSort;
 
     /**
      * <p>
@@ -65,7 +60,7 @@ public class CoreContextFactory {
      * </p>
      *
      * @param autoFilterAndSort Is false if you do not want to have the items filtered and sorted automatically by the API.
-     * @param webContext The WebContext for the table.
+     * @param webContext        The WebContext for the table.
      */
     public CoreContextFactory(boolean autoFilterAndSort, WebContext webContext) {
 
@@ -78,11 +73,11 @@ public class CoreContextFactory {
         if (registry == null) {
             registry = new FilterMatcherRegistry();
 
-            FilterMatcherMap filterMatcherMap = PreferencesUtils.<FilterMatcherMap>createClassFromPreferences(getPreferences(), FILTER_MATCHER_MAP);
+            FilterMatcherMap filterMatcherMap = PreferencesUtils.createClassFromPreferences(getPreferences(), FILTER_MATCHER_MAP);
             Map<MatcherKey, FilterMatcher> filterMatchersMap = filterMatcherMap.getFilterMatchers();
 
             for (Map.Entry<MatcherKey, FilterMatcher> entry : filterMatchersMap.entrySet()) {
-            	registry.addFilterMatcher(entry.getKey(), entry.getValue());
+                registry.addFilterMatcher(entry.getKey(), entry.getValue());
             }
         }
 
@@ -92,7 +87,7 @@ public class CoreContextFactory {
     /**
      * Add a FilterMatcher to the FilterMatcherRegistry..
      *
-     * @param key The MatcherKey instance.
+     * @param key     The MatcherKey instance.
      * @param matcher The FilterMatcher instance.
      */
     public void addFilterMatcher(MatcherKey key, FilterMatcher matcher) {
@@ -104,7 +99,7 @@ public class CoreContextFactory {
     protected RowFilter getRowFilter() {
 
         if (rowFilter == null) {
-            rowFilter = PreferencesUtils.<RowFilter>createClassFromPreferences(getPreferences(), ROW_FILTER);
+            rowFilter = PreferencesUtils.createClassFromPreferences(getPreferences(), ROW_FILTER);
         }
         SupportUtils.setFilterMatcherRegistry(rowFilter, getFilterMatcherRegistry());
 
@@ -124,7 +119,7 @@ public class CoreContextFactory {
     protected ColumnSort getColumnSort() {
 
         if (columnSort == null) {
-            columnSort = PreferencesUtils.<ColumnSort>createClassFromPreferences(getPreferences(), COLUMN_SORT);
+            columnSort = PreferencesUtils.createClassFromPreferences(getPreferences(), COLUMN_SORT);
         }
 
         return columnSort;
@@ -181,8 +176,8 @@ public class CoreContextFactory {
     /**
      * Take all the attributes of the factory and create a CoreContext object.
      *
-     * @param items The Collection of Beans or Maps.
-     * @param limit The Limit instance.
+     * @param items     The Collection of Beans or Maps.
+     * @param limit     The Limit instance.
      * @param worksheet excel worksheet
      * @return The newly created CoreContext object.
      */

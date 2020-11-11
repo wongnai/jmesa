@@ -18,24 +18,23 @@ package org.jmesa.web;
 import java.util.List;
 
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class WebContextUtils {
-		
+
     /**
      * The value needs to be a String[]. A String, Null, or List will be
      * converted to a String[]. In addition it will attempt to do a String
      * conversion for other object types.
-     * 
-     * @param value
-     *            The value to convert to an String[]
+     *
+     * @param value The value to convert to an String[]
      * @return A String[] value.
      */
     public static String[] getValueAsArray(Object value) {
-		
+
         if (value == null) {
-            return new String[] {}; // put in a placeholder
+            return new String[]{}; // put in a placeholder
         }
 
         if (value instanceof String[]) {
@@ -45,6 +44,6 @@ public class WebContextUtils {
             return valueList.toArray(new String[valueList.size()]);
         }
 
-        return new String[] { value.toString() };
+        return new String[]{value.toString()};
     }
 }

@@ -18,11 +18,12 @@ package org.jmesa.core.filter;
 /**
  * Classes that implement this class will automatically get the FilterMatcherRegistry injected.
  *
- * @version 2.4.3
  * @author Jeff Johnston
+ * @version 2.4.3
  */
 public interface FilterMatcherRegistrySupport {
-		
-    public FilterMatcherRegistry getFilterMatcherRegistry();
-    public void setFilterMatcherRegistry(FilterMatcherRegistry registry);
+
+    FilterMatcherRegistry getFilterMatcherRegistry();
+
+    void setFilterMatcherRegistry(FilterMatcherRegistry registry);
 }

@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 package org.jmesa.web;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Support to handle the HttpServletRequest.
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public interface HttpServletRequestSupport {
-		
-    public HttpServletRequest getHttpServletRequest();
-    public void setHttpServletRequest(HttpServletRequest request);
+
+    HttpServletRequest getHttpServletRequest();
+
+    void setHttpServletRequest(HttpServletRequest request);
 }

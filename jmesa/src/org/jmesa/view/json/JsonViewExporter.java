@@ -18,6 +18,7 @@ package org.jmesa.view.json;
 import org.jmesa.view.AbstractViewExporter;
 
 import javax.servlet.ServletOutputStream;
+import java.io.OutputStream;
 
 /**
  * @since 4.1
@@ -28,13 +29,16 @@ public class JsonViewExporter extends AbstractViewExporter {
     @Override
     public void export()
             throws Exception {
-
         responseHeaders();
+        export(getHttpServletResponse().getOutputStream());
+    }
+
+    @Override
+    public void export(OutputStream out) throws Exception {
         String viewData = (String) getView().render();
         byte[] contents = (viewData).getBytes();
-        ServletOutputStream outputStream = getHttpServletResponse().getOutputStream();
-        outputStream.write(contents);
-        outputStream.flush();
+        out.write(contents);
+        out.flush();
     }
 
     @Override

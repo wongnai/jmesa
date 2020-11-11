@@ -15,24 +15,25 @@
  */
 package org.jmesa.web;
 
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class HttpServletRequestSpringWebContext extends HttpServletRequestWebContext implements SpringWebContext {
-		
+
     public HttpServletRequestSpringWebContext(HttpServletRequest request) {
-		
+
         super(request);
     }
 
     @Override
     public ApplicationContext getApplicationContext() {
-		
+
         return WebApplicationContextUtils.getWebApplicationContext(getHttpServletRequest().getSession().getServletContext());
     }
 }

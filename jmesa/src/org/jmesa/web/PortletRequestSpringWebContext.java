@@ -15,31 +15,31 @@
  */
 package org.jmesa.web;
 
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.portlet.context.PortletApplicationContextUtils;
 
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+
 /**
- * @version 2.3.4
  * @author bgould
+ * @version 2.3.4
  */
 public class PortletRequestSpringWebContext extends PortletRequestWebContext implements SpringWebContext {
-		
+
     public PortletRequestSpringWebContext(PortletRequest request) {
-		
+
         super(request);
     }
 
     public PortletRequestSpringWebContext(PortletRequest request, PortletContext context, int sessionScope) {
-		
+
         super(request, context, sessionScope);
     }
 
     @Override
     public ApplicationContext getApplicationContext() {
-		
+
         return PortletApplicationContextUtils.getWebApplicationContext(getPortletContext());
     }
 }

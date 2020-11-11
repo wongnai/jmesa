@@ -15,8 +15,6 @@
  */
 package org.jmesa.core.filter;
 
-import java.util.Map;
-
 import org.apache.commons.collections.Predicate;
 import org.jmesa.limit.Filter;
 import org.jmesa.limit.FilterSet;
@@ -24,21 +22,23 @@ import org.jmesa.util.ItemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 /**
  * Use the Jakarta Collections predicate pattern to filter out the table.
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public final class FilterPredicate implements Predicate {
-		
-    private Logger logger = LoggerFactory.getLogger(FilterPredicate.class);
 
-    private Map<Filter, FilterMatcher> filterMatchers;
-    private FilterSet filterSet;
+    private final Logger logger = LoggerFactory.getLogger(FilterPredicate.class);
+
+    private final Map<Filter, FilterMatcher> filterMatchers;
+    private final FilterSet filterSet;
 
     public FilterPredicate(Map<Filter, FilterMatcher> filterMatchers, FilterSet filterSet) {
-		
+
         this.filterMatchers = filterMatchers;
         this.filterSet = filterSet;
     }
@@ -48,7 +48,7 @@ public final class FilterPredicate implements Predicate {
      */
     @Override
     public boolean evaluate(Object item) {
-		
+
         boolean result = false;
 
         try {

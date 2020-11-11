@@ -17,6 +17,7 @@ package org.jmesa.facade;
 
 import org.jmesa.core.CoreContext;
 import org.jmesa.core.CoreContextFactory;
+import org.jmesa.core.CoreContextSupport;
 import org.jmesa.core.filter.FilterMatcher;
 import org.jmesa.core.filter.FilterMatcherMap;
 import org.jmesa.core.filter.MatcherKey;
@@ -31,7 +32,7 @@ import org.jmesa.limit.LimitFactory;
 import org.jmesa.limit.RowSelect;
 import org.jmesa.limit.state.SessionState;
 import org.jmesa.limit.state.State;
-import org.jmesa.model.TableModel;
+import org.jmesa.model.ExportTypes;
 import org.jmesa.util.ExportUtils;
 import org.jmesa.util.PreferencesUtils;
 import org.jmesa.util.SupportUtils;
@@ -55,14 +56,15 @@ import org.jmesa.view.pdf.PdfView;
 import org.jmesa.view.pdf.PdfViewExporter;
 import org.jmesa.view.pdfp.PdfPView;
 import org.jmesa.view.pdfp.PdfPViewExporter;
-import org.jmesa.web.HttpServletRequestWebContext;
-import org.jmesa.web.WebContext;
+import org.jmesa.web.JsonContextSupport;
+import org.jmesa.worksheet.NBWorksheet;
 import org.jmesa.worksheet.Worksheet;
 import org.jmesa.worksheet.state.SessionWorksheetState;
 import org.jmesa.worksheet.state.WorksheetState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,8 +72,8 @@ import java.util.Set;
 
 import static org.jmesa.facade.TableFacadeExceptions.*;
 import static org.jmesa.facade.TableFacadeUtils.filterWorksheetItems;
-import static org.jmesa.facade.TableFacadeUtils.isClearingWorksheet;
 import static org.jmesa.limit.LimitConstants.LIMIT_ROWSELECT_MAXROWS;
+import static org.jmesa.worksheet.NBWorksheet.isClearingWorksheet;
 
 /**
  * <p>
@@ -106,18 +108,16 @@ import static org.jmesa.limit.LimitConstants.LIMIT_ROWSELECT_MAXROWS;
  * @since 2.1
  * @author Jeff Johnston
  */
-public class NWTableFacade implements WorksheetSupport, ContextSupport{
+public class NWTableFacade implements  WorksheetSupport, JsonContextSupport, CoreContextSupport  {
 
     private Logger logger = LoggerFactory.getLogger(NWTableFacade.class);
 
     private final String id;
-    private Map<String,String[]> request;
-    private Map<String, Object>  response;
+    private Map<String, Object> context;
     private int maxRows;
     private Collection<?> items;
     private String[] exportTypes;
     private String exportFileName;
-    private WebContext webContext;
     private CoreContext coreContext;
     private Messages messages;
     private Preferences preferences;
@@ -134,7 +134,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
     private ViewExporter viewExporter;
     private boolean autoFilterAndSort = true;
     private boolean editable;
-    private Worksheet worksheet;
+    private NBWorksheet worksheet;
     private WorksheetState worksheetState;
 
     /**
@@ -143,32 +143,14 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
      * </p>
      *
      * @param id The unique identifier for this table.
-     * @param request The servlet request object.
+     * @param context The servlet request object.
      */
-    public NWTableFacade(String id, Map<String,String[]> request) {
-
+    public NWTableFacade(String id, Map<String,Object> context) {
         this.id = id;
-        this.request = request;
-    }
-
-    /**
-     * <p>
-     * Create the table with the id.
-     * </p>
-     *
-     * @param id The unique identifier for this table.
-     * @param request The servlet request object.
-     * @param response The servlet response object used for the exports.
-     */
-    public NWTableFacade(String id, Map<String,String[]> request, Map<String, Object> response) {
-
-        this.id = id;
-        this.request = request;
-        this.response = response;
+        this.context = context;
     }
 
     public String getId() {
-
         return id;
     }
 
@@ -178,9 +160,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
      * @param exportTypes types
      */
     public void setExportTypes(String... exportTypes) {
-
         validateToolbarIsNull(toolbar, "exportTypes");
-
         this.exportTypes = exportTypes;
     }
 
@@ -194,30 +174,6 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         this.exportFileName = exportFileName;
     }
 
-    /**
-     * Get the WebContext. If the WebContext does not exist then one will be created.
-     */
-    public WebContext getWebContext() {
-
-        if (webContext == null) {
-            this.webContext = new HttpServletRequestWebContext(request);
-        }
-
-        return webContext;
-    }
-
-    /**
-     * Set the WebContext on the facade. This will override the WebContext if it was previously set.
-     */
-    public void setWebContext(WebContext webContext) {
-
-        this.webContext = webContext;
-
-        Object backingObject = webContext.getBackingObject();
-        if (backingObject instanceof Map) {
-            request = (Map<String,String[]>) backingObject;
-        }
-    }
 
     /**
      * <p>
@@ -241,21 +197,21 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
      * @since 2.3
      */
     @Override
-    public Worksheet getWorksheet() {
+    public NBWorksheet getWorksheet() {
 
         if (worksheet != null || !editable) {
             return worksheet;
         }
 
         this.worksheetState = getWorksheetState();
-        this.worksheet = worksheetState.retrieveWorksheet();
+//        this.worksheet = worksheetState.retrieveWorksheet();
 
-        if (worksheet == null || isClearingWorksheet(id, getWebContext())) {
-            this.worksheet = new Worksheet(id);
+        if (worksheet == null || isClearingWorksheet(context)) {
+            this.worksheet = new NBWorksheet(id);
             persistWorksheet(worksheet);
         }
 
-        worksheet.setWebContext(getWebContext());
+        worksheet.setContext(context);
         worksheet.setMessages(getMessages());
 
         return worksheet;
@@ -277,8 +233,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
      */
     @Override
     public void addWorksheetRow(Object item) {
-
-        Worksheet ws = getWorksheet();
+        NBWorksheet ws = getWorksheet();
         if (ws != null) {
         	ws.addRow(item, getTable());
         }
@@ -292,7 +247,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
     protected WorksheetState getWorksheetState() {
 
     	if (worksheetState == null) {
-    		return new SessionWorksheetState(id, getWebContext());
+//    		return new SessionWorksheetState(id, getWebContext());
     	}
 
     	return worksheetState;
@@ -306,7 +261,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
     @Override
     public void persistWorksheet(Worksheet worksheet) {
 
-    	getWorksheetState().persistWorksheet(worksheet);
+//    	getWorksheetStateState().persistWorksheet(worksheet);
     }
 
     /**
@@ -327,7 +282,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
             return limit;
         }
 
-        LimitFactory limitFactory = new LimitFactory(id, getWebContext());
+        LimitFactory limitFactory = new LimitFactory(id, getContext());
         limitFactory.setState(getState());
         this.limit = limitFactory.createLimit();
 
@@ -386,7 +341,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         if (l.hasExport()) {
             rowSelect = new RowSelect(1, totalRows, totalRows);
         } else {
-            LimitFactory limitFactory = new LimitFactory(id, getWebContext());
+            LimitFactory limitFactory = new LimitFactory(id, getContext());
             rowSelect = limitFactory.createRowSelect(getMaxRows(), totalRows);
         }
 
@@ -408,7 +363,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         this.state = new SessionState();
         SupportUtils.setId(state, id);
         SupportUtils.setStateAttr(state, stateAttr);
-        SupportUtils.setWebContext(state, getWebContext());
+//        SupportUtils.setWebContext(state, getWebContext());
         return state;
     }
 
@@ -422,7 +377,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         this.state = state;
         SupportUtils.setId(state, id);
         SupportUtils.setStateAttr(state, stateAttr);
-        SupportUtils.setWebContext(state, getWebContext());
+//        SupportUtils.setWebContext(state, getWebContext());
     }
 
     /**
@@ -461,7 +416,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
             return messages;
         }
 
-        this.messages = MessagesFactory.getMessages(getWebContext());
+//        this.messages = MessagesFactory.getMessages(getContext());
         return messages;
     }
 
@@ -473,7 +428,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         validateCoreContextIsNull(coreContext, "Messages");
 
         this.messages = messages;
-        SupportUtils.setWebContext(messages, getWebContext());
+//        SupportUtils.setWebContext(messages, getWebContext());
     }
 
     /**
@@ -485,7 +440,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
             return preferences;
         }
 
-        this.preferences = PreferencesFactory.getPreferences(getWebContext());
+//        this.preferences = PreferencesFactory.getPreferences(getWebContext());
         return preferences;
     }
 
@@ -498,7 +453,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         validateCoreContextIsNull(coreContext, "Preferences");
 
         this.preferences = preferences;
-        SupportUtils.setWebContext(preferences, getWebContext());
+//        SupportUtils.setWebContext(preferences, getWebContext());
     }
 
     /**
@@ -510,7 +465,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         validateCoreContextIsNull(coreContext, "FilterMatcher");
 
         if (filterMatchers == null) {
-            filterMatchers = new HashMap<MatcherKey, FilterMatcher>();
+            filterMatchers = new HashMap<>(16);
         }
 
         filterMatchers.put(key, matcher);
@@ -535,7 +490,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
             return;
         }
 
-        SupportUtils.setWebContext(filterMatcherMap, getWebContext());
+//        SupportUtils.setWebContext(filterMatcherMap, getWebContext());
 
         Map<MatcherKey, FilterMatcher> matchers = filterMatcherMap.getFilterMatchers();
         Set<MatcherKey> keys = matchers.keySet();
@@ -553,7 +508,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         validateCoreContextIsNull(coreContext, "ColumnSort");
 
         this.columnSort = columnSort;
-        SupportUtils.setWebContext(columnSort, getWebContext());
+//        SupportUtils.setWebContext(columnSort, getWebContext());
     }
 
     /**
@@ -564,7 +519,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         validateCoreContextIsNull(coreContext, "RowFilter");
 
         this.rowFilter = rowFilter;
-        SupportUtils.setWebContext(rowFilter, getWebContext());
+//        SupportUtils.setWebContext(rowFilter, getWebContext());
     }
 
     /**
@@ -579,7 +534,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         validateCoreContextIsNull(coreContext, "items");
 
         if (editable) {
-            this.items = filterWorksheetItems(items, getWorksheet());
+//            this.items = filterWorksheetItems(items, getWorksheet());
         } else {
             this.items = items;
         }
@@ -590,7 +545,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         if (maxRows == 0) {
             Preferences pref = getPreferences();
             String mr = pref.getPreference(LIMIT_ROWSELECT_MAXROWS);
-            this.maxRows = Integer.valueOf(mr);
+            this.maxRows = Integer.parseInt(mr);
         }
 
         return maxRows;
@@ -610,6 +565,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
     /**
      * Get the CoreContext. If the CoreContext does not exist then one will be created.
      */
+    @Override
     public CoreContext getCoreContext() {
 
         if (coreContext != null) {
@@ -618,33 +574,34 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
 
         validateItemsIsNotNull(items);
 
-        CoreContextFactory factory = new CoreContextFactory(autoFilterAndSort, getWebContext());
-        factory.setPreferences(getPreferences());
-        factory.setMessages(getMessages());
-        factory.setColumnSort(columnSort);
-        factory.setRowFilter(rowFilter);
-
-        if (filterMatchers != null) {
-            Set<MatcherKey> keySet = filterMatchers.keySet();
-            for (MatcherKey key : keySet) {
-                FilterMatcher matcher = filterMatchers.get(key);
-                factory.addFilterMatcher(key, matcher);
-            }
-        }
-
-        this.coreContext = factory.createCoreContext(items, getLimit(), getWorksheet());
+//        CoreContextFactory factory = new CoreContextFactory(autoFilterAndSort, getWebContext());
+//        factory.setPreferences(getPreferences());
+//        factory.setMessages(getMessages());
+//        factory.setColumnSort(columnSort);
+//        factory.setRowFilter(rowFilter);
+//
+//        if (filterMatchers != null) {
+//            Set<MatcherKey> keySet = filterMatchers.keySet();
+//            for (MatcherKey key : keySet) {
+//                FilterMatcher matcher = filterMatchers.get(key);
+//                factory.addFilterMatcher(key, matcher);
+//            }
+//        }
+//
+//        this.coreContext = factory.createCoreContext(items, getLimit(), getWorksheet());
         return coreContext;
     }
 
     /**
      * Set the CoreContext on the facade. This will override the CoreContext if it was previously set.
      */
+    @Override
     public void setCoreContext(CoreContext coreContext) {
 
         validateTableIsNull(table, "CoreContext");
 
         this.coreContext = coreContext;
-        SupportUtils.setWebContext(coreContext, getWebContext());
+//        SupportUtils.setWebContext(coreContext, getWebContext());
     }
 
     /**
@@ -664,7 +621,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
 
         validateViewIsNull(view, "Table");
 
-        TableFacadeUtils.initTable(this, table);
+//        TableFacadeUtils.initTable(this, table);
         this.table = table;
     }
 
@@ -679,10 +636,10 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
 
         validateCoreContextIsNotNull(coreContext);
 
-        this.toolbar = PreferencesUtils.<Toolbar>createClassFromPreferences(getCoreContext(), HtmlConstants.TOOLBAR);
+        this.toolbar = PreferencesUtils.createClassFromPreferences(getCoreContext(), HtmlConstants.TOOLBAR);
         SupportUtils.setTable(toolbar, getTable());
         SupportUtils.setCoreContext(toolbar, getCoreContext());
-        SupportUtils.setWebContext(toolbar, getWebContext());
+//        SupportUtils.setWebContext(toolbar, getWebContext());
         SupportUtils.setMaxRowsIncrements(toolbar, maxRowsIncrements);
         SupportUtils.setExportTypes(toolbar, exportTypes);
 
@@ -699,7 +656,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         this.toolbar = toolbar;
         SupportUtils.setTable(toolbar, getTable());
         SupportUtils.setCoreContext(toolbar, getCoreContext());
-        SupportUtils.setWebContext(toolbar, getWebContext());
+//        SupportUtils.setWebContext(toolbar, getWebContext());
         SupportUtils.setMaxRowsIncrements(toolbar, maxRowsIncrements);
         SupportUtils.setExportTypes(toolbar, exportTypes);
     }
@@ -737,25 +694,25 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
 
     protected View getExportView(String exportType) {
 
-        View exportView = null;
+        View exportView;
 
         if (exportType == null) {
             throw new IllegalStateException("The export type is null.");
         }
 
-        if (exportType.equals(TableModel.CSV)) {
+        if (exportType.equals(ExportTypes.CSV)) {
             exportView = new CsvView(",");
-        } else if (exportType.equals(TableModel.EXCEL)) {
+        } else if (exportType.equals(ExportTypes.EXCEL)) {
             exportView = new ExcelView();
-        } else if (exportType.equals(TableModel.EXCEL_2007)) {
+        } else if (exportType.equals(ExportTypes.EXCEL_2007)) {
             exportView = new Excel2007View();
-        } else if (exportType.equals(TableModel.JEXCEL)) {
+        } else if (exportType.equals(ExportTypes.JEXCEL)) {
             exportView = new JExcelView();
-        } else if (exportType.equals(TableModel.PDF)) {
+        } else if (exportType.equals(ExportTypes.PDF)) {
             exportView = new PdfView();
-        } else if (exportType.equals(TableModel.PDFP)) {
+        } else if (exportType.equals(ExportTypes.PDFP)) {
             exportView= new PdfPView();
-        }else if (exportType.equals(TableModel.JSON)) {
+        }else if (exportType.equals(ExportTypes.JSON)) {
             exportView= new JsonView();
         } else {
             throw new IllegalStateException("Not a valid export type.");
@@ -763,7 +720,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
 
         if (exportView != null) {
             SupportUtils.setCoreContext(exportView, getCoreContext());
-            SupportUtils.setWebContext(exportView, getWebContext());
+//            SupportUtils.setWebContext(exportView, getWebContext());
             SupportUtils.setTable(exportView, getTable());
             return exportView;
         }
@@ -780,7 +737,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         SupportUtils.setTable(view, getTable());
         SupportUtils.setToolbar(view, getToolbar());
         SupportUtils.setCoreContext(view, getCoreContext());
-        SupportUtils.setWebContext(view, getWebContext());
+//        SupportUtils.setWebContext(view, getWebContext());
     }
 
     /**
@@ -797,7 +754,7 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
      * @return An html generated table will return the String markup. An export will be written out
      *         to the response and this method will return null.
      */
-    public String render() {
+    public String render(OutputStream out) {
 
         Limit l = getLimit();
         View v = getView();
@@ -807,14 +764,12 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
         }
 
         String exportType = l.getExportType();
-        renderExport(exportType, v);
+        renderExport(exportType, v, out);
 
         return null;
     }
 
-    protected void renderExport(String exportType, View view) {
-
-        validateResponseIsNotNull(response);
+    protected void renderExport(String exportType, View view, OutputStream out) {
 
         try {
             ViewExporter ve = viewExporter;
@@ -825,19 +780,19 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
                     throw new IllegalStateException("The export type is null.");
                 }
 
-                if (exportType.equals(TableModel.CSV)) {
+                if (exportType.equals(ExportTypes.CSV)) {
                     ve = new CsvViewExporter();
-                } else if (exportType.equals(TableModel.EXCEL)) {
+                } else if (exportType.equals(ExportTypes.EXCEL)) {
                     ve = new ExcelViewExporter();
-                } else if (exportType.equals(TableModel.EXCEL_2007)) {
+                } else if (exportType.equals(ExportTypes.EXCEL_2007)) {
                     ve = new Excel2007ViewExporter();
-                } else if (exportType.equals(TableModel.JEXCEL)) {
+                } else if (exportType.equals(ExportTypes.JEXCEL)) {
                     ve = new JExcelViewExporter();
-                } else if (exportType.equals(TableModel.PDF)) {
+                } else if (exportType.equals(ExportTypes.PDF)) {
                     ve = new PdfViewExporter();
-                } else if (exportType.equals(TableModel.PDFP)) {
+                } else if (exportType.equals(ExportTypes.PDFP)) {
                     ve = new PdfPViewExporter();
-                } else if (exportType.equals(TableModel.JSON)) {
+                } else if (exportType.equals(ExportTypes.JSON)) {
                     ve = new JsonViewExporter();
                 } else {
                     throw new IllegalStateException("Not a valid export type.");
@@ -847,7 +802,6 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
             if (ve != null) {
                 ve.setView(view);
 
-                SupportUtils.setWebContext(ve, getWebContext());
                 SupportUtils.setCoreContext(ve, getCoreContext());
 
                 if (exportFileName == null) {
@@ -856,10 +810,20 @@ public class NWTableFacade implements WorksheetSupport, ContextSupport{
 
                 ve.setFileName(exportFileName);
 
-                ve.export();
+                ve.export(out);
             }
         } catch (Exception e) {
             logger.error("Not able to perform the " + exportType + " export.", e);
         }
+    }
+
+    @Override
+    public Map<String, Object> getContext() {
+        return context;
+    }
+
+    @Override
+    public void setContext(Map<String, Object> context) {
+        this.context = context;
     }
 }

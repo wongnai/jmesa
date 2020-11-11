@@ -15,42 +15,43 @@
  */
 package org.jmesa.core.filter;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 import org.jmesa.web.WebContext;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * The number filter matcher.
- * 
- * @since 2.2
+ *
  * @author Jeff Johnston
+ * @since 2.2
  */
 public class NumberFilterMatcher extends AbstractPatternFilterMatcher {
-		
+
     public NumberFilterMatcher() {
-		
-    	// default constructor
+
+        // default constructor
     }
 
     /**
      * @param pattern The pattern to use.
      */
     public NumberFilterMatcher(String pattern) {
-		
+
         setPattern(pattern);
     }
 
     public NumberFilterMatcher(String pattern, WebContext webContext) {
-		
+
         setPattern(pattern);
         setWebContext(webContext);
     }
 
     @Override
     public boolean evaluate(Object itemValue, String filterValue) {
-		
+
         if (itemValue == null) {
             return false;
         }
@@ -76,10 +77,6 @@ public class NumberFilterMatcher extends AbstractPatternFilterMatcher {
 
         String item = String.valueOf(itemValue);
         String filter = String.valueOf(filterValue);
-        if (StringUtils.contains(item, filter)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.contains(item, filter);
     }
 }

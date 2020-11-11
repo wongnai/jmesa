@@ -18,10 +18,10 @@ package org.jmesa.web;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @since 2.3.4
  * @author Jeff Johnston
+ * @since 2.3.4
  */
 public interface SpringWebContext extends WebContext {
-		
-    public ApplicationContext getApplicationContext();
+
+    ApplicationContext getApplicationContext();
 }

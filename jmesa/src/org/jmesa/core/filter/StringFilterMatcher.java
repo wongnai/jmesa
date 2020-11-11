@@ -19,21 +19,17 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Will do a case insensitive string match.
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class StringFilterMatcher implements FilterMatcher {
-		
+
     @Override
     public boolean evaluate(Object itemValue, String filterValue) {
-        
+
         String item = StringUtils.lowerCase(String.valueOf(itemValue));
         String filter = StringUtils.lowerCase(String.valueOf(filterValue));
-        if (StringUtils.contains(item, filter)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.contains(item, filter);
     }
 }

@@ -19,14 +19,14 @@ import java.util.Map;
 
 /**
  * Get a Map of FilterMatcher objects keyed by a MatcherKey.
- * 
- * @since 2.2
+ *
  * @author Jeff Johnston
+ * @since 2.2
  */
 public interface FilterMatcherMap {
-		
+
     /**
      * @return The FilterMatcher objects.
      */
-    public Map<MatcherKey, FilterMatcher> getFilterMatchers();
+    Map<MatcherKey, FilterMatcher> getFilterMatchers();
 }

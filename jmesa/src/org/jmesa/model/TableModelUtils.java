@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jmesa.facade.WorksheetSupport;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.limit.Limit;
-import org.jmesa.limit.LimitActionFactory;
+import org.jmesa.limit.LimitActionFactoryMapImpl;
 import org.jmesa.limit.RowSelect;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.component.Row;
@@ -62,7 +62,7 @@ public class TableModelUtils {
 
     public static String getExportType(String id, HttpServletRequest request) {
 
-        LimitActionFactory actionFactory = new LimitActionFactory(id, request.getParameterMap());
+        LimitActionFactoryMapImpl actionFactory = new LimitActionFactoryMapImpl(id, request.getParameterMap());
         return actionFactory.getExportType();
     }
 

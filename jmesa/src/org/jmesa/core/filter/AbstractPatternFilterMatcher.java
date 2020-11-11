@@ -15,42 +15,42 @@
  */
 package org.jmesa.core.filter;
 
-import org.jmesa.view.editor.*;
+import org.jmesa.view.editor.PatternSupport;
 import org.jmesa.web.WebContext;
 import org.jmesa.web.WebContextSupport;
 
 /**
  * Abstract class to hold the pattern information for filter matcher classes.
- * 
- * @since 2.4.4
+ *
  * @author Jeff Johnston
+ * @since 2.4.4
  */
 public abstract class AbstractPatternFilterMatcher implements FilterMatcher, PatternSupport, WebContextSupport {
-		
+
     private String pattern;
     private WebContext webContext;
 
     @Override
     public String getPattern() {
-		
+
         return pattern;
     }
 
     @Override
     public void setPattern(String pattern) {
-		
+
         this.pattern = pattern;
     }
 
     @Override
     public WebContext getWebContext() {
-		
+
         return webContext;
     }
 
     @Override
     public void setWebContext(WebContext webContext) {
-		
+
         this.webContext = webContext;
     }
 }

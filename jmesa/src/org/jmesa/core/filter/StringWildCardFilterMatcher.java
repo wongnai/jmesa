@@ -20,12 +20,12 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Will do a string match based on wildcards.
- * 
- * @since 2.3.3
+ *
  * @author Oscar Perez
+ * @since 2.3.3
  */
 public class StringWildCardFilterMatcher implements FilterMatcher {
-		
+
     private static final String ASTERISK = "*";
     private static final String QUESTION_MARK = "?";
     private static final String ANYCHARREGEXP = ".";
@@ -36,23 +36,23 @@ public class StringWildCardFilterMatcher implements FilterMatcher {
      * Ignores cases by default
      */
     public StringWildCardFilterMatcher() {
-		
+
         ignoreCases = true;
     }
 
     @Override
     public boolean evaluate(Object itemValue, String filterValue) {
-        
+
         if (filterValue == null) {
             return false;
         }
-		
+
         if (ignoreCases) {
             filterValue = filterValue.toLowerCase();
         }
 
         Pattern filterPattern = createFilterPattern(filterValue);
-        
+
         if (filterPattern == null) {
             return false;
         }
@@ -68,47 +68,47 @@ public class StringWildCardFilterMatcher implements FilterMatcher {
      * @return the pattern to be filtered against
      */
     private Pattern createFilterPattern(String filterStr) {
-		
+
         String regFilter = replaceAsterisk(filterStr);
 
         //for usability reasons, automatic wildcard to end of the word. The user can just filter
         //by beginning letters of the word without worrying about the wildcard
         regFilter += ANYSTRINGREGEXP;
 
-        Pattern result = null; 
+        Pattern result = null;
         try {
             result = ignoreCases ? Pattern.compile(regFilter, Pattern.CASE_INSENSITIVE) : Pattern.compile(regFilter);
         } catch (PatternSyntaxException pse) {
             // Do nothing. We've encountered some bad string we can't compile.
         }
-        
-        return result; 
+
+        return result;
     }
-    
+
     /**
      * Replace "*" with the regex equivalent.
-     * 
+     *
      * @param filterString
      * @return
      */
     private String replaceAsterisk(String filterString) {
-        
+
         StringBuilder sb = new StringBuilder();
 
         if (filterString.contains(ASTERISK)) {
-            int i = 0; 
+            int i = 0;
             int index = filterString.indexOf(ASTERISK, i);
             String subStr;
             while (index > -1) {
                 subStr = filterString.substring(i, index);
-                
+
                 subStr = replaceQuestionMark(subStr);
                 sb.append(subStr);
                 sb.append(ANYSTRINGREGEXP);
-                
-                i = index+1;
-                index = filterString.indexOf(ASTERISK, i); 
-            } 
+
+                i = index + 1;
+                index = filterString.indexOf(ASTERISK, i);
+            }
             if (i < filterString.length()) {
                 subStr = filterString.substring(i);
                 subStr = replaceQuestionMark(subStr);
@@ -118,22 +118,22 @@ public class StringWildCardFilterMatcher implements FilterMatcher {
         } else {
             sb.append(replaceQuestionMark(filterString));
         }
-        
+
         return sb.toString();
     }
 
     /**
      * Replace "?" with the regex equivalent.
-     * 
+     *
      * @param filterString
      * @return
      */
     private String replaceQuestionMark(String filterString) {
-        
+
         StringBuilder sb = new StringBuilder();
 
         if (filterString.contains(QUESTION_MARK)) {
-            int i = 0; 
+            int i = 0;
             int index = filterString.indexOf(QUESTION_MARK, i);
             String subStr;
             while (index > -1) {
@@ -141,7 +141,7 @@ public class StringWildCardFilterMatcher implements FilterMatcher {
                 subStr = filterString.substring(i, index);
                 sb.append(Pattern.quote(subStr));
                 sb.append(ANYCHARREGEXP);
-                i = index+1;
+                i = index + 1;
                 index = filterString.indexOf(QUESTION_MARK, i);
             }
             if (i < filterString.length()) {
@@ -151,7 +151,7 @@ public class StringWildCardFilterMatcher implements FilterMatcher {
         } else {
             sb.append(Pattern.quote(filterString));
         }
-        
+
         return sb.toString();
     }
 }

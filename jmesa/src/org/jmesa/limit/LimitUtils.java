@@ -15,6 +15,8 @@
  */
 package org.jmesa.limit;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.List;
 
 /**
@@ -22,27 +24,27 @@ import java.util.List;
  * @author Jeff Johnston
  */
 public class LimitUtils {
-		
+
     /**
      * Convert the input value to a String. A String[] or List will be converted
      * to a String by using the value in the first position. In addition will
      * attempt to do a String conversion for other object types using the
      * String.valueOf() method.
-     * 
+     *
      * @param value
      *            The input object to convert to a String.
      * @return The converted value.
      */
     public static String getValue(Object value) {
-		
+
         if (value instanceof Object[]) {
             if (((Object[]) value).length > 0) {
                 return String.valueOf(((Object[]) value)[0]);
             }
         } else if (value instanceof List) {
             List<?> valueList = (List<?>) value;
-            if (((List<?>) valueList).size() > 0) {
-                return String.valueOf(((List<?>) valueList).get(0));
+            if (valueList.size() > 0) {
+                return String.valueOf(valueList.get(0));
             }
         }
 
@@ -51,5 +53,17 @@ public class LimitUtils {
         }
 
         return "";
+    }
+
+    public static Integer getIntValue(Object value){
+        if(value==null) {
+            return null;
+        }
+        if(value instanceof Number){
+            return ((Number)value).intValue();
+        }else if(StringUtils.isNumeric(value.toString())){
+            return Integer.parseInt(value.toString());
+        }
+        return 0;
     }
 }

@@ -15,27 +15,27 @@
  */
 package org.jmesa.core.filter;
 
-import java.util.Date;
-import java.util.Locale;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.jmesa.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * The date filter matcher.
- * 
- * @since 2.0
+ *
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class DateFilterMatcher extends AbstractPatternFilterMatcher {
-		
-    private Logger logger = LoggerFactory.getLogger(DateFilterMatcher.class);
+
+    private final Logger logger = LoggerFactory.getLogger(DateFilterMatcher.class);
 
     public DateFilterMatcher() {
-		
+
         // default constructor
     }
 
@@ -43,19 +43,19 @@ public class DateFilterMatcher extends AbstractPatternFilterMatcher {
      * @param pattern The pattern to use.
      */
     public DateFilterMatcher(String pattern) {
-		
+
         setPattern(pattern);
     }
 
     public DateFilterMatcher(String pattern, WebContext webContext) {
-		
+
         setPattern(pattern);
         setWebContext(webContext);
     }
 
     @Override
     public boolean evaluate(Object itemValue, String filterValue) {
-		
+
         if (itemValue == null) {
             return false;
         }
@@ -83,10 +83,6 @@ public class DateFilterMatcher extends AbstractPatternFilterMatcher {
 
         String item = String.valueOf(itemValue);
         String filter = String.valueOf(filterValue);
-        if (StringUtils.contains(item, filter)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.contains(item, filter);
     }
 }
