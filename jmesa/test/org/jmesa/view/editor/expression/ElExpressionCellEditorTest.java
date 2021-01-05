@@ -18,12 +18,13 @@ package org.jmesa.view.editor.expression;
 import org.jmesa.view.editor.*;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.jsp.el.ELException;
-import javax.servlet.jsp.el.VariableResolver;
-import junit.framework.Assert;
+import javax.el.*;
+
 import org.jmesa.test.AbstractTestCase;
-import org.jmesa.view.editor.expression.ElExpressionCellEditor.VariableResolverMap;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * @version 2.4
@@ -35,12 +36,16 @@ public class ElExpressionCellEditorTest extends AbstractTestCase {
     public void testVariableResolver()
             throws ELException {
         Map<?, ?> item = getVariableContext();
-        Map<String, Object> ctx = new HashMap<String, Object>();
+        Map<String, Object> ctx = new HashMap<>();
         ctx.put("item", item);
-        VariableResolver resolver = new VariableResolverMap(ctx);
 
-        Object result = resolver.resolveVariable("item");
-        Assert.assertSame(item, result);
+
+        StandardELContext context = new StandardELContext(ExpressionFactory.newInstance());
+
+        ELResolver resolver = new MapELResolver();
+
+        Object result = resolver.getValue(context, ctx, "item");
+        assertSame(item, result);
     }
 
     @Test
@@ -50,15 +55,15 @@ public class ElExpressionCellEditorTest extends AbstractTestCase {
 
         CellEditor editor = new ElExpressionCellEditor(new Expression(Language.EL, "item", "item.one + item.two"));
         Object result = editor.getValue(item, "test", 0);
-        Assert.assertEquals("item.one + item.two", result);
+        assertEquals("item.one + item.two", result);
 
         editor = new ElExpressionCellEditor(new Expression(Language.EL, "item", "${item.one + item.two}"));
         result = editor.getValue(item, "test", 0);
-        Assert.assertEquals(new Integer(3).toString(), result.toString());
+        assertEquals(new Integer(3).toString(), result.toString());
 
         editor = new ElExpressionCellEditor("item", "${item.one} + ${item.two} = ${item.one + item.two}");
         result = editor.getValue(item, "test", 0);
-        Assert.assertEquals("1 + 2 = 3", result);
+        assertEquals("1 + 2 = 3", result);
     }
 
     protected Map<?, ?> getVariableContext() {

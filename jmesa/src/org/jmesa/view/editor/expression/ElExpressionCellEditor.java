@@ -15,76 +15,91 @@
  */
 package org.jmesa.view.editor.expression;
 
-import static org.jmesa.util.AssertUtils.notNull;
-import org.jmesa.view.editor.*;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.jsp.el.ELException;
-import javax.servlet.jsp.el.FunctionMapper;
-import javax.servlet.jsp.el.VariableResolver;
-
-import org.apache.commons.el.ExpressionString;
-import org.apache.commons.el.parser.ELParser;
-import org.apache.commons.el.parser.ParseException;
+import com.sun.el.ValueExpressionImpl;
+import com.sun.el.lang.EvaluationContext;
+import com.sun.el.parser.ELParser;
+import com.sun.el.parser.Node;
+import com.sun.el.parser.ParseException;
+import org.jmesa.util.ItemUtils;
+import org.jmesa.view.editor.AbstractCellEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.el.*;
+import java.io.StringReader;
+import java.util.Map;
+
+import static org.jmesa.util.AssertUtils.notNull;
+
 /**
  * Uses commons-el to evaluate EL expressions.
- * 
+ * Update: since EL
+ *
  * @version 2.4
  * @author bgould
  */
 public class ElExpressionCellEditor extends AbstractCellEditor {
-		
-    private Logger logger = LoggerFactory.getLogger(ElExpressionCellEditor.class);
-    private org.apache.commons.el.Logger pLogger = new org.apache.commons.el.Logger(System.err);
 
-    private String var;
+    private Logger logger = LoggerFactory.getLogger(ElExpressionCellEditor.class);
+
+    /**
+     * cell data variable name, i.e. 'item'
+     */
+    private final String var;
+
     private Object template;
 
+    ExpressionFactory expressionFactory = ExpressionFactory.newInstance();
+
+    StandardELContext context = new StandardELContext(expressionFactory);
+
+
+
     public ElExpressionCellEditor(Expression expression) {
-		
+
         this(expression.getVar(), expression.getTemplate());
+
     }
 
     public ElExpressionCellEditor(String var, Object template) {
-		
+
         notNull("The var is required.", var);
         this.var = var;
 
         notNull("The template is required.", template);
         this.template = template;
-
         try {
-            this.template = new ELParser(new StringReader(String.valueOf(template))).ExpressionString();
+            this.template = new ELParser(new StringReader(String.valueOf(template))).CompositeExpression();
         } catch (ParseException e) {
-            this.template = null;
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+
+
     }
 
     @Override
     public Object getValue(Object item, String property, int rowcount) {
-		
+
         Object result = null;
 
         try {
-            // ExpressionString is a mixture of template text and EL
-            // expressions; ex. ${lastName}, ${firstName}
-            if (template instanceof ExpressionString) {
-                result = ((ExpressionString) template).evaluate(getVariableResolver(item), getFunctionMapper(), pLogger);
 
-            // Expression is a single EL expression with no template text;
-            // ex. ${lastName + ', ' + firstName}
-            } else if (template instanceof org.apache.commons.el.Expression) {
-                result = ((org.apache.commons.el.Expression) template).evaluate(getVariableResolver(item), getFunctionMapper(), pLogger);
+//             ExpressionString is a mixture of template text and EL
+//             expressions; ex. ${lastName}, ${firstName}
+            if(template==null) {
+                result = ItemUtils.getItemValue(item, property);
+            }if (template instanceof Node) {
+                context.getVariableMapper().setVariable(var,  expressionFactory.createValueExpression(item, Map.class));
+                result= ((Node)template).getValue(new EvaluationContext(context, context.getFunctionMapper(),context.getVariableMapper()));
 
-            // If the expression parsed to a String, it is just template text 
-            } else if (template instanceof String) {
-                result = template;
+            // If the expression parsed to a String, it is just template text
+            } else {
+
+                logger.warn("template is:" + template.getClass() + " " + template.toString());
+
+                if (template instanceof String) {
+                    result = template;
+                }
             }
         } catch (ELException e) {
             logger.warn("Could not process el expression editor with property " + property, e);
@@ -93,42 +108,4 @@ public class ElExpressionCellEditor extends AbstractCellEditor {
         return result;
     }
 
-    /**
-     * Creates a VariableResolver based on the current row bean and variable name.
-     * 
-     * @param item The row's backing bean.
-     */
-    protected VariableResolver getVariableResolver(Object item) {
-		
-        Map<String, Object> context = new HashMap<String, Object>();
-        context.put(var, item);
-        return new VariableResolverMap(context);
-    }
-
-    /**
-     * Override this method to make EL functions available to your expressions.
-     */
-    protected FunctionMapper getFunctionMapper() {
-		
-        return null;
-    }
-
-    /**
-     * VariableResolver that resolves implicit objects based on a Map.
-     */
-    public static class VariableResolverMap implements VariableResolver {
-		
-
-        private final Map<?, ?> context;
-
-        public VariableResolverMap(Map<?, ?> context) {
-		
-            this.context = context;
-        }
-
-        public Object resolveVariable(String var) {
-		
-            return context.get(var);
-        }
-    }
 }

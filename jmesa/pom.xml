@@ -79,6 +79,7 @@
         </project.reporting.outputEncoding>
 
         <jacksonVersion>2.11.3</jacksonVersion>
+        <javax-el-implVersion>3.0.0</javax-el-implVersion>
     </properties>
 
     <build>
@@ -235,12 +236,12 @@
             <version>${junitVersion}</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.junit.vintage</groupId>-->
-<!--            <artifactId>junit-vintage-engine</artifactId>-->
-<!--            <version>${junitVersion}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junitVersion}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
@@ -303,11 +304,6 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>${commonsLangVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-el</groupId>
-            <artifactId>commons-el</artifactId>
-            <version>${commonsElVersion}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
@@ -470,6 +466,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jacksonVersion}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javax-el-implVersion}</version>
+        </dependency>
+
 
 
     </dependencies>

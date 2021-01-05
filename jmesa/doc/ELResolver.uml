@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>javax.el.ELResolver</OriginalElement>
+  <nodes>
+    <node x="15.0" y="1362.5385671774075">javax.el.ImportHandler</node>
+    <node x="701.3868709089138" y="20.0">com.sun.el.parser.ELParser</node>
+    <node x="22.986366517287024" y="571.2069966089563">javax.el.ELContext</node>
+    <node x="43.38687090891386" y="0.0">javax.el.ELResolver</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.sun.el.parser.ELParser" target="com.sun.el.parser.ELParser">
+      <point x="108.0" y="-629.5" />
+      <point x="1030.3868709089138" y="0.0" />
+      <point x="1163.3868709089138" y="0.0" />
+      <point x="1163.3868709089138" y="337.25" />
+      <point x="221.0" y="-312.25" />
+    </edge>
+    <edge source="javax.el.ELResolver" target="javax.el.ELContext">
+      <point x="5.048548478023918" y="0.0" />
+      <point x="5.048548478023893" y="0.0" />
+    </edge>
+    <edge source="javax.el.ImportHandler" target="javax.el.ImportHandler">
+      <point x="-75.0" y="-83.5" />
+      <point x="90.0" y="1347.5385671774075" />
+      <point x="0.0" y="1347.5385671774075" />
+      <point x="0.0" y="1404.2885671774075" />
+      <point x="-150.0" y="-41.75" />
+    </edge>
+    <edge source="javax.el.ELContext" target="javax.el.ImportHandler">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="javax.el.ELContext" target="javax.el.ELResolver">
+      <point x="-4.951918379871737" y="-0.6917400950418275" />
+      <point x="-4.951918379871742" y="-0.6917400950418369" />
+    </edge>
+    <edge source="javax.el.ELContext" target="javax.el.ELContext">
+      <point x="-111.75" y="-291.5" />
+      <point x="134.73636651728702" y="556.2069966089563" />
+      <point x="7.986366517287024" y="556.2069966089563" />
+      <point x="7.986366517287024" y="716.9569966089563" />
+      <point x="-223.5" y="-145.75" />
+    </edge>
+  </edges>
+  <settings layout="Balloon" zoom="1.0" x="591.5" y="215.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

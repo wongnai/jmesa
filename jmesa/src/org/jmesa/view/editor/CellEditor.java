@@ -16,14 +16,20 @@
 package org.jmesa.view.editor;
 
 /**
- * A CellEditor is used to display the column value. You can either use the pre-canned 
- * ones included in JMesa or create something custom. Typically most tables you create 
+ * A CellEditor is used to display the column value. You can either use the pre-canned
+ * ones included in JMesa or create something custom. Typically most tables you create
  * will have at least one custom editor.
- * 
+ *
  * @since 2.0
  * @author Jeff Johnston
  */
 public interface CellEditor {
-		
-    public Object getValue(Object item, String property, int rowcount);
+    /**
+     * get cell value by item and property
+     * @param item row object or Map
+     * @param property property of item or Map Key
+     * @param rowcount index of row
+     * @return if no property return ""
+     */
+    Object getValue(Object item, String property, int rowcount);
 }
