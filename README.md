@@ -1,6 +1,12 @@
 # Jmesa
 
-A table grid manager for java web developing.
+## 4.1 
+**remove** direct dependency on `WebContext`, remove indirect use of `HttpServletResponse` and `HttpServletRequest`
+
+**add** support `json` export format. In future will change to client render.
+
+
+# A table grid manager for java web developing.
 
 
 Jmesa is a Html table component re-developed by the ExtremeTable project, providing functions such as filtering,
