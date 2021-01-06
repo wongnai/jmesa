@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.1.0-RC3</version>
+    <version>4.1.0-RC4</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -44,7 +44,7 @@
 
         <!-- Maven plugins versions -->
         <compilerPluginVersion>2.2</compilerPluginVersion>
-        <surefirePluginVersion>2.5</surefirePluginVersion>
+        <surefirePluginVersion>2.18.1</surefirePluginVersion>
 
         <!-- Frameworks versions - production use -->
         <bsfVersion>2.4.0</bsfVersion>
@@ -83,12 +83,9 @@
     </properties>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
-        <testSourceDirectory>test</testSourceDirectory>
-
         <resources>
             <resource>
-                <directory>src</directory>
+                <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.properties</include>
                 </includes>
@@ -124,23 +121,6 @@
             </resource>
         </resources>
 
-        <testResources>
-            <testResource>
-                <directory>testResources</directory>
-            </testResource>
-            <testResource>
-                <directory>src</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </testResource>
-            <testResource>
-                <directory>test</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </testResource>
-        </testResources>
 
         <plugins>
             <plugin>
@@ -259,10 +239,8 @@
             <artifactId>spring-test</artifactId>
             <version>${springFrameworkVersion}</version>
             <!--
-            TODO Spring Test is a test framework but org.jmesa.test is in src (prod code dir) and uses it
-            Should move org.jmesa.test to test?
-                  <scope>test</scope>
-            so make optional until Jeff decides on resolution (must not have test in prod)
+            TODO should move spring mock object from src to test
+            <scope>test</scope>
             -->
             <optional>true</optional>
         </dependency>
