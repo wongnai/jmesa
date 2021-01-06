@@ -15,7 +15,6 @@
  */
 package org.jmesa.view.editor.expression;
 
-import com.sun.el.ValueExpressionImpl;
 import com.sun.el.lang.EvaluationContext;
 import com.sun.el.parser.ELParser;
 import com.sun.el.parser.Node;
@@ -89,14 +88,10 @@ public class ElExpressionCellEditor extends AbstractCellEditor {
             if(template==null) {
                 result = ItemUtils.getItemValue(item, property);
             }if (template instanceof Node) {
-                context.getVariableMapper().setVariable(var,  expressionFactory.createValueExpression(item, Map.class));
-                result= ((Node)template).getValue(new EvaluationContext(context, this.getFunctionMapper(),this.getVariableMapper()));
-
+                result= ((Node)template).getValue(new EvaluationContext(context, this.getFunctionMapper(),this.getVariableMapper(item)));
             // If the expression parsed to a String, it is just template text
             } else {
-
                 logger.warn("template is:" + template.getClass() + " " + template.toString());
-
                 if (template instanceof String) {
                     result = template;
                 }
@@ -112,8 +107,10 @@ public class ElExpressionCellEditor extends AbstractCellEditor {
        return context.getFunctionMapper();
    }
 
-   protected VariableMapper getVariableMapper(){
-      return context.getVariableMapper();
+   protected VariableMapper getVariableMapper(Object item){
+       VariableMapper variableMapper = context.getVariableMapper();
+       variableMapper.setVariable(var,  expressionFactory.createValueExpression(item, Map.class));
+       return variableMapper;
    }
 
 
