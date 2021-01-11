@@ -34,7 +34,8 @@ public class WebContextUtils {
     public static String[] getValueAsArray(Object value) {
 
         if (value == null) {
-            return new String[]{}; // put in a placeholder
+            // put in a placeholder
+            return new String[]{};
         }
 
         if (value instanceof String[]) {

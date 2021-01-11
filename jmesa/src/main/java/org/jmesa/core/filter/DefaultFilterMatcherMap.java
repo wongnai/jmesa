@@ -23,7 +23,7 @@ public class DefaultFilterMatcherMap implements FilterMatcherMap {
     @Override
     public Map<MatcherKey, FilterMatcher> getFilterMatchers() {
 
-        Map<MatcherKey, FilterMatcher> filterMatcherMap = new HashMap<MatcherKey, FilterMatcher>();
+        Map<MatcherKey, FilterMatcher> filterMatcherMap = new HashMap<>();
         filterMatcherMap.put(new MatcherKey(Object.class), new StringFilterMatcher());
         return filterMatcherMap;
     }

@@ -71,7 +71,7 @@ public class CoreContextTest {
 		Items items = new Items(data, limit, rowFilter, columnSort);
 
 		Preferences preferences = new PropertiesPreferences("/test.properties", webContext);
-		Messages messages = new ResourceBundleMessages("org.jmesa.core.message.testResourceBundle", webContext);
+		Messages messages = new ResourceBundleMessages("testResourceBundle", webContext);
 
 		CoreContext coreContext = new CoreContext(items, limit, null, preferences, messages);
 

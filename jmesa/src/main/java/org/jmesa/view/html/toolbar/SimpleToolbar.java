@@ -27,10 +27,10 @@ import org.jmesa.view.html.HtmlConstants;
  * @author Jeff Johnston
  */
 public class SimpleToolbar extends AbstractToolbar {
-		
+
     @Override
     public String render() {
-        
+
         HtmlBuilder html = new HtmlBuilder();
 
         html.table(2).border("0").cellpadding("0").cellspacing("1").close();
@@ -50,26 +50,26 @@ public class SimpleToolbar extends AbstractToolbar {
         html.tabs(2);
 
         return html.toString();
-    }    
-    
+    }
+
     protected List<ToolbarItem> getToolbarItems() {
-        
+
         List<ToolbarItem> toolbarItems = new ArrayList<ToolbarItem>();
-        
+
         ToolbarItemFactory toolbarItemFactory = new ToolbarItemFactory(getWebContext(), getCoreContext());
-		
+
         toolbarItems.add(toolbarItemFactory.createFirstPageToolbarItem());
         toolbarItems.add(toolbarItemFactory.createPrevPageToolbarItem());
 
         String pageNumbersEnabled = getCoreContext().getPreference(HtmlConstants.TOOLBAR_PAGE_NUMBERS_ENABLED);
-        
-        if (enablePageNumbers || (pageNumbersEnabled != null && pageNumbersEnabled.equals("true"))) {
+
+        if (enablePageNumbers || "true".equals(pageNumbersEnabled)) {
             toolbarItems.addAll(toolbarItemFactory.createPageNumberToolbarItems());
         }
-        
+
         toolbarItems.add(toolbarItemFactory.createNextPageToolbarItem());
         toolbarItems.add(toolbarItemFactory.createLastPageToolbarItem());
-        
+
         if (enableSeparators) {
             toolbarItems.add(toolbarItemFactory.createSeparatorToolbarItem());
         }
@@ -79,20 +79,20 @@ public class SimpleToolbar extends AbstractToolbar {
             maxRowsItem.setIncrements(getMaxRowsIncrements());
         }
         toolbarItems.add(maxRowsItem);
-        
+
         boolean exportable = ViewUtils.isExportable(getExportTypes());
 
         if (exportable && enableSeparators) {
             toolbarItems.add(toolbarItemFactory.createSeparatorToolbarItem());
         }
-        
+
         if (exportable) {
             toolbarItems.addAll(toolbarItemFactory.createExportToolbarItems(getExportTypes()));
         }
-        
+
         Row row = getTable().getRow();
         List columns = row.getColumns();
-        
+
         boolean filterable = ViewUtils.isFilterable(columns);
 
         if (filterable && enableSeparators) {
@@ -103,7 +103,7 @@ public class SimpleToolbar extends AbstractToolbar {
             toolbarItems.add(toolbarItemFactory.createFilterToolbarItem());
             toolbarItems.add(toolbarItemFactory.createClearToolbarItem());
         }
-        
+
         boolean editable = ViewUtils.isEditable(getCoreContext().getWorksheet());
         if (editable) {
             if (enableSeparators) {
@@ -112,12 +112,12 @@ public class SimpleToolbar extends AbstractToolbar {
 
             toolbarItems.add(toolbarItemFactory.createSaveWorksheetToolbarItem());
             toolbarItems.add(toolbarItemFactory.createClearWorksheetToolbarItem());
-            if (getCoreContext().getPreference(HtmlConstants.TOOLBAR_ADD_WORKSHEET_ROW_ENABLED).equals("true")) {
+            if ("true".equals(getCoreContext().getPreference(HtmlConstants.TOOLBAR_ADD_WORKSHEET_ROW_ENABLED))) {
                 toolbarItems.add(toolbarItemFactory.createAddWorksheetRowToolbarItem());
             }
             toolbarItems.add(toolbarItemFactory.createFilterWorksheetToolbarItem());
         }
-        
+
         return toolbarItems;
     }
 }

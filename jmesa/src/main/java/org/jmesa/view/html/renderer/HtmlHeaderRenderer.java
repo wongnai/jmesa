@@ -25,25 +25,25 @@ import org.jmesa.view.renderer.AbstractHeaderRenderer;
  * @author Jeff Johnston
  */
 public class HtmlHeaderRenderer extends AbstractHeaderRenderer {
-		
+
     @Override
     public HtmlColumn getColumn() {
-		
+
         return (HtmlColumn) super.getColumn();
     }
 
     @Override
     public Object render() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         String element = getCoreContext().getPreference(HtmlConstants.HEADER_RENDERER_ELEMENT);
-        if (element.equalsIgnoreCase("td")) {
+        if ("td".equalsIgnoreCase(element)) {
             html.td(2);
         } else {
             html.th(2);
         }
-        
+
         HtmlColumn column = getColumn();
 
         html.width(getColumn().getWidth());
@@ -53,7 +53,7 @@ public class HtmlHeaderRenderer extends AbstractHeaderRenderer {
 
         html.append(column.getHeaderEditor().getValue());
 
-        if (element.equalsIgnoreCase("td")) {
+        if ("td".equalsIgnoreCase(element)) {
             html.tdEnd();
         } else {
             html.thEnd();

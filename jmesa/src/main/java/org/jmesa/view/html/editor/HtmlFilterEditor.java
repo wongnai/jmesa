@@ -17,27 +17,29 @@ package org.jmesa.view.html.editor;
 
 import org.jmesa.limit.Filter;
 import org.jmesa.limit.Limit;
+import org.jmesa.limit.RangeFilter;
+import org.jmesa.limit.SingleValueFilter;
 import org.jmesa.view.editor.AbstractFilterEditor;
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.view.html.component.HtmlColumn;
 
 /**
  * The default editor for the column filter.
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
 public class HtmlFilterEditor extends AbstractFilterEditor {
-		
+
     @Override
     public HtmlColumn getColumn() {
-		
+
         return (HtmlColumn) super.getColumn();
     }
 
     @Override
     public Object getValue() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         Limit limit = getCoreContext().getLimit();
@@ -45,17 +47,28 @@ public class HtmlFilterEditor extends AbstractFilterEditor {
         String property = column.getProperty();
         Filter filter = limit.getFilterSet().getFilter(property);
 
-        String filterValue = "";
-        if (filter != null) {
-            filterValue = filter.getValue();
+        if(filter instanceof SingleValueFilter) {
+            String filterValue = "";
+            filterValue = (String) filter.getValue();
+
+            html.input().type("text");
+            html.name(getCoreContext().getLimit().getId() + "_f_" + property);
+            html.value(filterValue);
+            html.onkeypress("jQuery.jmesa.filterKeypress('" + limit.getId() + "', event);");
+            html.end();
+        }else if(filter instanceof RangeFilter) {
+                html.input().type("text");
+                html.name(getCoreContext().getLimit().getId() + "_f_b_" + property);
+                html.value(((RangeFilter)filter).getStartValue());
+                html.onkeypress("jQuery.jmesa.filterKeypress('" + limit.getId() + "', event);");
+                html.end();
+
+                html.input().type("text");
+                html.name(getCoreContext().getLimit().getId() + "_f_e_" + property);
+                html.value(((RangeFilter)filter).getEndValue());
+                html.onkeypress("jQuery.jmesa.filterKeypress('" + limit.getId() + "', event);");
+                html.end();
         }
-
-        html.input().type("text");
-        html.name(getCoreContext().getLimit().getId() + "_f_" + property);
-        html.value(filterValue);
-        html.onkeypress("jQuery.jmesa.filterKeypress('" + limit.getId() + "', event);");
-        html.end();
-
         return html.toString();
     }
 }

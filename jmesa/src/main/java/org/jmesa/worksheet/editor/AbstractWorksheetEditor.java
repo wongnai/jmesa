@@ -25,22 +25,22 @@ import org.jmesa.worksheet.WorksheetRow;
 
 /**
  * The abstraction for the worksheet editors. Custom implementations should extend this.
- * 
+ *
  * @since 2.3
  * @author Jeff Johnston
  */
 public abstract class AbstractWorksheetEditor extends AbstractCellEditor implements WorksheetEditor {
-		
-    protected String UNIQUE_PROPERTY = "up";
+
+    protected static final String UNIQUE_PROPERTY = "up";
 
     private CellEditor cellEditor;
-    
+
     /**
      * @return The wrapped CellEditor.
      */
     @Override
     public CellEditor getCellEditor() {
-		
+
         return cellEditor;
     }
 
@@ -49,13 +49,13 @@ public abstract class AbstractWorksheetEditor extends AbstractCellEditor impleme
      */
     @Override
     public void setCellEditor(CellEditor cellEditor) {
-		
+
         this.cellEditor = cellEditor;
     }
-    
+
     @Override
     public Object getValueForWorksheet(Object item, String property, int rowcount) {
-		
+
     	return getCellEditor().getValue(item, property, rowcount);
     }
 
@@ -65,28 +65,28 @@ public abstract class AbstractWorksheetEditor extends AbstractCellEditor impleme
      * @return The WorksheetColumn for this column.
      */
     protected WorksheetColumn getWorksheetColumn(Object item, String property) {
-		
+
         Worksheet worksheet = getCoreContext().getWorksheet();
         if (worksheet == null) {
             return null;
         }
-        
+
         UniqueProperty uniqueProperty = getColumn().getRow().getUniqueProperty(item);
         WorksheetRow worksheetRow = worksheet.getRow(uniqueProperty);
 
         if (worksheetRow == null) {
             return null;
         }
-        
+
         return worksheetRow.getColumn(property);
     }
-    
+
     /**
      * @param item The Bean or Map.
      * @return The JavaScript for the unique properties.
      */
     protected String getUniquePropertyJavaScript(Object item) {
-		
+
         Row row = getColumn().getRow();
         UniqueProperty uniqueProperty = row.getUniqueProperty(item);
         if (uniqueProperty == null) {
@@ -100,7 +100,7 @@ public abstract class AbstractWorksheetEditor extends AbstractCellEditor impleme
     }
 
     protected String getStyleClass(WorksheetColumn worksheetColumn) {
-		
+
         if (worksheetColumn != null) {
         	String originalValue = worksheetColumn.getOriginalValue();
             if (worksheetColumn.hasError()) {
@@ -113,7 +113,7 @@ public abstract class AbstractWorksheetEditor extends AbstractCellEditor impleme
                 }
             }
         }
-        
+
         return "worksheetColumn";
     }
 }

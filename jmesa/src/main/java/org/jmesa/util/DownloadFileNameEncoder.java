@@ -45,33 +45,33 @@ public class DownloadFileNameEncoder {
     public static String codedFileName(String userAgent, String filename, String encoding)
             throws UnsupportedEncodingException {
 
-        String new_filename = URLEncoder.encode(filename, encoding);
+        String newFilename = URLEncoder.encode(filename, encoding);
         // 如果没有UA，则默认使用IE的方式进行编码，因为毕竟IE还是占多数的
-        String rtn = "=\"" + new_filename + "\"";
+        String rtn = "=\"" + newFilename + "\"";
         if (userAgent != null) {
             userAgent = userAgent.toLowerCase();
             // IE浏览器，只能采用URLEncoder编码
-            if (userAgent.indexOf("msie") != -1) {
-                rtn = "=\"" + new_filename + "\"";
+            if (userAgent.contains("msie")) {
+                rtn = "=\"" + newFilename + "\"";
             }
             // Opera浏览器只能采用filename*
-            else if (userAgent.indexOf("opera") != -1) {
-                rtn = "*=\"UTF-8''" + new_filename + "\"";
+            else if (userAgent.contains("opera")) {
+                rtn = "*=\"UTF-8''" + newFilename + "\"";
             }
             // Safari浏览器，只能采用ISO编码的中文输出
-            else if (userAgent.indexOf("safari") != -1) {
+            else if (userAgent.contains("safari")) {
                 rtn = "=\""
                         + new String(filename.getBytes(encoding), "ISO8859-1")
                         + "\"";
             }
             // Chrome浏览器，只能采用MimeUtility编码或ISO编码的中文输出
-            else if (userAgent.indexOf("applewebkit") != -1) {
-                new_filename = MimeUtility.encodeText(filename, "UTF8", "B");
-                rtn = "=\"" + new_filename + "\"";
+            else if (userAgent.contains("applewebkit")) {
+                newFilename = MimeUtility.encodeText(filename, "UTF8", "B");
+                rtn = "=\"" + newFilename + "\"";
             }
             // FireFox浏览器，可以使用MimeUtility或filename*或ISO编码的中文输出
-            else if (userAgent.indexOf("mozilla") != -1) {
-                rtn = "*=\"UTF-8''" + new_filename + "\"";
+            else if (userAgent.contains("mozilla")) {
+                rtn = "*=\"UTF-8''" + newFilename + "\"";
                 ;
             }
         }

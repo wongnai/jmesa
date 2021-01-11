@@ -109,13 +109,15 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
      * must be used.
      */
     @Override
-    public Integer getMaxRows() {
+    public int getMaxRows() {
 
-        int maxRows = LimitUtils.getIntValue(data.get(Keys.MAX_ROWS));
+        Integer maxRows = LimitUtils.getIntValue(data.get(Keys.MAX_ROWS));
+        if(maxRows==null){
+            return 0;
+        }
         if (logger.isDebugEnabled()) {
             logger.debug("Max Rows:" + maxRows);
         }
-
         return maxRows;
     }
 
@@ -158,9 +160,10 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
         if (o instanceof Map) {
             Map<String, Object> map = (Map<String, Object>) o;
             for (String property : map.keySet()) {
-                String value = LimitUtils.getValue(map.get(property));
-                if (StringUtils.isNotBlank(value)) {
-                    Filter filter = new Filter(property, value);
+                Object v = map.get(property);
+
+                Filter filter = buildFilter(property, v);
+                if(filter!=null){
                     filterSet.addFilter(filter);
                 }
             }

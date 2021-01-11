@@ -21,19 +21,20 @@ import org.jmesa.view.html.component.HtmlTable;
 import org.jmesa.view.renderer.AbstractTableRenderer;
 
 public class HtmlTableRenderer extends AbstractTableRenderer {
-		
+
     @Override
     public HtmlTable getTable() {
-		
+
         return (HtmlTable) super.getTable();
     }
 
+    @Override
     public Object render() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
-        
+
         HtmlTable table = getTable();
-        
+
         html.table(0);
         String id = getCoreContext().getLimit().getId();
         html.id(id);

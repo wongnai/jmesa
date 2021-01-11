@@ -18,23 +18,18 @@ package org.jmesa.core;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * @since 2.0
  * @author Jeff Johnston
+ * @since 2.0
  */
 public class PresidentDao {
 
 
     public static Collection<President> getPresidents() {
 
-        List<President> presidents = new ArrayList<President>();
+        List<President> presidents = new ArrayList<>();
 
         President president = new President();
         Name name = new Name("George", "Washington", "Father of His Country");
@@ -46,7 +41,7 @@ public class PresidentDao {
         president.setEducation("The equivalent of an elementary school education");
         president.setCareer("Soldier, Planter");
         president.setPoliticalParty("Federalist");
-        president.setSalary(new Double(1000.01));
+        president.setSalary(1000.01);
         presidents.add(president);
 
         president = new President();
@@ -59,7 +54,7 @@ public class PresidentDao {
         president.setEducation("Harvard College (graduated 1755)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Federalist");
-        president.setSalary(new Double(2000.02));
+        president.setSalary(2000.02);
         presidents.add(president);
 
         president = new President();
@@ -72,7 +67,7 @@ public class PresidentDao {
         president.setEducation("College of William and Mary (graduated 1762)");
         president.setCareer("Lawyer, Planter");
         president.setPoliticalParty("Democratic-Republican ");
-        president.setSalary(new Double(3000.03));
+        president.setSalary(3000.03);
         presidents.add(president);
 
         president = new President();
@@ -85,7 +80,7 @@ public class PresidentDao {
         president.setEducation("College of New Jersey (now Princeton University, graduated 1771)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democratic-Republican");
-        president.setSalary(new Double(4000.04));
+        president.setSalary(4000.04);
         presidents.add(president);
 
         president = new President();
@@ -98,7 +93,7 @@ public class PresidentDao {
         president.setEducation("College of William and Mary (graduated 1776)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democratic-Republican");
-        president.setSalary(new Double(5000.05));
+        president.setSalary(5000.05);
         presidents.add(president);
 
         president = new President();
@@ -111,7 +106,7 @@ public class PresidentDao {
         president.setEducation("Harvard College (graduated 1787)");
         president.setCareer("Lawyer, Senator, Diplomat");
         president.setPoliticalParty("Federalist, Democratic-Republican, Whig ");
-        president.setSalary(new Double(6000.06));
+        president.setSalary(6000.06);
         presidents.add(president);
 
         president = new President();
@@ -124,7 +119,7 @@ public class PresidentDao {
         president.setEducation("");
         president.setCareer("Lawyer, Soldier");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(7000.07));
+        president.setSalary(7000.07);
         presidents.add(president);
 
         president = new President();
@@ -137,7 +132,7 @@ public class PresidentDao {
         president.setEducation("Kinderhook Academy (graduated 1796)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(8000.08));
+        president.setSalary(8000.08);
         presidents.add(president);
 
         president = new President();
@@ -150,7 +145,7 @@ public class PresidentDao {
         president.setEducation("Hampden-Sydney College");
         president.setCareer("Soldier");
         president.setPoliticalParty("Whig");
-        president.setSalary(new Double(9000.09));
+        president.setSalary(9000.09);
         presidents.add(president);
 
         president = new President();
@@ -163,7 +158,7 @@ public class PresidentDao {
         president.setEducation("College of William and Mary (graduated 1807)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democrat, Whig");
-        president.setSalary(new Double(10000.10));
+        president.setSalary(10000.10);
         presidents.add(president);
 
         president = new President();
@@ -176,7 +171,7 @@ public class PresidentDao {
         president.setEducation("University of North Carolina (graduated 1818)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(11000.11));
+        president.setSalary(11000.11);
         presidents.add(president);
 
         president = new President();
@@ -189,7 +184,7 @@ public class PresidentDao {
         president.setEducation("");
         president.setCareer("Soldier");
         president.setPoliticalParty("Whig");
-        president.setSalary(new Double(12000.12));
+        president.setSalary(12000.12);
         presidents.add(president);
 
         president = new President();
@@ -202,7 +197,7 @@ public class PresidentDao {
         president.setEducation("Six months of grade school; read law in 1822");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Whig");
-        president.setSalary(new Double(13000.13));
+        president.setSalary(13000.13);
         presidents.add(president);
 
         president = new President();
@@ -215,7 +210,7 @@ public class PresidentDao {
         president.setEducation("Bowdoin College (graduated 1824)");
         president.setCareer("Lawyer, Public Official");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(14000.14));
+        president.setSalary(14000.14);
         presidents.add(president);
 
         president = new President();
@@ -228,7 +223,7 @@ public class PresidentDao {
         president.setEducation("Dickinson College (graduated 1809)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(15000.15));
+        president.setSalary(15000.15);
         presidents.add(president);
 
         president = new President();
@@ -241,7 +236,7 @@ public class PresidentDao {
         president.setEducation("");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Whig, Republican");
-        president.setSalary(new Double(16000.16));
+        president.setSalary(16000.16);
         presidents.add(president);
 
         president = new President();
@@ -254,7 +249,7 @@ public class PresidentDao {
         president.setEducation("");
         president.setCareer("Tailor, Public Official");
         president.setPoliticalParty("emocrat; Unionist");
-        president.setSalary(new Double(17000.17));
+        president.setSalary(17000.17);
         presidents.add(president);
 
         president = new President();
@@ -267,7 +262,7 @@ public class PresidentDao {
         president.setEducation("U.S. Military Academy, West Point, New York (graduated 1843)");
         president.setCareer("Soldier");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(18000.18));
+        president.setSalary(18000.18);
         presidents.add(president);
 
         president = new President();
@@ -280,7 +275,7 @@ public class PresidentDao {
         president.setEducation("Kenyon College (graduated 1842), Harvard Law School (graduated 1845)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(19000.19));
+        president.setSalary(19000.19);
         presidents.add(president);
 
         president = new President();
@@ -293,7 +288,7 @@ public class PresidentDao {
         president.setEducation("Western Reserve Eclectic Institute (now Hiram College), Williams College (graduated 1856)");
         president.setCareer("Teacher, Public Official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(20000.20));
+        president.setSalary(20000.20);
         presidents.add(president);
 
         president = new President();
@@ -306,7 +301,7 @@ public class PresidentDao {
         president.setEducation("Union College (graduated 1848)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(21000.21));
+        president.setSalary(21000.21);
         presidents.add(president);
 
         president = new President();
@@ -319,7 +314,7 @@ public class PresidentDao {
         president.setEducation("Some common school; Read law (1855-59)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(22000.22));
+        president.setSalary(22000.22);
         presidents.add(president);
 
         president = new President();
@@ -332,7 +327,7 @@ public class PresidentDao {
         president.setEducation("Miami University (Ohio), graduated 1852");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(23000.23));
+        president.setSalary(23000.23);
         presidents.add(president);
 
         president = new President();
@@ -345,7 +340,7 @@ public class PresidentDao {
         president.setEducation("Some common school; Read law (1855-59)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(24000.24));
+        president.setSalary(24000.24);
         presidents.add(president);
 
         president = new President();
@@ -358,7 +353,7 @@ public class PresidentDao {
         president.setEducation("Allegheny College");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(25000.25));
+        president.setSalary(25000.25);
         presidents.add(president);
 
         president = new President();
@@ -371,7 +366,7 @@ public class PresidentDao {
         president.setEducation("Harvard College (graduated 1880)");
         president.setCareer("Author, Lawyer, Public Official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(26000.26));
+        president.setSalary(26000.26);
         presidents.add(president);
 
         president = new President();
@@ -384,7 +379,7 @@ public class PresidentDao {
         president.setEducation("Yale College (graduated 1878), Cincinnati Law School (LL.B., 1880)");
         president.setCareer("Lawyer, Public Official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(27000.27));
+        president.setSalary(27000.27);
         presidents.add(president);
 
         president = new President();
@@ -397,7 +392,7 @@ public class PresidentDao {
         president.setEducation("College of New Jersey (now Princeton University), graduated 1879");
         president.setCareer("Professor, College Administration, Public Official");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(28000.28));
+        president.setSalary(28000.28);
         presidents.add(president);
 
         president = new President();
@@ -410,7 +405,7 @@ public class PresidentDao {
         president.setEducation("Ohio Central College (graduated 1882)");
         president.setCareer("Editor-Publisher");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(29000.29));
+        president.setSalary(29000.29);
         presidents.add(president);
 
         president = new President();
@@ -423,7 +418,7 @@ public class PresidentDao {
         president.setEducation("Amherst College (graduated 1895)");
         president.setCareer("Lawyer");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(30000.30));
+        president.setSalary(30000.30);
         presidents.add(president);
 
         president = new President();
@@ -436,7 +431,7 @@ public class PresidentDao {
         president.setEducation("Stanford University (graduated 1895)");
         president.setCareer("Engineer");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(31000.31));
+        president.setSalary(31000.31);
         presidents.add(president);
 
         president = new President();
@@ -449,7 +444,7 @@ public class PresidentDao {
         president.setEducation("Harvard College (graduated 1903), Columbia Law School");
         president.setCareer("Public Official, Lawyer");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(32000.32));
+        president.setSalary(32000.32);
         presidents.add(president);
 
         president = new President();
@@ -462,7 +457,7 @@ public class PresidentDao {
         president.setEducation("University of Kansas City Law School");
         president.setCareer("Farmer, Businessman, Public Official");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(33000.33));
+        president.setSalary(33000.33);
         presidents.add(president);
 
         president = new President();
@@ -475,7 +470,7 @@ public class PresidentDao {
         president.setEducation(" U.S. Military Academy, West Point, New York (graduated 1915)");
         president.setCareer("Soldier");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(34000.34));
+        president.setSalary(34000.34);
         presidents.add(president);
 
         president = new President();
@@ -488,7 +483,7 @@ public class PresidentDao {
         president.setEducation("Harvard College (graduated 1940)");
         president.setCareer("Author, officer, U.S. Navy");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(35000.35));
+        president.setSalary(35000.35);
         presidents.add(president);
 
         president = new President();
@@ -501,7 +496,7 @@ public class PresidentDao {
         president.setEducation("Southwest Texas State Teachers College (graduated 1930); Georgetown Law School (attended, 1934)");
         president.setCareer("Teacher, Public Official");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(36000.36));
+        president.setSalary(36000.36);
         presidents.add(president);
 
         president = new President();
@@ -514,7 +509,7 @@ public class PresidentDao {
         president.setEducation("Whittier College (1934); Duke University Law School (1937)");
         president.setCareer("Lawyer, public official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(37000.37));
+        president.setSalary(37000.37);
         presidents.add(president);
 
         president = new President();
@@ -526,7 +521,7 @@ public class PresidentDao {
         president.setEducation("University of Michigan (1935); Yale University Law School (1941)");
         president.setCareer("Lawyer, Public Official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(38000.38));
+        president.setSalary(38000.38);
         presidents.add(president);
 
         president = new President();
@@ -537,7 +532,7 @@ public class PresidentDao {
         president.setBorn(getDate("10/01/1924"));
         president.setEducation("Georgia Southwestern College, 1941-1942; Georgia Institute of Technology, 1942-1943; United States Naval Academy, 1943-1946 (class of 1947);");
         president.setCareer(" Soldier; Farmer, Warehouseman, Public Official, Professor");
-        president.setSalary(new Double(39000.39));
+        president.setSalary(39000.39);
         presidents.add(president);
 
         president = new President();
@@ -550,7 +545,7 @@ public class PresidentDao {
         president.setEducation("Eureka College (1932)");
         president.setCareer("Actor, public official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(40000.40));
+        president.setSalary(40000.40);
         presidents.add(president);
 
         president = new President();
@@ -562,7 +557,7 @@ public class PresidentDao {
         president.setEducation("Yale University (1948)");
         president.setCareer("Businessman, public official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(41000.41));
+        president.setSalary(41000.41);
         presidents.add(president);
 
         president = new President();
@@ -574,7 +569,7 @@ public class PresidentDao {
         president.setEducation("Georgetown University (1968), attended Oxford University (1968-1970), Yale Law School (1973)");
         president.setCareer("Lawyer, public official");
         president.setPoliticalParty("Democrat");
-        president.setSalary(new Double(42000.42));
+        president.setSalary(42000.42);
         presidents.add(president);
 
         president = new President();
@@ -586,7 +581,7 @@ public class PresidentDao {
         president.setEducation("Yale (B.S., 1968), Harvard (M.B.A., 1975)");
         president.setCareer("Businessman, public official");
         president.setPoliticalParty("Republican");
-        president.setSalary(new Double(43000.43));
+        president.setSalary(43000.43);
         presidents.add(president);
 
         return presidents;
@@ -595,11 +590,11 @@ public class PresidentDao {
     public static Collection<Map<?, ?>> getPresidentsAsListOfMaps() {
 
 
-        List<Map<?, ?>> results = new ArrayList<Map<?, ?>>();
+        List<Map<?, ?>> results = new ArrayList<>();
 
         Collection<President> presidents = getPresidents();
         for (President president : presidents) {
-            Map<String, Object> result = new HashMap<String, Object>();
+            Map<String, Object> result = new HashMap<>();
             result.put("id", president.getId());
             result.put("firstName", president.getName().getFirstName());
             result.put("lastName", president.getName().getLastName());

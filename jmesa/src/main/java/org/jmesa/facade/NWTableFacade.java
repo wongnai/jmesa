@@ -204,7 +204,6 @@ public class NWTableFacade implements  WorksheetSupport, JsonContextSupport, Cor
         }
 
         this.worksheetState = getWorksheetState();
-//        this.worksheet = worksheetState.retrieveWorksheet();
 
         if (worksheet == null || isClearingWorksheet(context)) {
             this.worksheet = new NBWorksheet(id);

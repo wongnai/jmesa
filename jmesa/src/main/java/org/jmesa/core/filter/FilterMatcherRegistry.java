@@ -93,7 +93,9 @@ public class FilterMatcherRegistry {
 
         for (MatcherKey key : matchers.keySet()) {
             String prop = key.getProperty();
-            if (prop != null) { //do not use matcher that is using property match
+
+            //do not use matcher that is using property match
+            if (prop != null) {
                 continue;
             }
 
@@ -121,7 +123,9 @@ public class FilterMatcherRegistry {
 
         for (MatcherKey key : matchers.keySet()) {
             String prop = key.getProperty();
-            if (prop != null) { //do not use matcher that is using property match
+
+            //do not use matcher that is using property match
+            if (prop != null) {
                 continue;
             }
 
@@ -129,8 +133,9 @@ public class FilterMatcherRegistry {
             if (typ.isAssignableFrom(type)) {
                 FilterMatcher matcher = matchers.get(key);
                 if (key.getType().equals(Object.class)) {
-                    result = matcher; // If Object matches then make sure
+                    // If Object matches then make sure
                     // there is not something more specific
+                    result = matcher;
                     continue;
                 }
 

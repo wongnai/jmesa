@@ -64,7 +64,7 @@ public class TableFacadeUtils {
     static boolean isClearingWorksheet(String id, WebContext webContext) {
 
         String clearingWorksheet = webContext.getParameter(id + "_" + CLEARING_WORKSHEET);
-        if (StringUtils.isNotEmpty(clearingWorksheet) && clearingWorksheet.equals("true")) {
+        if (StringUtils.isNotEmpty(clearingWorksheet) && "true".equals(clearingWorksheet)) {
             return true;
         }
 

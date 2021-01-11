@@ -27,51 +27,51 @@ import org.jmesa.view.html.HtmlBuilder;
  * @author Jeff Johnston
  */
 public class MaxRowsToolbarItem extends AbstractToolbarItem {
-		
+
     private int maxRows;
     private String text;
     private int[] increments = new int[0];
 
     public String getText() {
-		
+
         return text;
     }
 
     public void setText(String text) {
-		
+
         this.text = text;
     }
 
     public int getMaxRows() {
-		
+
         return maxRows;
     }
 
     public void setMaxRows(int maxRows) {
-		
+
         this.maxRows = maxRows;
     }
 
     public int[] getIncrements() {
-		
+
         return increments;
     }
 
     public void setIncrements(int[] increments) {
-		
+
         this.increments = increments;
     }
 
     public MaxRowsToolbarItem(CoreContext coreContext) {
-		
+
         super(coreContext);
     }
 
     @Override
     public String render() {
-		
+
         if (getIncrements().length == 0) {
-            String increments[] = StringUtils.split(getCoreContext().getPreference(TOOLBAR_MAX_ROWS_DROPLIST_INCREMENTS), ",");
+            String[] increments = StringUtils.split(getCoreContext().getPreference(TOOLBAR_MAX_ROWS_DROPLIST_INCREMENTS), ",");
             int[] values = new int[increments.length];
             for (int i = 0; i < increments.length; i++) {
                 values[i] = Integer.valueOf(increments[i]);
@@ -95,7 +95,7 @@ public class MaxRowsToolbarItem extends AbstractToolbarItem {
     }
 
     private boolean incrementsContainsMaxRows(int maxRows) {
-		
+
         boolean found = false;
 
         for (int increment : increments) {
@@ -106,9 +106,9 @@ public class MaxRowsToolbarItem extends AbstractToolbarItem {
 
         return found;
     }
-    
+
     private String enabled(String action) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         if (StringUtils.isEmpty(text)) {
@@ -139,5 +139,5 @@ public class MaxRowsToolbarItem extends AbstractToolbarItem {
         html.selectEnd();
 
         return html.toString();
-    }    
+    }
 }

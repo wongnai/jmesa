@@ -35,17 +35,17 @@ import org.jmesa.view.html.component.HtmlColumn;
 
 /**
  * Create a droplist for the filter.
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
 public class DroplistFilterEditor extends AbstractFilterEditor {
-        
+
     private Set<Option> options;
-    
+
     @Override
     public Object getValue() {
-        
+
         HtmlBuilder html = new HtmlBuilder();
 
         Limit limit = getCoreContext().getLimit();
@@ -55,7 +55,7 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
 
         String filterValue = "";
         if (filter != null) {
-            filterValue = filter.getValue();
+            filterValue = filter.getValue().toString();
         }
 
         html.select();
@@ -78,26 +78,26 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
 
         return html.toString();
     }
-    
+
     public void addOptions(Collection<?> beans, String valueProperty, String labelProperty) {
-        
+
         for (Object bean : beans) {
             addOption(bean, valueProperty, labelProperty);
         }
     }
 
     public void addOption(Object bean, String valueProperty, String labelProperty) {
-        
+
         Object value = ItemUtils.getItemValue(bean, valueProperty);
         Object label = ItemUtils.getItemValue(bean, labelProperty);
         addOption(
             value == null ? null : String.valueOf(value),
-            label == null ? null : String.valueOf(label)        
+            label == null ? null : String.valueOf(label)
         );
     }
-    
+
     public void addOption(String value, String label) {
-        
+
         if (value == null || value.length() == 0) {
             return;
         }
@@ -106,26 +106,26 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
         }
         this.addOption(new Option(value, label));
     }
-    
+
     protected void addOption(Option option) {
-        
+
         if (options == null) {
             options = new HashSet<Option>();
         }
         options.add(option);
     }
-    
+
     /**
      * @return The unique list of options for the droplist values.
      */
     protected Collection<Option> getOptions() {
-        
+
         List<Option> opts;
 
         if (this.options == null) {
             opts = new ArrayList<Option>();
             opts.add(new Option("", ""));
-            
+
             Set<String> values = new HashSet<String>();
             String property = getColumn().getProperty();
             for (Object item : getCoreContext().getAllItems()) {
@@ -156,28 +156,29 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
      * Represents an Html Select Option.
      */
     protected static class Option implements Comparable<Option> {
-        
+
         private final String value;
         private final String label;
 
         public Option(String value, String label) {
-        
+
             this.value = value;
             this.label = label;
         }
 
         public String getValue() {
-        
+
             return value;
         }
 
         public String getLabel() {
-        
+
             return label;
         }
 
+        @Override
         public int compareTo(Option option) {
-        
+
             return this.getLabel().compareToIgnoreCase(option.getLabel());
         }
 
@@ -187,7 +188,7 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
          */
         @Override
         public boolean equals(Object o) {
-        
+
             if (o == this) {
                 return true;
             }
@@ -203,7 +204,7 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
 
         @Override
         public int hashCode() {
-        
+
             int result = 17;
             int property = this.getLabel() == null ? 0 : this.getLabel().hashCode();
             result = result * 37 + property;
@@ -212,7 +213,7 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
 
         @Override
         public String toString() {
-        
+
             ToStringBuilder builder = new ToStringBuilder(this);
             builder.append("value", getValue());
             builder.append("label", getLabel());

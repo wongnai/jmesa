@@ -50,21 +50,23 @@ public class LimitActionFactoryMapImpl implements LimitActionFactory {
     }
 
     /**
-     * @return The max rows based on what the user selected. A null returned implies the default
+     * @return The max rows based on what the user selected. A 0 returned implies the default
      *         must be used.
      */
     @Override
-    public Integer getMaxRows() {
+    public int getMaxRows() {
 
         String maxRows = LimitUtils.getValue(parameters.get(prefixId + Action.MAX_ROWS.toParam()));
         if (StringUtils.isNotBlank(maxRows)) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Max Rows:" + maxRows);
             }
-            return Integer.parseInt(maxRows);
+            if(StringUtils.isNumeric(maxRows)) {
+                return Integer.parseInt(maxRows);
+            }
         }
 
-        return null;
+        return 0;
     }
 
     /**
@@ -105,12 +107,13 @@ public class LimitActionFactoryMapImpl implements LimitActionFactory {
         for (Object param : parameters.keySet()) {
             String parameter = (String) param;
             if (parameter.startsWith(prefixId + Action.FILTER.toParam())) {
-                String value = LimitUtils.getValue(parameters.get(parameter));
-                if (StringUtils.isNotBlank(value)) {
-                    String property = StringUtils.substringAfter(parameter, prefixId + Action.FILTER.toParam());
-                    Filter filter = new Filter(property, value);
+
+                String property = StringUtils.substringAfter(parameter, prefixId + Action.FILTER.toParam());
+                Filter filter = buildFilter(property, parameters.get(parameter));
+                if(filter!=null){
                     filterSet.addFilter(filter);
                 }
+
             }
         }
 

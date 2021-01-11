@@ -15,10 +15,9 @@
  */
 package org.jmesa.limit;
 
-import java.io.Serializable;
-
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -53,32 +52,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * </pre>
  *
  *
- * @since 2.0
- * @author Jeff Johnston
+ * @since 4.1
+ * @author Xing Wanxiang
  */
-public interface Filter extends Serializable {
+public final class SingleValueFilter extends BaseFilter implements Filter{
 
-    /**
-     * The Bean (Or Map) attribute used to reduce the results.
-     */
-    String getProperty();
-
-    Object getValue();
-
-    /**
-     * Filter factory
-     * @param property
-     * @param value
-     * @return
-     */
-    static Filter build(String property, Object value){
-        if(value instanceof String){
-            return new SingleValueFilter(property, (String) value);
-        }else if(value instanceof RangeFilter.Pair){
-            return new RangeFilter(property, (RangeFilter.Pair) value);
-        }else{
-            throw new NotImplementedException("Unknown type:"+value);
-        }
+    public SingleValueFilter(String property, String value) {
+        super(property, value);
     }
 
 }

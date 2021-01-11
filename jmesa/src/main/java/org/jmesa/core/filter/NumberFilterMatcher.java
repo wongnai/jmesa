@@ -16,6 +16,7 @@
 package org.jmesa.core.filter;
 
 import org.apache.commons.lang.StringUtils;
+import org.jmesa.limit.RangeFilter;
 import org.jmesa.web.WebContext;
 
 import java.text.DecimalFormat;
@@ -50,7 +51,7 @@ public class NumberFilterMatcher extends AbstractPatternFilterMatcher {
     }
 
     @Override
-    public boolean evaluate(Object itemValue, String filterValue) {
+    public boolean evaluate(Object itemValue, Object filterValue) {
 
         if (itemValue == null) {
             return false;
@@ -75,7 +76,12 @@ public class NumberFilterMatcher extends AbstractPatternFilterMatcher {
         df.applyPattern(pattern);
         itemValue = df.format(itemValue);
 
+        if(filterValue instanceof RangeFilter.Pair){
+            return ((RangeFilter.Pair)filterValue).inRange(itemValue);
+        }
+
         String item = String.valueOf(itemValue);
+
         String filter = String.valueOf(filterValue);
         return StringUtils.contains(item, filter);
     }

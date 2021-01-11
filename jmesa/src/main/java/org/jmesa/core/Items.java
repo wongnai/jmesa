@@ -41,7 +41,8 @@ public class Items {
 
     public Items(Collection<?> items, Limit limit, RowFilter rowFilter, ColumnSort columnSort) {
 
-        this.allItems = new ArrayList<Object>(items); // copy for thread safety
+        // copy for thread safety
+        this.allItems = new ArrayList<Object>(items);
 
         this.filteredItems = rowFilter.filterItems(allItems, limit);
 

@@ -57,7 +57,7 @@ public class ParametersBuilder {
     public void addFilter(String property, String value) {
 
         String key = prefixId + Action.FILTER.toParam() + property;
-        List<String> filterList = new ArrayList<String>();
+        List<String> filterList = new ArrayList<>();
         filterList.add(value);
         parameters.addParameter(key, filterList);
     }

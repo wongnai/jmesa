@@ -25,16 +25,16 @@ import org.jmesa.view.renderer.AbstractCellRenderer;
  * @author Jeff Johnston
  */
 public class HtmlCellRenderer extends AbstractCellRenderer {
-		
+
     @Override
     public HtmlColumn getColumn() {
-		
+
         return (HtmlColumn) super.getColumn();
     }
 
     protected String getId(int rowcount) {
-		
-        if (getCoreContext().getPreference(CELL_RENDERER_INCLUDE_ID).equals("false")) {
+
+        if ("false".equals(getCoreContext().getPreference(CELL_RENDERER_INCLUDE_ID))) {
             return null;
         }
 
@@ -45,11 +45,11 @@ public class HtmlCellRenderer extends AbstractCellRenderer {
 
     @Override
     public Object render(Object item, int rowcount) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         HtmlColumn column = getColumn();
-        
+
         html.td(2).id(getId(rowcount));
         html.width(getColumn().getWidth());
         html.style(column.getStyle());

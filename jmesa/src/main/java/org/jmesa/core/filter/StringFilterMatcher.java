@@ -26,7 +26,7 @@ import org.apache.commons.lang.StringUtils;
 public class StringFilterMatcher implements FilterMatcher {
 
     @Override
-    public boolean evaluate(Object itemValue, String filterValue) {
+    public boolean evaluate(Object itemValue, Object filterValue) {
 
         String item = StringUtils.lowerCase(String.valueOf(itemValue));
         String filter = StringUtils.lowerCase(String.valueOf(filterValue));

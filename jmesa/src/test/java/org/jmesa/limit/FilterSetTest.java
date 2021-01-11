@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import java.security.Signature;
+
 /**
  * @since 2.0
  * @author Jeff Johnston
@@ -58,11 +60,25 @@ public class FilterSetTest {
         assertEquals(filter.getValue(), "Father Of His Country");
     }
 
+    @Test
+    public void getInRange() {
+
+        FilterSet filterSet = getFilterSet();
+        Object age = filterSet.getFilter("age").getValue();
+        assertNotNull(age);
+        assertEquals(age, new RangeFilter.Pair("20","35"));
+
+        assertTrue( ((RangeFilter.Pair)age).inRange(30));
+        assertFalse( ((RangeFilter.Pair)age).inRange(35));
+
+    }
+
     private FilterSet getFilterSet() {
 
         FilterSet filters = new FilterSet();
-        filters.addFilter(new Filter("fullName", "George Washington"));
-        filters.addFilter(new Filter("nickname", "Father Of His Country"));
+        filters.addFilter(new SingleValueFilter("fullName", "George Washington"));
+        filters.addFilter(new SingleValueFilter("nickname", "Father Of His Country"));
+        filters.addFilter(new RangeFilter("age", new RangeFilter.Pair("20", "35")));
         return filters;
     }
 }

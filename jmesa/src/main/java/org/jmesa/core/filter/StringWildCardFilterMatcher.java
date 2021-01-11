@@ -41,17 +41,17 @@ public class StringWildCardFilterMatcher implements FilterMatcher {
     }
 
     @Override
-    public boolean evaluate(Object itemValue, String filterValue) {
+    public boolean evaluate(Object itemValue, Object filterValue) {
 
         if (filterValue == null) {
             return false;
         }
 
         if (ignoreCases) {
-            filterValue = filterValue.toLowerCase();
+            filterValue = filterValue.toString().toLowerCase();
         }
 
-        Pattern filterPattern = createFilterPattern(filterValue);
+        Pattern filterPattern = createFilterPattern(filterValue.toString());
 
         if (filterPattern == null) {
             return false;

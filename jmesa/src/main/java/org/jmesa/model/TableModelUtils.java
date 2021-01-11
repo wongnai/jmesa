@@ -202,12 +202,10 @@ public class TableModelUtils {
                 }
 
                 row.addColumn(column);
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException | IllegalAccessException e) {
                 throw new RuntimeException("Cannot create instance of " + cellEditorFQN + " for column " + title, e);
             } catch (InstantiationException e) {
                 throw new RuntimeException("Failed to create instance of " + cellEditorFQN + " for column " + title, e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException("Cannot create instance of " + cellEditorFQN + " for column " + title, e);
             }
 
         }

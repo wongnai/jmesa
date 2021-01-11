@@ -16,6 +16,7 @@
 package org.jmesa.core.filter;
 
 import org.apache.commons.lang.StringUtils;
+import org.jmesa.limit.RangeFilter;
 import org.jmesa.web.WebContext;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class DateTimeFilterMatcher extends DateFilterMatcher {
     }
 
     @Override
-    public boolean evaluate(Object itemValue, String filterValue) {
+    public boolean evaluate(Object itemValue, Object filterValue) {
 
         if (itemValue == null) {
             return false;
@@ -70,7 +71,14 @@ public class DateTimeFilterMatcher extends DateFilterMatcher {
             locale = webContext.getLocale();
         }
 
+
+
         DateTime dateTime = (DateTime) itemValue;
+
+        if(filterValue instanceof RangeFilter.Pair){
+            return ((RangeFilter.Pair)filterValue).inRange(itemValue);
+        }
+
         if (locale != null) {
             itemValue = dateTime.toString(pattern, locale);
         } else {

@@ -21,7 +21,8 @@ class LimitActionFactoryJsonImplTest {
                 "        \"page\": 123,\n" +
                 "        \"filter\": {\n" +
                 "            \"property1\":true,\n" +
-                "            \"property2\":\"abc\"\n" +
+                "            \"property2\":\"abc\",\n" +
+                "            \"property3\":[\"10\", \"100\"]\n" +
                 "        },\n" +
                 "        \"sort\":{\n" +
                 "            \"property1\":\"asc\",\n" +
@@ -52,6 +53,7 @@ class LimitActionFactoryJsonImplTest {
         FilterSet set = laf.getFilterSet();
         assertEquals("true", set.getFilter("property1").getValue());
         assertEquals("abc", set.getFilter("property2").getValue());
+        assertEquals(new RangeFilter.Pair("10","100"), set.getFilter("property3").getValue());
     }
 
     @Test

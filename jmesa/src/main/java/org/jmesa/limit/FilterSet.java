@@ -35,16 +35,16 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author Jeff Johnston
  */
 public class FilterSet implements Serializable {
-		
+
     private Set<Filter> filters;
 
     public FilterSet() {
-		
-        filters = new HashSet<Filter>();
+
+        filters = new HashSet<>();
     }
 
     public boolean isFilterable() {
-		
+
         return isFiltered();
     }
 
@@ -52,7 +52,7 @@ public class FilterSet implements Serializable {
      * @return Is true if there are any columns that need to be filtered.
      */
     public boolean isFiltered() {
-		
+
         return filters != null && !filters.isEmpty();
     }
 
@@ -60,7 +60,7 @@ public class FilterSet implements Serializable {
      * @return The set of Filter objects.
      */
     public Collection<Filter> getFilters() {
-		
+
         return filters;
     }
 
@@ -73,7 +73,7 @@ public class FilterSet implements Serializable {
      * @return The Filter object.
      */
     public Filter getFilter(String property) {
-		
+
         for (Iterator<Filter> iter = filters.iterator(); iter.hasNext();) {
             Filter filter = iter.next();
             if (filter.getProperty().equals(property)) {
@@ -93,8 +93,7 @@ public class FilterSet implements Serializable {
      * @return The Filter value.
      */
     public String getFilterValue(String property) {
-		
-        return getFilter(property).getValue();
+        return getFilter(property).getValue().toString();
     }
 
     /**
@@ -106,15 +105,15 @@ public class FilterSet implements Serializable {
      * @param value The value to filter the column.
      */
     public void addFilter(String property, String value) {
-		
-        addFilter(new Filter(property, value));
+
+        addFilter(Filter.build(property, value));
     }
 
     /**
      * @param filter The Filter to add to the set.
      */
     public void addFilter(Filter filter) {
-		
+
         if (filters.contains(filter)) {
             filters.remove(filter);
         }
@@ -124,7 +123,7 @@ public class FilterSet implements Serializable {
 
     @Override
     public String toString() {
-		
+
         ToStringBuilder builder = new ToStringBuilder(this);
 
         for (Iterator<Filter> iter = filters.iterator(); iter.hasNext();) {
