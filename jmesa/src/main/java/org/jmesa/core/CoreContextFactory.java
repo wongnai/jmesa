@@ -74,6 +74,9 @@ public class CoreContextFactory {
             registry = new FilterMatcherRegistry();
 
             FilterMatcherMap filterMatcherMap = PreferencesUtils.createClassFromPreferences(getPreferences(), FILTER_MATCHER_MAP);
+            if(filterMatcherMap==null){
+                filterMatcherMap =  new DefaultFilterMatcherMap();
+            }
             Map<MatcherKey, FilterMatcher> filterMatchersMap = filterMatcherMap.getFilterMatchers();
 
             for (Map.Entry<MatcherKey, FilterMatcher> entry : filterMatchersMap.entrySet()) {
@@ -100,6 +103,9 @@ public class CoreContextFactory {
 
         if (rowFilter == null) {
             rowFilter = PreferencesUtils.createClassFromPreferences(getPreferences(), ROW_FILTER);
+            if(rowFilter==null){
+                rowFilter =  new DefaultRowFilter();
+            }
         }
         SupportUtils.setFilterMatcherRegistry(rowFilter, getFilterMatcherRegistry());
 
@@ -120,6 +126,9 @@ public class CoreContextFactory {
 
         if (columnSort == null) {
             columnSort = PreferencesUtils.createClassFromPreferences(getPreferences(), COLUMN_SORT);
+            if(columnSort==null){
+                columnSort =  new DefaultColumnSort();
+            }
         }
 
         return columnSort;

@@ -33,9 +33,17 @@ import org.jmesa.view.editor.CellEditor;
 import org.jmesa.view.editor.FilterEditor;
 import org.jmesa.view.editor.HeaderEditor;
 import org.jmesa.view.html.editor.HtmlCellEditor;
+import org.jmesa.view.html.editor.HtmlFilterEditor;
+import org.jmesa.view.html.editor.HtmlHeaderEditor;
+import org.jmesa.view.html.renderer.HtmlCellRenderer;
+import org.jmesa.view.html.renderer.HtmlFilterRenderer;
+import org.jmesa.view.html.renderer.HtmlHeaderRenderer;
+import org.jmesa.view.renderer.BasicCellRenderer;
 import org.jmesa.view.renderer.CellRenderer;
 import org.jmesa.view.renderer.FilterRenderer;
 import org.jmesa.view.renderer.HeaderRenderer;
+import org.jmesa.worksheet.editor.AutoCompleteWorksheetEditor;
+import org.jmesa.worksheet.editor.InputWorksheetEditor;
 import org.jmesa.worksheet.editor.WorksheetEditor;
 
 /**
@@ -43,7 +51,7 @@ import org.jmesa.worksheet.editor.WorksheetEditor;
  * @author Jeff Johnston
  */
 public class HtmlColumn extends Column {
-		
+
     private Boolean filterable;
     private Boolean sortable;
     private Boolean editable;
@@ -69,117 +77,117 @@ public class HtmlColumn extends Column {
     public HtmlColumn() {}
 
     public HtmlColumn(String property) {
-		
+
         setProperty(property);
     }
 
     @Override
     public HtmlColumn property(String property) {
-		
+
     	setProperty(property);
     	return this;
     }
 
     @Override
     public HtmlColumn title(String title) {
-		
+
     	setTitle(title);
     	return this;
     }
 
     @Override
     public HtmlColumn titleKey(String key) {
-		
+
     	setTitleKey(key);
     	return this;
     }
 
     public boolean isFilterable() {
-		
+
         if (filterable != null) {
             return filterable.booleanValue();
         }
-        
+
         HtmlRow row = getRow();
         if (row != null && row.isFilterable() != null) {
             return row.isFilterable().booleanValue();
         }
-        
+
         return true;
     }
 
     public void setFilterable(Boolean filterable) {
-		
+
         this.filterable = filterable;
     }
 
     public HtmlColumn filterable(Boolean filterable) {
-		
+
     	setFilterable(filterable);
     	return this;
     }
-    
+
     public boolean isSortable() {
-		
+
         if (sortable != null) {
             return sortable.booleanValue();
         }
-        
+
         HtmlRow row = getRow();
         if (row != null && row.isSortable() != null) {
             return row.isSortable().booleanValue();
         }
-        
+
         return true;
     }
 
     public void setSortable(Boolean sortable) {
-		
+
         this.sortable = sortable;
     }
 
 	public HtmlColumn sortable(Boolean sortable) {
-		
+
 		setSortable(sortable);
 		return this;
 	}
-	
+
     /**
      * @return Is true if the column is editable.
      * @since 2.3
      */
     public boolean isEditable() {
-		
+
         if (editable != null) {
             return editable.booleanValue();
         }
-        
+
         return true;
     }
 
     /**
      * Set if column is editable.
-     * 
+     *
      * @since 2.3
      * @param editable Is true if the column is editable.
      */
     public void setEditable(Boolean editable) {
-		
+
         this.editable = editable;
     }
 
 	public HtmlColumn editable(Boolean editable) {
-		
+
 		setEditable(editable);
 		return this;
 	}
-	
+
     /**
      * @since 2.2
      * @return The sort order for the column.
      */
     public Order[] getSortOrder() {
-		
+
         if (sortOrder == null) {
             sortOrder = new Order[] { Order.NONE, Order.ASC, Order.DESC };
         }
@@ -193,7 +201,7 @@ public class HtmlColumn extends Column {
      * Typically you would use this to exclude the 'none' Order so that the user can only sort
      * ascending and decending once invoked.
      * </p>
-     * 
+     *
      * <p>
      * Note though that initially this does not change the look of the column, or effect the
      * sorting, when the table is first displayed. For instance, if you only want to sort asc and
@@ -203,33 +211,33 @@ public class HtmlColumn extends Column {
      * not do this then the effect will be that the once the column is sorted then it will just flip
      * between asc and desc, which is still a really nice effect and is what I would mostly do.
      * </p>
-     * 
+     *
      * @since 2.2
      * @param sortOrder The order array.
      */
     public void setSortOrder(Order... sortOrder) {
-		
+
         this.sortOrder = sortOrder;
     }
 
 	public HtmlColumn sortOrder(Order... sortOrder) {
-		
+
 		setSortOrder(sortOrder);
 		return this;
 	}
-	
+
     public String getWidth() {
-		
+
         return width;
     }
 
     public void setWidth(String width) {
-		
+
         this.width = width;
     }
 
 	public HtmlColumn width(String width) {
-		
+
 		setWidth(width);
 		return this;
 	}
@@ -238,32 +246,35 @@ public class HtmlColumn extends Column {
      * @return Is true if generated on the fly through the api.
      */
     public boolean isGeneratedOnTheFly() {
-		
+
         return generatedOnTheFly;
     }
 
     /**
      * Flag the column that it was generated on the fly. Only useful for the internal api so
      * developers should not use or override this variable.
-     * 
+     *
      * @since 2.2.1
      */
     public void setGeneratedOnTheFly(boolean generatedOnTheFly) {
-		
+
         this.generatedOnTheFly = generatedOnTheFly;
     }
 
 	public HtmlColumn generatedOnTheFly(boolean generatedOnTheFly) {
-		
+
 		setGeneratedOnTheFly(generatedOnTheFly);
 		return this;
 	}
 
     @Override
     public CellRenderer getCellRenderer() {
-		
+
         if (cellRenderer == null) {
-            CellRenderer cr = PreferencesUtils.<CellRenderer>createClassFromPreferences(getCoreContext(), COLUMN_CELL_RENDERER);
+            CellRenderer cr = PreferencesUtils.createClassFromPreferences(getCoreContext(), COLUMN_CELL_RENDERER);
+            if(cr==null){
+                cr = new HtmlCellRenderer();
+            }
             setCellRenderer(cr);
             return cr;
         }
@@ -272,7 +283,7 @@ public class HtmlColumn extends Column {
 
     @Override
     public void setCellRenderer(CellRenderer cellRenderer) {
-		
+
         this.cellRenderer = cellRenderer;
         this.cellRenderer.setColumn(this);
     }
@@ -282,15 +293,21 @@ public class HtmlColumn extends Column {
      */
     @Override
     public CellEditor getCellEditor() {
-		
+
         CoreContext coreContext = getCoreContext();
         if (cellEditor == null && coreContext != null) {
-            this.cellEditor = PreferencesUtils.<CellEditor>createClassFromPreferences(coreContext, COLUMN_CELL_EDITOR);
+            this.cellEditor = PreferencesUtils.createClassFromPreferences(coreContext, COLUMN_CELL_EDITOR);
+            if(this.cellEditor==null){
+                this.cellEditor =  new HtmlCellEditor();
+            }
         }
 
         if (coreContext != null && (ViewUtils.isEditable(coreContext.getWorksheet()) && isEditable())) {
             if (worksheetEditor == null) {
-                this.worksheetEditor = PreferencesUtils.<WorksheetEditor>createClassFromPreferences(coreContext, COLUMN_WORKSHEET_EDITOR);
+                this.worksheetEditor = PreferencesUtils.createClassFromPreferences(coreContext, COLUMN_WORKSHEET_EDITOR);
+                if(this.worksheetEditor==null){
+                    this.worksheetEditor = new InputWorksheetEditor();
+                }
             }
 
             if (worksheetEditor.getCellEditor() == null) {
@@ -299,7 +316,7 @@ public class HtmlColumn extends Column {
 
             return worksheetEditor;
         }
-        
+
         if (cellEditor == null) {
             cellEditor = new HtmlCellEditor();
         }
@@ -309,18 +326,18 @@ public class HtmlColumn extends Column {
 
     @Override
     public HtmlColumn cellEditor(CellEditor editor) {
-		
+
     	setCellEditor(editor);
     	return this;
     }
 
     @Override
     public void setCellEditor(CellEditor cellEditor) {
-		
+
         this.cellEditor = cellEditor;
 
         /*
-         * This is useful for editors that are decorated at 
+         * This is useful for editors that are decorated at
          * runtime. Most of the support classes are handled
          * in the TableFacadeUtils.init() method though.
          */
@@ -330,27 +347,30 @@ public class HtmlColumn extends Column {
     }
 
     public WorksheetEditor getWorksheetEditor() {
-		
+
         return worksheetEditor;
     }
 
     public void setWorksheetEditor(WorksheetEditor worksheetEditor) {
-		
+
         this.worksheetEditor = worksheetEditor;
     }
 
     public HtmlColumn worksheetEditor(WorksheetEditor editor){
-		
+
     	setWorksheetEditor(editor);
     	return this;
     }
 
     @Override
     public HeaderRenderer getHeaderRenderer() {
-		
+
         HeaderRenderer headerRenderer = super.getHeaderRenderer();
         if (headerRenderer == null) {
-            HeaderRenderer hr = PreferencesUtils.<HeaderRenderer>createClassFromPreferences(getCoreContext(), COLUMN_HEADER_RENDERER);
+            HeaderRenderer hr = PreferencesUtils.createClassFromPreferences(getCoreContext(), COLUMN_HEADER_RENDERER);
+            if(hr==null){
+                hr = new HtmlHeaderRenderer();
+            }
             super.setHeaderRenderer(hr);
             return hr;
         }
@@ -359,10 +379,13 @@ public class HtmlColumn extends Column {
 
     @Override
     public HeaderEditor getHeaderEditor() {
-		
+
         HeaderEditor headerEditor = super.getHeaderEditor();
         if (headerEditor == null) {
-            HeaderEditor he = PreferencesUtils.<HeaderEditor>createClassFromPreferences(getCoreContext(), COLUMN_HEADER_EDITOR);
+            HeaderEditor he = PreferencesUtils.createClassFromPreferences(getCoreContext(), COLUMN_HEADER_EDITOR);
+            if(he==null){
+                he = new HtmlHeaderEditor();
+            }
             super.setHeaderEditor(he);
             return he;
         }
@@ -371,10 +394,13 @@ public class HtmlColumn extends Column {
 
     @Override
     public FilterRenderer getFilterRenderer() {
-		
+
         FilterRenderer filterRenderer = super.getFilterRenderer();
         if (filterRenderer == null) {
-            FilterRenderer fr = PreferencesUtils.<FilterRenderer>createClassFromPreferences(getCoreContext(), COLUMN_FILTER_RENDERER);
+            FilterRenderer fr = PreferencesUtils.createClassFromPreferences(getCoreContext(), COLUMN_FILTER_RENDERER);
+            if(fr==null){
+                fr =  new HtmlFilterRenderer();
+            }
             super.setFilterRenderer(fr);
             return fr;
         }
@@ -383,10 +409,13 @@ public class HtmlColumn extends Column {
 
     @Override
     public FilterEditor getFilterEditor() {
-		
+
         FilterEditor filterEditor = super.getFilterEditor();
         if (filterEditor == null) {
-            FilterEditor fe = PreferencesUtils.<FilterEditor>createClassFromPreferences(getCoreContext(), COLUMN_FILTER_EDITOR);
+            FilterEditor fe = PreferencesUtils.createClassFromPreferences(getCoreContext(), COLUMN_FILTER_EDITOR);
+            if(fe ==null){
+                fe = new HtmlFilterEditor();
+            }
             super.setFilterEditor(fe);
             return fe;
         }
@@ -395,109 +424,109 @@ public class HtmlColumn extends Column {
 
     @Override
     public HtmlColumn filterEditor(FilterEditor filterEditor) {
-		
+
     	setFilterEditor(filterEditor);
     	return this;
     }
 
     @Override
     public HtmlRow getRow() {
-		
+
         return (HtmlRow) super.getRow();
     }
 
     public String getStyle() {
-		
+
         return style;
     }
 
     public void setStyle(String style) {
-		
+
     	this.style = style;
     }
-    
+
     public HtmlColumn style(String style) {
-		
+
     	setStyle(style);
     	return this;
     }
-    
+
     public String getStyleClass() {
-		
+
         return styleClass;
     }
 
     public void setStyleClass(String styleClass) {
-		
+
     	this.styleClass = styleClass;
     }
 
     public HtmlColumn styleClass(String styleClass) {
-		
+
     	setStyleClass(styleClass);
     	return this;
     }
 
     public String getHeaderStyle() {
-		
+
         return headerStyle;
     }
-    
+
     public void setHeaderStyle(String headerStyle) {
-		
+
     	this.headerStyle = headerStyle;
     }
-    
+
     public HtmlColumn headerStyle(String headerStyle) {
-		
+
     	setHeaderStyle(headerStyle);
     	return this;
     }
 
     public String getHeaderClass() {
-		
+
         return headerClass;
     }
-    
+
     public void setHeaderClass(String headerClass) {
-		
+
     	this.headerClass = headerClass;
     }
-    
+
     public HtmlColumn headerClass(String headerClass) {
-		
+
     	setHeaderClass(headerClass);
     	return this;
     }
 
     public String getFilterStyle() {
-		
+
         return filterStyle;
     }
 
     public void setFilterStyle(String filterStyle) {
-		
+
     	this.filterStyle = filterStyle;
     }
 
     public HtmlColumn filterStyle(String filterStyle) {
-		
+
     	setFilterStyle(filterStyle);
     	return this;
     }
 
     public String getFilterClass() {
-		
+
         return filterClass;
     }
 
     public void setFilterClass(String filterClass) {
-		
+
     	this.filterClass = filterClass;
     }
 
     public HtmlColumn filterClass(String filterClass) {
-		
+
     	setFilterClass(filterClass);
     	return this;
     }

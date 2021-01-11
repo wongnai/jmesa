@@ -573,21 +573,21 @@ public class NWTableFacade implements  WorksheetSupport, JsonContextSupport, Cor
 
         validateItemsIsNotNull(items);
 
-//        CoreContextFactory factory = new CoreContextFactory(autoFilterAndSort, getWebContext());
-//        factory.setPreferences(getPreferences());
-//        factory.setMessages(getMessages());
-//        factory.setColumnSort(columnSort);
-//        factory.setRowFilter(rowFilter);
-//
-//        if (filterMatchers != null) {
-//            Set<MatcherKey> keySet = filterMatchers.keySet();
-//            for (MatcherKey key : keySet) {
-//                FilterMatcher matcher = filterMatchers.get(key);
-//                factory.addFilterMatcher(key, matcher);
-//            }
-//        }
-//
-//        this.coreContext = factory.createCoreContext(items, getLimit(), getWorksheet());
+        CoreContextFactory factory = new CoreContextFactory(autoFilterAndSort, table.getWebContext());
+        factory.setPreferences(getPreferences());
+        factory.setMessages(getMessages());
+        factory.setColumnSort(columnSort);
+        factory.setRowFilter(rowFilter);
+
+        if (filterMatchers != null) {
+            Set<MatcherKey> keySet = filterMatchers.keySet();
+            for (MatcherKey key : keySet) {
+                FilterMatcher matcher = filterMatchers.get(key);
+                factory.addFilterMatcher(key, matcher);
+            }
+        }
+
+        this.coreContext = factory.createCoreContext(items, getLimit(), getWorksheet());
         return coreContext;
     }
 

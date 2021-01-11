@@ -26,10 +26,14 @@ import org.jmesa.web.WebContext;
 public class PreferencesFactory {
 
     private static final String JMESA_PREFERENCES_LOCATION = "jmesaPreferencesLocation";
+    public static final String DEFAULT_JMESA_PROPERTIES = "/jmesa.properties";
 
     public static Preferences getPreferences(WebContext webContext) {
 
         String jmesaPreferencesLocation = (String) webContext.getApplicationInitParameter(JMESA_PREFERENCES_LOCATION);
+        if(jmesaPreferencesLocation==null){
+            jmesaPreferencesLocation = DEFAULT_JMESA_PROPERTIES;
+        }
         return new PropertiesPreferences(jmesaPreferencesLocation, webContext);
     }
 }

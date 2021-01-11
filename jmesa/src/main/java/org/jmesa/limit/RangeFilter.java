@@ -65,11 +65,21 @@ public final class RangeFilter extends BaseFilter implements Filter{
     private static  final Logger logger = LoggerFactory.getLogger(RangeFilter.class);
 
     public static class Pair{
+
+
         String startValueInclusive;
         String endValueExclusive;
         public Pair(String startValueInclusive, String endValueExclusive){
             this.startValueInclusive = startValueInclusive;
             this.endValueExclusive = endValueExclusive;
+        }
+
+        public String getStartValueInclusive() {
+            return startValueInclusive;
+        }
+
+        public String getEndValueExclusive() {
+            return endValueExclusive;
         }
 
         /**

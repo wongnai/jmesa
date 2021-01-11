@@ -23,10 +23,13 @@ import org.jmesa.core.preference.Preferences;
  * @author Jeff Johnston
  */
 public class PreferencesUtils {
-    
+
     public static <T> T createClassFromPreferences(CoreContext coreContext, String property) {
-        
+
         String className = coreContext.getPreference(property);
+        if(className==null){
+            return null;
+        }
         try {
             Class<?> clazz = Class.forName(className);
             return (T)clazz.newInstance();
@@ -36,8 +39,11 @@ public class PreferencesUtils {
     }
 
     public static <T> T createClassFromPreferences(Preferences preferences, String property) {
-        
+
         String className = preferences.getPreference(property);
+        if(className==null){
+            return null;
+        }
         try {
             Class<?> clazz = Class.forName(className);
             return (T)clazz.newInstance();

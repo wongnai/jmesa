@@ -46,37 +46,37 @@ import com.google.gson.Gson;
  * @author Jeff Johnston
  */
 public class HtmlSnippets extends AbstractContextSupport {
-		
+
     private static final Gson GSON = new Gson();
     private HtmlTable table;
     private Toolbar toolbar;
 
     public HtmlSnippets(HtmlTable table, Toolbar toolbar, CoreContext coreContext) {
-		
+
         this.table = table;
         this.toolbar = toolbar;
         setCoreContext(coreContext);
     }
 
     protected HtmlTable getHtmlTable() {
-		
+
         return table;
     }
 
     protected Toolbar getToolbar() {
-		
+
         return toolbar;
     }
 
     public String themeStart() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.div().styleClass(table.getTheme()).close();
         return html.toString();
     }
 
     public String themeEnd() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.newline();
         html.divEnd();
@@ -84,35 +84,35 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String tableStart() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.append(table.getTableRenderer().render());
         return html.toString();
     }
 
     public String tableEnd() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.tableEnd(0);
         return html.toString();
     }
 
     public String theadStart() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.thead(1).close();
         return html.toString();
     }
 
     public String theadEnd() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.theadEnd(1);
         return html.toString();
     }
 
     public String tbodyStart() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         String tbodyClass = getCoreContext().getPreference(HtmlConstants.TBODY_CLASS);
         html.tbody(1).styleClass(tbodyClass).close();
@@ -120,7 +120,7 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String tbodyEnd() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.tbodyEnd(1);
         return html.toString();
@@ -128,7 +128,7 @@ public class HtmlSnippets extends AbstractContextSupport {
 
     @SuppressWarnings("unchecked")
     public String filter() {
-		
+
         HtmlRow row = table.getRow();
         List columns = row.getColumns();
 
@@ -155,7 +155,7 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String header() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         String headerClass = getCoreContext().getPreference(HtmlConstants.HEADER_CLASS);
         html.tr(1).styleClass(headerClass).close();
@@ -173,12 +173,12 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String footer() {
-		
+
         return null;
     }
 
     public String body() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         CoreContext coreContext = getCoreContext();
@@ -207,7 +207,7 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String worksheetRowsAdded() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         CoreContext coreContext = getCoreContext();
@@ -245,7 +245,7 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     private String worksheetRowsAddedHeader(String title, int colspan) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         html.tr(1).styleClass("addRow").close();
@@ -256,7 +256,7 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String statusBarText() {
-		
+
         CoreContext coreContext = getCoreContext();
         Limit limit = coreContext.getLimit();
         RowSelect rowSelect = limit.getRowSelect();
@@ -273,7 +273,10 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String toolbar() {
-		
+        if(toolbar== null){
+            return "";
+        }
+
         HtmlBuilder html = new HtmlBuilder();
 
         HtmlRow row = table.getRow();
@@ -292,7 +295,7 @@ public class HtmlSnippets extends AbstractContextSupport {
     }
 
     public String statusBar() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         HtmlRow row = table.getRow();
@@ -313,17 +316,17 @@ public class HtmlSnippets extends AbstractContextSupport {
 
         return html.toString();
     }
-    
+
     public String hiddenFields() {
-        
+
         HtmlBuilder html = new HtmlBuilder();
-        
+
         Limit limit = getCoreContext().getLimit();
-        
+
         /* limit fields */
         html.newline().input().type("hidden").name(limit.getId() + "_mr_").value(String.valueOf(limit.getRowSelect().getMaxRows())).end();
         html.newline().input().type("hidden").name(limit.getId() + "_p_").value(String.valueOf(limit.getRowSelect().getPage())).end();
-        
+
         /* export fields */
         html.newline().input().type("hidden").name(limit.getId() + "_e_").end();
 
@@ -336,7 +339,7 @@ public class HtmlSnippets extends AbstractContextSupport {
 
         /* context fields */
         html.newline().input().type("hidden").name(limit.getId() + "_ctx_").value(getWebContext().getContextPath()).end();
-        
+
         return html.toString();
     }
 
@@ -351,7 +354,7 @@ public class HtmlSnippets extends AbstractContextSupport {
 
         return hiddenFields();
     }
-    
+
     public String createExportField() {
 
         Map<String,  Map<String,String>> columnInfo = new LinkedHashMap<String,  Map<String,String>>();
@@ -367,9 +370,9 @@ public class HtmlSnippets extends AbstractContextSupport {
                 info.put("pattern", ((PatternSupport)exportEditor).getPattern());
             }
             columnInfo.put(column.getProperty(), info);
-            
+
         }
-        
+
         HtmlBuilder html = new HtmlBuilder();
         Limit limit = getCoreContext().getLimit();
         String name = limit.getId() + "_exp_";
@@ -380,6 +383,6 @@ public class HtmlSnippets extends AbstractContextSupport {
 
         return html.toString();
     }
-    
+
 
 }
