@@ -27,23 +27,23 @@ import org.jmesa.view.html.toolbar.ToolbarItemType;
 
 /**
  * The default editor for the column header. Will handle all the sorting.
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
 public class HtmlHeaderEditor extends AbstractHeaderEditor {
-		
+
     @Override
     public HtmlColumn getColumn() {
-		
+
         return (HtmlColumn) super.getColumn();
     }
 
     @Override
     public Object getValue() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
-        
+
         html.div();
 
         Limit limit = getCoreContext().getLimit();
@@ -69,7 +69,7 @@ public class HtmlHeaderEditor extends AbstractHeaderEditor {
                 }
             }
         }
-        
+
         html.close();
         html.append(getTitle(column));
 
@@ -104,7 +104,7 @@ public class HtmlHeaderEditor extends AbstractHeaderEditor {
                 }
             }
         }
-        
+
         html.divEnd();
 
         if (column.isSortable()) {
@@ -113,14 +113,14 @@ public class HtmlHeaderEditor extends AbstractHeaderEditor {
             if (sort != null) {
                 html.value(sort.getOrder().toParam());
             }
-            html.end();            
+            html.end();
         }
-        
+
         return html.toString();
     }
 
     protected String getTitle(HtmlColumn column) {
-		
+
         return column.getTitle();
     }
 
@@ -131,15 +131,15 @@ public class HtmlHeaderEditor extends AbstractHeaderEditor {
      * @return The JavaScript to get the next Order when invoking the onlick command.
      */
     protected String onclick(Order currentOrder, HtmlColumn column, Limit limit) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         int position = column.getRow().getColumns().indexOf(column);
-        
+
         if (currentOrder == Order.NONE) {
-            html.onclick("jQuery.jmesa.setSort('" + limit.getId() + "','" + column.getProperty() + "','" + position + "');" + getOnInvokeActionJavaScript(limit));
+            html.onclick("jQuery.jmesa.addSortToLimit('" + limit.getId() + "','" + column.getProperty() + "','" + position + "');" + getOnInvokeActionJavaScript(limit));
         } else {
-            html.onclick("jQuery.jmesa.setSort('" + limit.getId() + "','" + column.getProperty() + "','" + position + "','" + currentOrder.toParam() + "');" + getOnInvokeActionJavaScript(limit));
+            html.onclick("jQuery.jmesa.addSortToLimit('" + limit.getId() + "','" + column.getProperty() + "','" + position + "','" + currentOrder.toParam() + "');" + getOnInvokeActionJavaScript(limit));
         }
 
         return html.toString();
@@ -151,7 +151,7 @@ public class HtmlHeaderEditor extends AbstractHeaderEditor {
      * @return The next sort order in the array.
      */
     protected Order nextSortOrder(Order currentOrder, HtmlColumn column) {
-		
+
         Order[] sortOrder = column.getSortOrder();
 
         for (int i = 0; i < sortOrder.length; i++) {
@@ -167,15 +167,18 @@ public class HtmlHeaderEditor extends AbstractHeaderEditor {
 
         return Order.NONE;
     }
-    
+
     protected String getOnInvokeActionJavaScript(Limit limit) {
-		
+
         String onInvokeAction = getCoreContext().getPreference(HtmlConstants.ON_INVOKE_ACTION);
+        if(onInvokeAction==null){
+            onInvokeAction ="onInvokeAction";
+        }
         return onInvokeAction + "('" + limit.getId() + "', '" + ToolbarItemType.SORT_ITEM.toCode() + "')";
     }
-    
+
     protected String getInputName(HtmlColumn column, Limit limit) {
-        
+
         int position = column.getRow().getColumns().indexOf(column);
         StringBuilder name = new StringBuilder();
         name.append(limit.getId()).append("_s_").append(position).append("_").append(column.getProperty());

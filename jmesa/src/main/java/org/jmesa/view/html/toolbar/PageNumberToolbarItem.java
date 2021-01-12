@@ -24,18 +24,18 @@ import org.jmesa.view.html.HtmlBuilder;
  * @author Jeff Johnston
  */
 public class PageNumberToolbarItem extends AbstractToolbarItem {
-		
+
     private int page;
 
     public PageNumberToolbarItem(CoreContext coreContext, int page) {
-		
+
         super(coreContext);
         this.page = page;
     }
 
     @Override
     public String render() {
-		
+
         Limit limit = getCoreContext().getLimit();
         int currentPage = limit.getRowSelect().getPage();
 
@@ -44,12 +44,12 @@ public class PageNumberToolbarItem extends AbstractToolbarItem {
         }
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + page + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + page + "');" + getOnInvokeActionJavaScript());
         return enabled(action.toString(), page);
-    }    
-    
+    }
+
     protected String disabled(int page) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         html.span();
@@ -63,7 +63,7 @@ public class PageNumberToolbarItem extends AbstractToolbarItem {
     }
 
     protected String enabled(String action, int page) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         html.span();

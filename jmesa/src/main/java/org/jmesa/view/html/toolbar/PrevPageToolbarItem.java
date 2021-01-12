@@ -24,20 +24,20 @@ import org.jmesa.view.html.HtmlUtils;
  * @author Jeff Johnston
  */
 public class PrevPageToolbarItem extends AbstractImageToolbarItem {
-		
+
     public PrevPageToolbarItem(CoreContext coreContext) {
-        
+
         super(coreContext);
     }
 
     @Override
     public String render() {
-		
+
         Limit limit = getCoreContext().getLimit();
         int page = limit.getRowSelect().getPage();
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + (page - 1) + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + (page - 1) + "');" + getOnInvokeActionJavaScript());
 
         if (!HtmlUtils.isPrevPageEnabled(page)) {
             return disabled();

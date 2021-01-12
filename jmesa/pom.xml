@@ -48,7 +48,7 @@
 
         <!-- Frameworks versions - production use -->
         <bsfVersion>2.4.0</bsfVersion>
-        <commonsBeanUtilsVersion>1.7.0</commonsBeanUtilsVersion>
+        <commonsBeanUtilsVersion>1.9.4</commonsBeanUtilsVersion>
         <commonsCollectionsVersion>3.2</commonsCollectionsVersion>
         <commonsElVersion>1.0</commonsElVersion>
         <commonsLangVersion>2.2</commonsLangVersion>

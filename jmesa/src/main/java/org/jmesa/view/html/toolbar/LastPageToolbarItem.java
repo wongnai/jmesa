@@ -24,21 +24,21 @@ import org.jmesa.view.html.HtmlUtils;
  * @author Jeff Johnston
  */
 public class LastPageToolbarItem extends AbstractImageToolbarItem {
-		
+
     public LastPageToolbarItem(CoreContext coreContext) {
-        
+
         super(coreContext);
     }
 
     @Override
     public String render() {
-		
+
         Limit limit = getCoreContext().getLimit();
         int page = limit.getRowSelect().getPage();
         int totalPages = HtmlUtils.totalPages(getCoreContext());
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + totalPages + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + totalPages + "');" + getOnInvokeActionJavaScript());
 
         if (!HtmlUtils.isLastPageEnabled(page, totalPages)) {
             return disabled();

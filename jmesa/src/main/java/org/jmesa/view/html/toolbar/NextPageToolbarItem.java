@@ -24,7 +24,7 @@ import org.jmesa.view.html.HtmlUtils;
  * @author Jeff Johnston
  */
 public class NextPageToolbarItem extends AbstractImageToolbarItem {
-		
+
     public NextPageToolbarItem(CoreContext coreContext) {
 
         super(coreContext);
@@ -32,12 +32,12 @@ public class NextPageToolbarItem extends AbstractImageToolbarItem {
 
     @Override
     public String render() {
-		
+
         Limit limit = getCoreContext().getLimit();
         int page = limit.getRowSelect().getPage();
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + (page + 1) + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + (page + 1) + "');" + getOnInvokeActionJavaScript());
 
         int totalPages = HtmlUtils.totalPages(getCoreContext());
         if (!HtmlUtils.isNextPageEnabled(page, totalPages)) {

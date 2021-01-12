@@ -33,9 +33,13 @@ import org.jmesa.worksheet.state.WorksheetState;
  *
  * @since 2.3
  * @author Jeff Johnston
+ * patched by rnbWarden on 16 May 2015
+ *  Handling race conditions updating the worksheet
  */
 public class WorksheetUpdater {
-		
+
+    protected static final Object LOCK_OBJECT = new Object();
+
     protected static String UNIQUE_PROPERTIES = "up_";
     protected static String COLUMN_PROPERTY = "cp_";
     protected static String ORIGINAL_VALUE = "ov_";
@@ -50,25 +54,32 @@ public class WorksheetUpdater {
     protected WorksheetState worksheetState;
 
     public String update(Messages messages, WebContext webContext) {
-		
-        Worksheet worksheet = getWorksheet(messages, webContext);
-        WorksheetRow worksheetRow = getWorksheetRow(worksheet, webContext);
 
-        WorksheetColumn worksheetColumn = getWorksheetColumn(worksheetRow, webContext);
-        String columnStatus = validateWorksheet(worksheet, worksheetRow, worksheetColumn, webContext.getParameter(ERROR_MESSAGE));
+        String columnStatus;
+        Worksheet worksheet;
 
-        // for distributed deployment (e.g. GAE)
-        getWorksheetState(webContext).persistWorksheet(worksheet);
+        synchronized (LOCK_OBJECT) {
+            worksheet = getWorksheet(messages, webContext);
+        }
+        synchronized (worksheet) {
+            WorksheetRow worksheetRow = getWorksheetRow(worksheet, webContext);
+
+            WorksheetColumn worksheetColumn = getWorksheetColumn(worksheetRow, webContext);
+            columnStatus = validateWorksheet(worksheet, worksheetRow, worksheetColumn, webContext.getParameter(ERROR_MESSAGE));
+
+            // for distributed deployment (e.g. GAE)
+            getWorksheetState(webContext).persistWorksheet(worksheet);
+        }
 
         return columnStatus;
     }
 
     protected Worksheet getWorksheet(Messages messages, WebContext webContext) {
-		
+
         worksheetState = getWorksheetState(webContext);
         Worksheet worksheet = worksheetState.retrieveWorksheet();
         if (worksheet == null) {
-        	String id = webContext.getParameter("id");
+            String id = webContext.getParameter("id");
             worksheet = new Worksheet(id);
             worksheet.setWebContext(webContext);
             worksheet.setMessages(messages);
@@ -79,17 +90,17 @@ public class WorksheetUpdater {
     }
 
     protected WorksheetState getWorksheetState(WebContext webContext) {
-		
-    	if (worksheetState == null) {
-    		String id = webContext.getParameter("id");
-    		return new SessionWorksheetState(id, webContext);
-    	}
 
-    	return worksheetState;
+        if (worksheetState == null) {
+            String id = webContext.getParameter("id");
+            return new SessionWorksheetState(id, webContext);
+        }
+
+        return worksheetState;
     }
 
     protected WorksheetRow getWorksheetRow(Worksheet worksheet, WebContext webContext) {
-		
+
         Map<?, ?> parameters = webContext.getParameterMap();
         for (Object param : parameters.keySet()) {
             String parameter = (String) param;
@@ -113,7 +124,7 @@ public class WorksheetUpdater {
     }
 
     protected WorksheetColumn getWorksheetColumn(WorksheetRow worksheetRow, WebContext webContext) {
-		
+
         String property = webContext.getParameter(COLUMN_PROPERTY);
         WorksheetColumn worksheetColumn = worksheetRow.getColumn(property);
         if (worksheetColumn == null) {
@@ -143,7 +154,7 @@ public class WorksheetUpdater {
      * then remove the column from the row.
      */
     protected String validateWorksheet(Worksheet worksheet, WorksheetRow row, WorksheetColumn column, String errorMessage) {
-		
+
         String columnStatus = COLUMN_UPDATED;
 
         if (StringUtils.isNotEmpty(errorMessage)) {

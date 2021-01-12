@@ -231,8 +231,8 @@ public class LimitFactory {
 
     private int getMaxRows(int maxRows) {
 
-        Integer currentMaxRows = limitActionFactoryMapImpl.getMaxRows();
-        if (currentMaxRows == null) {
+        int currentMaxRows = limitActionFactoryMapImpl.getMaxRows();
+        if ( currentMaxRows<=0) {
             return maxRows;
         }
 

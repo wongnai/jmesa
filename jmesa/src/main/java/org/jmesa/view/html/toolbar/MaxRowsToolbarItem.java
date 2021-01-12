@@ -87,7 +87,7 @@ public class MaxRowsToolbarItem extends AbstractToolbarItem {
             throw new IllegalStateException("The maxRowIncrements does not contain the maxRows.");
         }
 
-        StringBuilder action = new StringBuilder("jQuery.jmesa.setMaxRows('"
+        StringBuilder action = new StringBuilder("jQuery.jmesa.setMaxRowsToLimit('"
                 + limit.getId() + "', this.options[this.selectedIndex].value);"
                 + getOnInvokeActionJavaScript());
 
