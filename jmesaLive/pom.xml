@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.github.yujiaao</groupId>
             <artifactId>jmesa</artifactId>
-            <version>4.1.0-RC5</version>
+            <version>4.1.0-RC6</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
