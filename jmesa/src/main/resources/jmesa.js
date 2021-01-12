@@ -18,15 +18,15 @@ function removeFilterFromWorksheet(id) {
 }
 
 function setPageToLimit(id, page) {
-    jQuery.jmesa.setPageToLimit(id, page);
+    jQuery.jmesa.setPage(id, page);
 }
 
 function setMaxRowsToLimit(id, maxRows) {
-    jQuery.jmesa.setMaxRowsToLimit(id, maxRows);
+    jQuery.jmesa.setMaxRows(id, maxRows);
 }
 
 function addSortToLimit(id, position, property, order) {
-    jQuery.jmesa.addSortToLimit(id, position, property, order);
+    jQuery.jmesa.setSort(id, position, property, order);
 }
 
 function removeSortFromLimit(id, property) {
@@ -42,11 +42,11 @@ function getSortFromLimit(id, property) {
 }
 
 function addFilterToLimit(id, property) {
-    jQuery.jmesa.addFilterToLimit(id, property);
+    jQuery.jmesa.setFilterToWorksheet(id, property);
 }
 
 function removeFilterFromLimit(id, property) {
-    jQuery.jmesa.removeFilterFromLimit(id, property);
+    jQuery.jmesa.removeFilterFromWorksheet(id, property);
 }
 
 function removeAllFiltersFromLimit(id) {
@@ -58,7 +58,7 @@ function getFilterFromLimit(id, property) {
 }
 
 function setExportToLimit(id, exportType) {
-    jQuery.jmesa.setExportToLimit(id, exportType);
+    jQuery.jmesa.setExport(id, exportType);
 }
 
 function createHiddenInputFieldsForLimit(id) {

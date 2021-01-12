@@ -14,9 +14,16 @@
       <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bp/fancy-type/screen.css" type="text/css" media="screen, projection">
 
       <!-- js files -->
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.3.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.jmesa.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jmesa.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='${pageContext.request.contextPath}/js/jquery-3.2.1.min.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+        </script>
+
+<%--        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.3.min.js"></script>--%>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.jmesa.js?v=2"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jmesa.js?v=2"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
 		<title>JMesa</title>
 		<decorator:head/>

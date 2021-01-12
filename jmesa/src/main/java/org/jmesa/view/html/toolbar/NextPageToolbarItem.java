@@ -37,7 +37,7 @@ public class NextPageToolbarItem extends AbstractImageToolbarItem {
         int page = limit.getRowSelect().getPage();
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + (page + 1) + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + (page + 1) + "');" + getOnInvokeActionJavaScript());
 
         int totalPages = HtmlUtils.totalPages(getCoreContext());
         if (!HtmlUtils.isNextPageEnabled(page, totalPages)) {

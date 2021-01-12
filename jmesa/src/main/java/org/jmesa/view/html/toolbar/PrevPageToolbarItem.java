@@ -37,7 +37,7 @@ public class PrevPageToolbarItem extends AbstractImageToolbarItem {
         int page = limit.getRowSelect().getPage();
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + (page - 1) + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + (page - 1) + "');" + getOnInvokeActionJavaScript());
 
         if (!HtmlUtils.isPrevPageEnabled(page)) {
             return disabled();

@@ -137,9 +137,9 @@ public class HtmlHeaderEditor extends AbstractHeaderEditor {
         int position = column.getRow().getColumns().indexOf(column);
 
         if (currentOrder == Order.NONE) {
-            html.onclick("jQuery.jmesa.addSortToLimit('" + limit.getId() + "','" + column.getProperty() + "','" + position + "');" + getOnInvokeActionJavaScript(limit));
+            html.onclick("jQuery.jmesa.setSort('" + limit.getId() + "','" + column.getProperty() + "','" + position + "');" + getOnInvokeActionJavaScript(limit));
         } else {
-            html.onclick("jQuery.jmesa.addSortToLimit('" + limit.getId() + "','" + column.getProperty() + "','" + position + "','" + currentOrder.toParam() + "');" + getOnInvokeActionJavaScript(limit));
+            html.onclick("jQuery.jmesa.setSort('" + limit.getId() + "','" + column.getProperty() + "','" + position + "','" + currentOrder.toParam() + "');" + getOnInvokeActionJavaScript(limit));
         }
 
         return html.toString();

@@ -1,17 +1,17 @@
 <!-- Header image and css/js will be included by sitemesh decorator (/WEB-INF/decorators.xml)-->
 
 <html>
-    
+
     <head>
         <title>Basic JMesa Example</title>
     </head>
-    
+
     <body>
-        
+
         <strong class="large">Basic with Export</strong>
         <h4 class="alt"> The basic JMesa example additionally having csv, excel export functionality. </h4>
         <hr/>
-        
+
         <div class="span-24">
            <div class="span-11 colborder">
                Also using the State feature (by passing parameter "restore=true" in request). You can see that
@@ -33,12 +33,12 @@
 
             ${presidents}
         </form>
-        
+
         <hr class="space"/>
-        
+
         <script type="text/javascript">
             function onInvokeAction(id) {
-                $.jmesa.setExportToLimit(id, '');
+                $.jmesa.setExport(id, '');
                 $.jmesa.createHiddenInputFieldsForLimitAndSubmit(id);
             }
             function onInvokeExportAction(id) {
@@ -46,7 +46,7 @@
                 location.href = '${pageContext.request.contextPath}/PresidentController?type=basicExport&' + parameterString;
             }
         </script>
-        
+
     </body>
-    
+
 </html>

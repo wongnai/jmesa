@@ -50,7 +50,7 @@ function removeFilterFromLimit(id, property) {
 }
 
 function removeAllFiltersFromLimit(id) {
-    jQuery.jmesa.removeFilterFromWorksheet(id);
+    jQuery.jmesa.removeAllFiltersFromLimit(id);
 }
 
 function getFilterFromLimit(id, property) {
@@ -58,7 +58,7 @@ function getFilterFromLimit(id, property) {
 }
 
 function setExportToLimit(id, exportType) {
-    jQuery.jmesa.setExport(id, exportType);
+    jQuery.jmesa.setExportToLimit(id, exportType);
 }
 
 function createHiddenInputFieldsForLimit(id) {

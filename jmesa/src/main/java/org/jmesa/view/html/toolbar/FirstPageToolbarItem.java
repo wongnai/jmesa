@@ -37,7 +37,7 @@ public class FirstPageToolbarItem extends AbstractImageToolbarItem {
         int page = limit.getRowSelect().getPage();
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + 1 + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + 1 + "');" + getOnInvokeActionJavaScript());
 
         if (!HtmlUtils.isFirstPageEnabled(page)) {
             return disabled();

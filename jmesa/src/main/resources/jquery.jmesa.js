@@ -2,47 +2,47 @@
 
     var coreapi = {
         getForm : function(id) {
-            
+
             return $("#"+id).parents('form');
         },
         setSaveToWorksheet : function(id) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_sw_"]').val('true');
         },
         setFilterToWorksheet : function(id) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_fw_"]').val('true');
             $(this.getForm(id)).find('input[name="' + id + '_p_"]').val('1');
         },
         setClearToWorksheet : function(id) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_cw_"]').val('true');
             this.removeFilterFromWorksheet(id);
         },
         setAddRowToWorksheet : function(id) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_awr_"]').val('true');
         },
         removeFilterFromWorksheet : function(id) {
-            
+
             this.removeAllFilters(id);
             $(this.getForm(id)).find('input[name="' + id + '_p_"]').val('1');
         },
         setPage : function(id, page) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_p_"]').val(page);
         },
         setMaxRows : function(id, maxRows) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_mr_"]').val(maxRows);
             $(this.getForm(id)).find('input[name="' + id + '_p_"]').val('1');
         },
         setSort : function(id, property, position, sort) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_s_' + position + '_' + property + '"]').val(sort);
         },
         removeAllFilters : function(id) {
-            
+
             $(this.getForm(id)).find('input[name^="' + id + '_f_"]').each(
                 function(i, child) {
                     child.value = '';
@@ -50,27 +50,24 @@
             $(this.getForm(id)).find('input[name="' + id + '_p_"]').val('1');
         },
         filterKeypress : function(id, e) {
-            
+
             var keynum;
 
             if (window.event) { // (IE)
                 keynum = e.keyCode;
-            } else if (e.which) { // (other browsers) 
+            } else if (e.which) { // (other browsers)
                 keynum = e.which;
             }
-            
+
             if (keynum == 13) { // enter key pressed
             	window.onInvokeAction(id, 'filter');
             }
         },
         setExport : function(id, exportType) {
-            
+
             $(this.getForm(id)).find('input[name="' + id + '_e_"]').val(exportType);
         },
-        setExportToLimit : function(id, exportType) {
-            
-            $(this.getForm(id)).find('input[name="' + id + '_e_"]').val(exportType);
-        },
+
         submitWorksheetColumn : function(column, id, property, uniqueProperty, uniqueValue, originalValue, worksheetValue) {
 
             var changedValue = $(column).val();
@@ -130,7 +127,7 @@
             $.post(contextPath + 'jmesa.wrk', jQuery.parseJSON(data), function(columnStatus) {
                //jQuery.jmesa.updateCssClass(columnStatus, cell, errorMessage);
             });
-        },        
+        },
         createHiddenInputFieldsForLimitAndSubmit : function(id) {
 
             $(this.getForm(id)).submit();
@@ -140,18 +137,18 @@
             $(this.getForm(id)).submit();
         },
         createParameterStringForLimit : function(id) {
-            
+
             var url = '';
 
             /* export fields */
-            
+
             var exportType = $(this.getForm(id)).find('input[name="' + id + '_e_"]').val();
             if (exportType) {
                 url += '&' + id + '_e_=' + exportType;
             }
 
             /* limit fields */
-            
+
             var maxRow = $(this.getForm(id)).find('input[name="' + id + '_mr_"]').val();
             if (maxRow) {
                 url += '&' + id + '_mr_=' + maxRow;
@@ -161,18 +158,18 @@
             if (page) {
                 url += '&' + id + '_p_=' + page;
             }
-            
+
             $(this.getForm(id)).find('input[name^="' + id + '_f_"]').each(
                 function(i, child) {
                     if (child.value != null && child.value != '') {
-                        url += '&' + child.name + '=' + child.value;                        
+                        url += '&' + child.name + '=' + child.value;
                     }
                 });
-            
+
             $(this.getForm(id)).find('input[name^="' + id + '_s_"]').each(
                 function(i, child) {
                     if (child.value != null && child.value != '') {
-                        url += '&' + child.name + '=' + child.value;                        
+                        url += '&' + child.name + '=' + child.value;
                     }
                 });
 
@@ -198,7 +195,7 @@
                 url += '&' + id + '_awr_=true';
             }
 
-            return url;            
+            return url;
         }
     };
 

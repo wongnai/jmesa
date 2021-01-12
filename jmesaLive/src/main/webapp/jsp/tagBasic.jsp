@@ -14,18 +14,18 @@ org.jmesalive.domain.President
 %>
 
 <html>
-    
+
     <head>
         <title>Basic JMesa Example</title>
         <%@ taglib uri="/WEB-INF/tld/jmesa.tld" prefix="jmesa" %>
     </head>
-    
+
     <body>
-        
+
         <strong class="large">Basic</strong>
         <h4 class="alt"> The basic JMesa example that uses the tag library. </h4>
         <hr/>
-        
+
         <div class="span-24">
            <div class="span-11 colborder">
                Also using the State feature (by passing parameter "restore=true" in request). You can see that
@@ -44,20 +44,20 @@ org.jmesalive.domain.President
         <form name="presidentsForm" action="${pageContext.request.contextPath}/jsp/tagBasic.jsp">
             <!-- required to put "active" css class on hyperlink of current example (/decorators/main.jsp) -->
             <input type="hidden" name="type" value="tagBasic"/>
-            
+
             <jmesa:tableModel
-               id="tagBasic" 
+               id="tagBasic"
                items="${presidents}"
                maxRows="12"
                maxRowsIncrements="12,20,36"
                stateAttr="restore"
                var="bean"
                >
-               <jmesa:htmlTable 
-                   caption="Presidents" 
+               <jmesa:htmlTable
+                   caption="Presidents"
                    width="700px"
-                   >               
-                   <jmesa:htmlRow> 
+                   >
+                   <jmesa:htmlRow>
                        <jmesa:htmlColumn property="name.firstName" title="First Name">
                            <a href="http://www.whitehouse.gov/history/presidents/">${bean.name.firstName}</a>
                        </jmesa:htmlColumn>
@@ -67,24 +67,24 @@ org.jmesalive.domain.President
                            filterEditor="org.jmesa.view.html.editor.DroplistFilterEditor"
                        />
                        <jmesa:htmlColumn property="born"
-                           pattern="MM/yyyy" 
+                           pattern="MM/yyyy"
                            cellEditor="org.jmesa.view.editor.DateCellEditor"
                        />
                    </jmesa:htmlRow>
-               </jmesa:htmlTable> 
+               </jmesa:htmlTable>
             </jmesa:tableModel>
-            
+
         </form>
-        
+
         <hr class="space"/>
-        
+
         <script type="text/javascript">
             function onInvokeAction(id) {
-                $.jmesa.setExportToLimit(id, '');
+                $.jmesa.setExport(id, '');
                 $.jmesa.createHiddenInputFieldsForLimitAndSubmit(id);
             }
         </script>
-        
+
     </body>
-    
+
 </html>

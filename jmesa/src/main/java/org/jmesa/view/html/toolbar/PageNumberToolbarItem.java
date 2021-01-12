@@ -44,7 +44,7 @@ public class PageNumberToolbarItem extends AbstractToolbarItem {
         }
 
         StringBuilder action = new StringBuilder("javascript:");
-        action.append("jQuery.jmesa.setPageToLimit('" + limit.getId() + "','" + page + "');" + getOnInvokeActionJavaScript());
+        action.append("jQuery.jmesa.setPage('" + limit.getId() + "','" + page + "');" + getOnInvokeActionJavaScript());
         return enabled(action.toString(), page);
     }
 
