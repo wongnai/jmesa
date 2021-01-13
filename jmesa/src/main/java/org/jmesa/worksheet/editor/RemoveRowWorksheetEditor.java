@@ -29,6 +29,7 @@ import static org.jmesa.worksheet.WorksheetUtils.isRowRemoved;
 public class RemoveRowWorksheetEditor extends AbstractWorksheetEditor {
     private final static String REMOVE_WORKSHEET_ROW_ITEM = "remove_worksheet_row";
 
+    @Override
     public Object getValue(Object item, String property, int rowcount) {
         HtmlBuilder html = new HtmlBuilder();
 

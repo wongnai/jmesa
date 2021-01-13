@@ -79,9 +79,9 @@ public class LimitUtils {
     }
 
 
-    public static Integer getIntValue(Object value){
+    public static int getIntValue(Object value){
         if(value==null) {
-            return null;
+            return 0;
         }
         if(value instanceof Number){
             return ((Number)value).intValue();

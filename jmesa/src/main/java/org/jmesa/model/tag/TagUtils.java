@@ -316,7 +316,7 @@ class TagUtils {
         if (hasBody && cellEditorNotDefined) {
             return new BasicCellEditor();
         } else if (cellEditorNotDefined) {
-            return PreferencesUtils.<CellEditor>createClassFromPreferences(coreContext, COLUMN_CELL_EDITOR);
+            return PreferencesUtils.createClassFromPreferences(coreContext, COLUMN_CELL_EDITOR);
         }
 
         CellEditor result = (CellEditor) createInstance(cellEditor);

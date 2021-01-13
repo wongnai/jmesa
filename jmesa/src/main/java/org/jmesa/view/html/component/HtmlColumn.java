@@ -15,14 +15,6 @@
  */
 package org.jmesa.view.html.component;
 
-import static org.jmesa.view.html.HtmlConstants.COLUMN_CELL_EDITOR;
-import static org.jmesa.view.html.HtmlConstants.COLUMN_CELL_RENDERER;
-import static org.jmesa.view.html.HtmlConstants.COLUMN_FILTER_EDITOR;
-import static org.jmesa.view.html.HtmlConstants.COLUMN_FILTER_RENDERER;
-import static org.jmesa.view.html.HtmlConstants.COLUMN_HEADER_EDITOR;
-import static org.jmesa.view.html.HtmlConstants.COLUMN_HEADER_RENDERER;
-import static org.jmesa.view.html.HtmlConstants.COLUMN_WORKSHEET_EDITOR;
-
 import org.jmesa.core.CoreContext;
 import org.jmesa.limit.Order;
 import org.jmesa.util.PreferencesUtils;
@@ -38,18 +30,18 @@ import org.jmesa.view.html.editor.HtmlHeaderEditor;
 import org.jmesa.view.html.renderer.HtmlCellRenderer;
 import org.jmesa.view.html.renderer.HtmlFilterRenderer;
 import org.jmesa.view.html.renderer.HtmlHeaderRenderer;
-import org.jmesa.view.renderer.BasicCellRenderer;
 import org.jmesa.view.renderer.CellRenderer;
 import org.jmesa.view.renderer.FilterRenderer;
 import org.jmesa.view.renderer.HeaderRenderer;
 import org.jmesa.worksheet.WorksheetValidation;
-import org.jmesa.worksheet.editor.AutoCompleteWorksheetEditor;
 import org.jmesa.worksheet.editor.InputWorksheetEditor;
 import org.jmesa.worksheet.editor.WorksheetEditor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static org.jmesa.view.html.HtmlConstants.*;
 
 /**
  * @since 2.0
@@ -70,7 +62,7 @@ public class HtmlColumn extends Column {
     private String filterStyle;
     private String filterClass;
 
-    /*
+    /**
      * Store locally because the super class
      * will create defaults.
      */
@@ -538,6 +530,9 @@ public class HtmlColumn extends Column {
 
     //-----------------------
     // below to be removed
+    /**
+     * validation is not used
+     */
     private List<WorksheetValidation> validations;
 
     public List<WorksheetValidation> getWorksheetValidations() {

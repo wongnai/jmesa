@@ -525,7 +525,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
         validateCoreContextIsNull(coreContext, "FilterMatcher");
 
         if (filterMatchers == null) {
-            filterMatchers = new HashMap<MatcherKey, FilterMatcher>();
+            filterMatchers = new HashMap<>(32);
         }
 
         filterMatchers.put(key, matcher);

@@ -110,11 +110,7 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
      */
     @Override
     public int getMaxRows() {
-
-        Integer maxRows = LimitUtils.getIntValue(data.get(Keys.MAX_ROWS));
-        if(maxRows==null){
-            return 0;
-        }
+        int maxRows = LimitUtils.getIntValue(data.get(Keys.MAX_ROWS));
         if (logger.isDebugEnabled()) {
             logger.debug("Max Rows:" + maxRows);
         }
@@ -128,19 +124,19 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
     @Override
     public int getPage() {
 
-        Integer page = LimitUtils.getIntValue(data.get(Keys.PAGE));
+        int page = LimitUtils.getIntValue(data.get(Keys.PAGE));
         if (logger.isDebugEnabled()) {
             logger.debug("On Page :" + page);
         }
-        if (page == null) {
+        if (page == 0) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Defaulting to Page 1");
             }
+            return 1;
         } else {
             return page;
         }
 
-        return 1;
     }
 
     @Override

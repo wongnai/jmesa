@@ -20,6 +20,8 @@ package org.jmesa.view.editor.expression;
  * @author bgould
  */
 public enum Language {
-		
+    /**
+     * language for BsfExpression cell editor
+      */
     EL, GROOVY, JAVASCRIPT, RUBY, JYTHON;
 }

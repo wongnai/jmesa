@@ -17,11 +17,15 @@ package org.jmesa.view.editor;
 
 /**
  * An editor specific to the filter.
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
 public interface FilterEditor {
-		
-    public Object getValue();
+    /**
+     *  Return content of cell, if it is HTML, then return the inner html of a table cell (e.g. TD) tag.
+     *
+      * @return
+     */
+    Object getValue();
 }

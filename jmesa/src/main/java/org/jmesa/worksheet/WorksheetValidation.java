@@ -21,7 +21,6 @@ import org.jmesa.view.AbstractContextSupport;
 /**
  * @since 2.4.7
  * @author Siddhant Agrawal
- * @deprecated to be deleted since 4.1
  */
 public class WorksheetValidation extends AbstractContextSupport {
     public static final String TRUE = "true";

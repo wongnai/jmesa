@@ -56,6 +56,11 @@ public class JsonView extends AbstractExportView {
     }
 
     private void addParams(StringBuilder results, List<Column> columns) {
+            addSortableColumns(results, columns);
+
+    }
+
+    private void addSortableColumns(StringBuilder results, List<Column> columns) {
 
     }
 

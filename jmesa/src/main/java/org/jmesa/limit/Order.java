@@ -23,6 +23,9 @@ package org.jmesa.limit;
  */
 public enum Order {
 
+    /**
+     * corresponds to sql order by asc and desc
+     */
     ASC("asc"), DESC("desc"), NONE("none");
 
     private final String param;

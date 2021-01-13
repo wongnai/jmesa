@@ -265,9 +265,9 @@ public class HtmlSnippets extends AbstractContextSupport {
             return coreContext.getMessage(HtmlConstants.STATUSBAR_NO_RESULTS_FOUND);
         }
 
-        Integer total = rowSelect.getTotalRows();
-        Integer from = rowSelect.getRowStart() + 1;
-        Integer to = rowSelect.getRowEnd();
+        int total = rowSelect.getTotalRows();
+        int from = rowSelect.getRowStart() + 1;
+        int to = rowSelect.getRowEnd();
         Object[] messageArguments = { total, from, to };
         return coreContext.getMessage(HtmlConstants.STATUSBAR_RESULTS_FOUND, messageArguments);
     }

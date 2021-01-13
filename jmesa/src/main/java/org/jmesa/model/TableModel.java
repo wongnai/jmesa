@@ -195,7 +195,7 @@ public class TableModel{
     public void addFilterMatcher(MatcherKey key, FilterMatcher matcher) {
 
         if (filterMatchers == null) {
-            filterMatchers = new HashMap<>();
+            filterMatchers = new HashMap<>(32);
         }
         filterMatchers.put(key, matcher);
     }

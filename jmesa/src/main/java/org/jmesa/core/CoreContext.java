@@ -113,7 +113,7 @@ public class CoreContext {
     public void setAttribute(Object key, Object value) {
 
         if (attributes == null) {
-            attributes = new HashMap<Object, Object>();
+            attributes = new HashMap<>(16);
         }
 
         attributes.put(key, value);

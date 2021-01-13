@@ -25,7 +25,30 @@ package org.jmesa.limit;
  */
 public enum Action {
 
-    FILTER("f_"), SORT("s_"), CLEAR("c_"), PAGE("p_"), MAX_ROWS("mr_"), EXPORT("e_");
+    /**
+     * as sql where clause
+     */
+    FILTER("f_"),
+    /**
+     * as sql order by clause
+     */
+    SORT("s_"),
+    /**
+     * drop change
+     */
+    CLEAR("c_"),
+    /**
+     * pagination - number of page
+     */
+    PAGE("p_"),
+    /**
+     * number rows by page
+     */
+    MAX_ROWS("mr_"),
+    /**
+     * export data to csv, excel, etc.
+     */
+    EXPORT("e_");
 
     private final String param;
 

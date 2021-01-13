@@ -20,6 +20,6 @@ package org.jmesa.view.editor;
  * @author Jeff Johnston
  */
 public interface HeaderEditor {
-		
-    public Object getValue();
+
+    Object getValue();
 }

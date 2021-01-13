@@ -75,7 +75,9 @@ public class NWTableModel {
 
     private NWTableFacade tableFacade;
 
-    // only used to subclass the model
+    /**
+     * only used to subclass the model
+      */
     protected NWTableModel() {}
 
     public NWTableModel(String id, Map<String,Object> params) {
