@@ -34,25 +34,19 @@ import static org.jmesa.util.AssertUtils.notNull;
  * Uses commons-el to evaluate EL expressions.
  * Update: since EL
  *
- * @version 2.4
  * @author bgould
+ * @version 2.4
  */
 public class ElExpressionCellEditor extends AbstractCellEditor {
-
-    private Logger logger = LoggerFactory.getLogger(ElExpressionCellEditor.class);
 
     /**
      * cell data variable name, i.e. 'item'
      */
-    private final String var;
-
-    private Object template;
-
-    ExpressionFactory expressionFactory = ExpressionFactory.newInstance();
-
-    StandardELContext context = new StandardELContext(expressionFactory);
-
-
+    protected final String var;
+    protected ExpressionFactory expressionFactory = ExpressionFactory.newInstance();
+    protected StandardELContext context = new StandardELContext(expressionFactory);
+    private final Logger logger = LoggerFactory.getLogger(ElExpressionCellEditor.class);
+    protected Object template;
 
     public ElExpressionCellEditor(Expression expression) {
 
@@ -85,11 +79,12 @@ public class ElExpressionCellEditor extends AbstractCellEditor {
 
 //             ExpressionString is a mixture of template text and EL
 //             expressions; ex. ${lastName}, ${firstName}
-            if(template==null) {
+            if (template == null) {
                 result = ItemUtils.getItemValue(item, property);
-            }if (template instanceof Node) {
-                result= ((Node)template).getValue(new EvaluationContext(context, this.getFunctionMapper(),this.getVariableMapper(item)));
-            // If the expression parsed to a String, it is just template text
+            }
+            if (template instanceof Node) {
+                // If the expression parsed to a String, it is just template text
+                result = ((Node) template).getValue(new EvaluationContext(context, this.getFunctionMapper(), this.getVariableMapper(item)));
             } else {
                 logger.warn("template is:" + template.getClass() + " " + template.toString());
                 if (template instanceof String) {
@@ -103,15 +98,15 @@ public class ElExpressionCellEditor extends AbstractCellEditor {
         return result;
     }
 
-   protected FunctionMapper getFunctionMapper() {
-       return context.getFunctionMapper();
-   }
+    protected FunctionMapper getFunctionMapper() {
+        return context.getFunctionMapper();
+    }
 
-   protected VariableMapper getVariableMapper(Object item){
-       VariableMapper variableMapper = context.getVariableMapper();
-       variableMapper.setVariable(var,  expressionFactory.createValueExpression(item, Map.class));
-       return variableMapper;
-   }
+    protected VariableMapper getVariableMapper(Object item) {
+        VariableMapper variableMapper = context.getVariableMapper();
+        variableMapper.setVariable(var, expressionFactory.createValueExpression(item, Map.class));
+        return variableMapper;
+    }
 
 
 }
