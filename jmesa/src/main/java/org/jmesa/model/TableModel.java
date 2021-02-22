@@ -262,6 +262,9 @@ public class TableModel{
     }
 
     public String getExportType() {
+        if(limit!=null){
+            return  limit.getExportType();
+        }
 
         LimitActionFactoryMapImpl actionFactory = new LimitActionFactoryMapImpl(id, request.getParameterMap());
         return actionFactory.getExportType();
