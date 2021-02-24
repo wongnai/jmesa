@@ -150,6 +150,14 @@ public class LimitFactory {
         String exportType = limitActionFactoryMapImpl.getExportType();
         limit.setExportType(exportType);
 
+        int defaultMaxRows = 100000;
+        try{
+            RowSelect rowSelect = limit.getRowSelect();
+            rowSelect.setMaxRows(limitActionFactoryMapImpl.getMaxRows());
+            rowSelect.setPage(limitActionFactoryMapImpl.getPage());
+        }catch (Exception e) {
+            limit.setRowSelect(createRowSelect(limitActionFactoryMapImpl.getMaxRows(), defaultMaxRows));
+        }
         if (state != null && !limit.hasExport()) {
             state.persistLimit(limit);
         }
