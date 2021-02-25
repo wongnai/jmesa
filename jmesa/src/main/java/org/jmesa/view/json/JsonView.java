@@ -17,6 +17,7 @@ package org.jmesa.view.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jmesa.limit.Limit;
 import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.renderer.CellRenderer;
@@ -44,7 +45,7 @@ public class JsonView extends AbstractExportView {
             results.append("{\n\"caption\":\"").append(escapeValue(getTable().getCaption())).append("\",\n");
             addColumnTitles(results, columns);
             addTableData(results, columns);
-            addParams(results, columns);
+            addParams(results, this.getCoreContext().getLimit());
 
             results.append("}\n");
 
@@ -55,14 +56,12 @@ public class JsonView extends AbstractExportView {
         return "";
     }
 
-    private void addParams(StringBuilder results, List<Column> columns) {
-            addSortableColumns(results, columns);
-
+    private void addParams(StringBuilder results, Limit limit) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+            results.append("\n\"paging\":")
+            .append(objectMapper.writeValueAsString(limit.getRowSelect()));
     }
 
-    private void addSortableColumns(StringBuilder results, List<Column> columns) {
-
-    }
 
     private void addTableData(StringBuilder results, List<Column> columns) throws JsonProcessingException {
         int rowcount = 0;
@@ -94,7 +93,7 @@ public class JsonView extends AbstractExportView {
                 results.append(",\n");
             }
         }
-        results.append("\n]\n");
+        results.append("\n],\n");
     }
 
     private void addColumnTitles(StringBuilder results, List<Column> columns) {

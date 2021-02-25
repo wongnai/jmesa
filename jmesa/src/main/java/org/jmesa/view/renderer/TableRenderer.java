@@ -22,8 +22,7 @@ import org.jmesa.view.component.Table;
  * @author Jeff Johnston
  */
 public interface TableRenderer {
-		
-    public Table getTable();
-    public void setTable(Table table);
-    public Object render();
+    Table getTable();
+    void setTable(Table table);
+    Object render();
 }
