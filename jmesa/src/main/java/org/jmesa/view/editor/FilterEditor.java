@@ -25,7 +25,7 @@ public interface FilterEditor {
     /**
      *  Return content of cell, if it is HTML, then return the inner html of a table cell (e.g. TD) tag.
      *
-      * @return
+      * @return content of cell
      */
     Object getValue();
 }

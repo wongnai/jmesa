@@ -15,20 +15,14 @@
  */
 package org.jmesa.facade;
 
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
 import org.jmesa.core.message.Messages;
 import org.jmesa.core.message.MessagesFactory;
 import org.jmesa.core.message.SpringMessages;
-import org.jmesa.core.message.Struts2Messages;
-import org.jmesa.web.HttpServletRequestSpringWebContext;
-import org.jmesa.web.HttpServletRequestWebContext;
-import org.jmesa.web.PortletRequestSpringWebContext;
-import org.jmesa.web.PortletRequestWebContext;
-import org.jmesa.web.SpringWebContext;
-import org.jmesa.web.WebContext;
+import org.jmesa.web.*;
 import org.springframework.context.i18n.LocaleContextHolder;
-import com.opensymphony.xwork2.ActionContext;
+
+import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -40,56 +34,56 @@ import javax.servlet.http.HttpServletResponse;
 public class TableFacadeFactory {
 
     public static TableFacade createTableFacade(String id, HttpServletRequest request) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request);
         return tableFacade;
     }
 
     public static TableFacade createTableFacade(String id, HttpServletRequest request, HttpServletResponse response) {
-		
+
         TableFacade tableFacade = new TableFacade(id, request, response);
         return tableFacade;
     }
 
     public static TableFacade createTableFacade(String id, WebContext webContext) {
-		
+
         TableFacade tableFacade = new TableFacade(id, null);
         tableFacade.setWebContext(webContext);
         return tableFacade;
     }
 
     public static TableFacade createTableFacade(String id, WebContext webContext, HttpServletResponse response) {
-		
+
         TableFacade tableFacade = new TableFacade(id, null, response);
         tableFacade.setWebContext(webContext);
         return tableFacade;
     }
 
     public static TableFacade createPortletTableFacade(String id, PortletRequest request) {
-		
+
         return createTableFacade(id, new PortletRequestWebContext(request));
     }
 
     public static TableFacade createSpringPortletTableFacade(String id, PortletRequest request) {
-		
+
         SpringWebContext springWebContext = new PortletRequestSpringWebContext(request);
         return createSpringTableFacade(id, springWebContext);
     }
 
     public static TableFacade createSpringTableFacade(String id, HttpServletRequest request) {
-		
+
         SpringWebContext springWebContext = new HttpServletRequestSpringWebContext(request);
         return createSpringTableFacade(id, springWebContext);
     }
 
     public static TableFacade createSpringTableFacade(String id, HttpServletRequest request, HttpServletResponse response) {
-		
+
         SpringWebContext springWebContext = new HttpServletRequestSpringWebContext(request);
         return createSpringTableFacade(id, springWebContext, response);
     }
 
     public static TableFacade createSpringTableFacade(String id, SpringWebContext springWebContext) {
-		
+
         springWebContext.setLocale(LocaleContextHolder.getLocale());
 
         TableFacade tableFacade = createTableFacade(id, springWebContext);
@@ -100,7 +94,7 @@ public class TableFacadeFactory {
     }
 
     public static TableFacade createSpringTableFacade(String id, SpringWebContext springWebContext, HttpServletResponse response) {
-		
+
         springWebContext.setLocale(LocaleContextHolder.getLocale());
 
         TableFacade tableFacade = createTableFacade(id, springWebContext, response);
@@ -110,37 +104,6 @@ public class TableFacadeFactory {
         return tableFacade;
     }
 
-    public static TableFacade createStruts2TableFacade(String id, HttpServletRequest request) {
-		
-        WebContext webContext = new HttpServletRequestWebContext(request);
-        return createStruts2TableFacade(id, webContext);
-    }
 
-    public static TableFacade createStruts2TableFacade(String id, HttpServletRequest request, HttpServletResponse response) {
-        
-        WebContext webContext = new HttpServletRequestWebContext(request);
-        return createStruts2TableFacade(id, webContext, response);
-    }
 
-    public static TableFacade createStruts2TableFacade(String id, WebContext webContext) {
-
-        webContext.setLocale(ActionContext.getContext().getLocale());
-
-        TableFacade tableFacade = createTableFacade(id, webContext);
-        Messages messages = MessagesFactory.getMessages(webContext);
-        Struts2Messages struts2Messages = new Struts2Messages(messages, webContext);
-        tableFacade.setMessages(struts2Messages);
-        return tableFacade;
-    }
-
-    public static TableFacade createStruts2TableFacade(String id, WebContext webContext, HttpServletResponse response) {
-
-        webContext.setLocale(ActionContext.getContext().getLocale());
-
-        TableFacade tableFacade = createTableFacade(id, webContext, response);
-        Messages messages = MessagesFactory.getMessages(webContext);
-        Struts2Messages struts2Messages = new Struts2Messages(messages, webContext);
-        tableFacade.setMessages(struts2Messages);
-        return tableFacade;
-    }
 }

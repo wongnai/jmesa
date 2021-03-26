@@ -753,7 +753,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
 
     protected View getExportView(String exportType) {
 
-        View exportView = null;
+        View exportView;
 
         if (exportType == null) {
             throw new IllegalStateException("The export type is null.");
@@ -777,14 +777,11 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
             throw new IllegalStateException("Not a valid export type.");
         }
 
-        if (exportView != null) {
-            SupportUtils.setCoreContext(exportView, getCoreContext());
-            SupportUtils.setWebContext(exportView, getWebContext());
-            SupportUtils.setTable(exportView, getTable());
-            return exportView;
-        }
+        SupportUtils.setCoreContext(exportView, getCoreContext());
+        SupportUtils.setWebContext(exportView, getWebContext());
+        SupportUtils.setTable(exportView, getTable());
+        return exportView;
 
-        throw new IllegalStateException("Not able to handle the export of type: " + exportType);
     }
 
     /**

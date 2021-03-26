@@ -69,7 +69,7 @@ public interface Filter extends Serializable {
      * Filter factory
      * @param property
      * @param value
-     * @return
+     * @return filter
      */
     static Filter build(String property, Object value){
         if(value instanceof String){
