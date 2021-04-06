@@ -66,7 +66,10 @@ public class LimitUtils {
         } else if (value instanceof List) {
             List<?> valueList = (List<?>) value;
             if (valueList.size() > 1) {
-                return new RangeFilter.Pair(String.valueOf(((List) value).get(0)),String.valueOf(((List) value).get(1)));
+                Object leftValue = valueList.get(0);
+                Object rightValue = valueList.get(1);
+                return new RangeFilter.Pair(leftValue==null? null: String.valueOf(leftValue),
+                        rightValue==null?  null: String.valueOf(rightValue));
             }
         }else if (value instanceof String) {
                 String v =  String.valueOf(value);

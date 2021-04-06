@@ -64,6 +64,14 @@ import java.util.Objects;
 public final class RangeFilter extends BaseFilter implements Filter{
     private static  final Logger logger = LoggerFactory.getLogger(RangeFilter.class);
 
+    @Override
+    public String toString() {
+        return "RangeFilter{" +
+                "property='" + property + '\'' +
+                ", value=" + value +
+                '}';
+    }
+
     public static class Pair{
 
 
@@ -141,8 +149,11 @@ public final class RangeFilter extends BaseFilter implements Filter{
         @Override
         public String toString() {
             return "[" +
-                    "\"" + StringEscapeUtils.escapeJavaScript(startValueInclusive) + '\"' +
-                    ", \"" + StringEscapeUtils.escapeJavaScript(endValueExclusive) + '\"' +
+                    (startValueInclusive==null? null:
+                    "\"" + StringEscapeUtils.escapeJavaScript(startValueInclusive) + '\"') +
+                    ", " +
+                    (endValueExclusive==null ? null:
+                     "\""+StringEscapeUtils.escapeJavaScript(endValueExclusive) + '\"') +
                     ']';
         }
 

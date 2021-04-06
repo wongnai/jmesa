@@ -67,4 +67,17 @@ class LimitActionFactoryJsonImplTest {
     void getExportType() {
         assertEquals(ExportTypes.JSON, laf.getExportType());
     }
+
+
+    @Test
+    void pairValueTest(){
+        String s ="{\"maxRows\":20,\"page\":1,\"exportType\":\"json\",\"sort\":{},\"filter\":{\"ExpirationDate\":[\"2021-04-01 00:00:00\",null]}}";
+
+        LimitActionFactoryJsonImpl local = new LimitActionFactoryJsonImpl(id, s);
+        FilterSet set = local.getFilterSet();
+
+       assertEquals("RangeFilter{property='ExpirationDate', value=[\"2021-04-01 00:00:00\", null]}", set.getFilter("ExpirationDate").toString());
+
+      //  System.out.println(set.toString());
+    }
 }
