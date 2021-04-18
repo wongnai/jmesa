@@ -15,6 +15,8 @@
  */
 package org.jmesa.core.filter;
 
+import org.jmesa.limit.Comparison;
+
 /**
  * <p>
  * Used to filter out values.
@@ -50,5 +52,5 @@ public interface FilterMatcher {
      * @param filterValue The value to match with.
      * @return Is true if the itemValue and the matchValue are the same.
      */
-    boolean evaluate(Object itemValue, Object filterValue);
+    boolean evaluate(Object itemValue, Comparison comparison, Object... filterValue);
 }

@@ -17,10 +17,8 @@ package org.jmesa.limit;
 
 import java.io.Serializable;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -93,21 +91,13 @@ public class FilterSet implements Serializable {
      * @return The Filter value.
      */
     public String getFilterValue(String property) {
-        return getFilter(property).getValue().toString();
+        Object[] v = getFilter(property).getValue();
+        if(v.length==1) {
+            return v[0].toString();
+        }
+        return Arrays.stream(v).map(k -> k.toString()).collect(Collectors.joining(","));
     }
 
-    /**
-     * <p>
-     * The Filter to add to the set.
-     * </p>
-     *
-     * @param property The column property to filter.
-     * @param value The value to filter the column.
-     */
-    public void addFilter(String property, String value) {
-
-        addFilter(Filter.build(property, value));
-    }
 
     /**
      * @param filter The Filter to add to the set.

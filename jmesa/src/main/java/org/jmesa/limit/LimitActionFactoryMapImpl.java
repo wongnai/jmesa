@@ -109,7 +109,8 @@ public class LimitActionFactoryMapImpl implements LimitActionFactory {
             if (parameter.startsWith(prefixId + Action.FILTER.toParam())) {
 
                 String property = StringUtils.substringAfter(parameter, prefixId + Action.FILTER.toParam());
-                Filter filter = buildFilter(property, parameters.get(parameter));
+                //TODO need receive comparison from parameter
+                Filter filter = buildFilter(property, Comparison.CONTAIN, parameters.get(parameter));
                 if(filter!=null){
                     filterSet.addFilter(filter);
                 }

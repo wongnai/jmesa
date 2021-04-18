@@ -15,10 +15,6 @@
  */
 package org.jmesa.limit;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
-import java.io.Serializable;
-
 /**
  * <p>
  * An immutable class that is used to reduce the rows that are returned for a
@@ -57,8 +53,8 @@ import java.io.Serializable;
  */
 public final class SingleValueFilter extends BaseFilter implements Filter{
 
-    public SingleValueFilter(String property, String value) {
-        super(property, value);
+    public SingleValueFilter(String property,Comparison op, Object[] value) {
+        super(property, op, value);
     }
 
 }

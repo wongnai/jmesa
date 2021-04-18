@@ -16,6 +16,7 @@
 package org.jmesa.core.filter;
 
 import org.apache.commons.lang.StringUtils;
+import org.jmesa.limit.Comparison;
 import org.jmesa.limit.RangeFilter;
 import org.jmesa.web.WebContext;
 
@@ -51,7 +52,7 @@ public class NumberFilterMatcher extends AbstractPatternFilterMatcher {
     }
 
     @Override
-    public boolean evaluate(Object itemValue, Object filterValue) {
+    public boolean evaluate(Object itemValue, Comparison comparison, Object... filterValue) {
 
         if (itemValue == null) {
             return false;
@@ -76,8 +77,8 @@ public class NumberFilterMatcher extends AbstractPatternFilterMatcher {
         df.applyPattern(pattern);
         itemValue = df.format(itemValue);
 
-        if(filterValue instanceof RangeFilter.Pair){
-            return ((RangeFilter.Pair)filterValue).inRange(itemValue);
+        if(comparison == Comparison.BETWEEN){
+            return new RangeFilter.Pair((String)filterValue[0], (String)filterValue[1]).inRange(itemValue);
         }
 
         String item = String.valueOf(itemValue);

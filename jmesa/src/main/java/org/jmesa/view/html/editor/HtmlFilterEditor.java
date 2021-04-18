@@ -23,6 +23,9 @@ import org.jmesa.view.editor.AbstractFilterEditor;
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.view.html.component.HtmlColumn;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * The default editor for the column filter.
  *
@@ -49,7 +52,7 @@ public class HtmlFilterEditor extends AbstractFilterEditor {
 
         if(filter instanceof SingleValueFilter) {
             String filterValue = "";
-            filterValue = (String) filter.getValue();
+            filterValue =  Arrays.stream((String[])filter.getValue()).collect(Collectors.joining(","));
 
             html.input().type("text");
             html.name(getCoreContext().getLimit().getId() + "_f_" + property);

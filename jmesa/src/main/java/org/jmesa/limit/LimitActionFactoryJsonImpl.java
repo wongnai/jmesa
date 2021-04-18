@@ -23,6 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -157,12 +158,27 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
             Map<String, Object> map = (Map<String, Object>) o;
             for (String property : map.keySet()) {
                 Object v = map.get(property);
-
-                Filter filter = buildFilter(property, v);
+                //comparison
+                // TODO
+                Filter filter = buildFilter(property,Comparison.CONTAIN, v);
                 if(filter!=null){
                     filterSet.addFilter(filter);
                 }
             }
+        }else if(o instanceof List){
+            List<Object> list = (List<Object>) o;
+            for (Object map : list) {
+                String property = (String) ((Map)map).get("key");
+                Comparison comparison = Comparison.valueOf( (String) ((Map)map).get("comparison").toString().toUpperCase());
+
+                Object[] value =( (List) ((Map)map).get("value")).toArray();
+
+                Filter filter = buildFilter(property,comparison, value);
+                if(filter!=null){
+                    filterSet.addFilter(filter);
+                }
+            }
+
         }
 
         return filterSet;

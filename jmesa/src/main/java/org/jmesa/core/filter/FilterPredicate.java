@@ -16,6 +16,7 @@
 package org.jmesa.core.filter;
 
 import org.apache.commons.collections.Predicate;
+import org.jmesa.limit.Comparison;
 import org.jmesa.limit.Filter;
 import org.jmesa.limit.FilterSet;
 import org.jmesa.util.ItemUtils;
@@ -58,7 +59,7 @@ public final class FilterPredicate implements Predicate {
 
                 if (value != null) {
                     FilterMatcher filterMatcher = filterMatchers.get(filter);
-                    result = filterMatcher.evaluate(value, filter.getValue());
+                    result = filterMatcher.evaluate(value, filter.getComparison(), filter.getValue());
                 } else {
                     result = false;
                 }

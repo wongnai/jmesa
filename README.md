@@ -1,5 +1,8 @@
 # Jmesa
 
+## 4.3
+**add** filters like kibana search filter
+
 ## 4.1 
 **remove** direct dependency on `WebContext`, remove indirect use of `HttpServletResponse` and `HttpServletRequest`
 

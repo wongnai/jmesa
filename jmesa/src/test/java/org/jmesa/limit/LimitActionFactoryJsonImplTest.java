@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LimitActionFactoryJsonImplTest {
@@ -19,11 +21,18 @@ class LimitActionFactoryJsonImplTest {
                 "        \"action\": \"\",\n" +
                 "        \"maxRows\": 500,\n" +
                 "        \"page\": 123,\n" +
-                "        \"filter\": {\n" +
-                "            \"property1\":true,\n" +
-                "            \"property2\":\"abc\",\n" +
-                "            \"property3\":[\"10\", \"100\"]\n" +
-                "        },\n" +
+//                "        \"filter\": {\n" +
+//                "            \"property1\":true,\n" +
+//                "            \"property2\":\"abc\",\n" +
+//                "            \"property3\":[\"10\", \"100\"]\n" +
+//                "        },\n" +
+                "\"filter\":[\n" +
+                "{\"key\":\"property1\",\"comparison\":\"is\",\"value\":[true]}\n" +
+                ",{\"key\":\"property2\",\"comparison\":\"is\",\"value\":[\"abc\"]}\n" +
+                ",{\"key\":\"property3\",\"comparison\":\"between\",\"value\":[\"10\", \"100\"]}\n" +
+                ",{\"key\":\"name\",\"comparison\":\"in\",\"value\":[\"name1\", \"name2\",\"name3\",\"name4\"]}\n" +
+                ",{\"key\":\"id\",\"comparison\":\"gte\",\"value\":[5]}\n" +
+                "],"+
                 "        \"sort\":{\n" +
                 "            \"property1\":\"asc\",\n" +
                 "            \"property2\":\"desc\"\n" +
@@ -51,9 +60,9 @@ class LimitActionFactoryJsonImplTest {
     @Test
     void getFilterSet() {
         FilterSet set = laf.getFilterSet();
-        assertEquals("true", set.getFilter("property1").getValue());
-        assertEquals("abc", set.getFilter("property2").getValue());
-        assertEquals(new RangeFilter.Pair("10","100"), set.getFilter("property3").getValue());
+        assertEquals(true, set.getFilter("property1").getValue()[0]);
+        assertEquals("abc", set.getFilter("property2").getValue()[0]);
+        assertTrue(Arrays.equals(new Object[]{"10","100"}, set.getFilter("property3").getValue()));
     }
 
     @Test
@@ -71,7 +80,7 @@ class LimitActionFactoryJsonImplTest {
 
     @Test
     void pairValueTest(){
-        String s ="{\"maxRows\":20,\"page\":1,\"exportType\":\"json\",\"sort\":{},\"filter\":{\"ExpirationDate\":[\"2021-04-01 00:00:00\",null]}}";
+        String s ="{\"maxRows\":20,\"page\":1,\"exportType\":\"json\",\"sort\":{},\"filter\":{\"key\":\"ExpirationDate\",\"comparison\":\"is\", \"value\":[\"2021-04-01 00:00:00\",null]}}";
 
         LimitActionFactoryJsonImpl local = new LimitActionFactoryJsonImpl(id, s);
         FilterSet set = local.getFilterSet();

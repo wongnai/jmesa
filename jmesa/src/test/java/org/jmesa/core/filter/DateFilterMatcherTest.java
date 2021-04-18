@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.jmesa.limit.Comparison;
 import org.jmesa.test.AbstractTestCase;
 import org.jmesa.web.WebContext;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ public class DateFilterMatcherTest extends AbstractTestCase {
         DateFilterMatcher matcher = new DateFilterMatcher("MM/dd/yyyy");
         matcher.setWebContext(webContext);
 
-        boolean evaluate = matcher.evaluate(null, "07/");
+        boolean evaluate = matcher.evaluate(null, Comparison.CONTAIN, "07/");
         assertFalse(evaluate);
 
         Date date = null;
@@ -54,7 +55,7 @@ public class DateFilterMatcherTest extends AbstractTestCase {
         evaluate = matcher.evaluate(date, null);
         assertFalse(evaluate);
 
-        evaluate = matcher.evaluate(date, "/04/");
+        evaluate = matcher.evaluate(date, Comparison.CONTAIN, "/04/");
         assertTrue(evaluate);
     }
 }

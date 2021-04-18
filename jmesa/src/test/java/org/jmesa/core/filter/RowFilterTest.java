@@ -25,6 +25,7 @@ import java.util.Map;
 import org.jmesa.core.Name;
 import org.jmesa.core.President;
 import org.jmesa.core.PresidentDao;
+import org.jmesa.limit.Comparison;
 import org.jmesa.limit.Limit;
 import org.jmesa.limit.LimitFactory;
 import org.jmesa.test.AbstractTestCase;
@@ -52,10 +53,10 @@ public class RowFilterTest extends AbstractTestCase {
 
         WebContext webContext = createWebContext();
 
-        Map<String, Object> results = new HashMap<String, Object>();
+        Map<String, Object> results = new HashMap<>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
         ParametersBuilder builder = new ParametersBuilder(ID, parametersAdapter);
-        builder.addFilter("name.fullName", "george");
+        builder.addFilter("name.fullName",  "george");
         webContext.setParameterMap(results);
 
         LimitFactory limitFactory = new LimitFactory(ID, webContext);

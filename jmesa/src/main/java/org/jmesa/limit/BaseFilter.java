@@ -3,49 +3,27 @@ package org.jmesa.limit;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * @author xwx
  */
 public class BaseFilter implements Filter{
     protected final String property;
-    protected final Object value;
+    protected final Object[] value;
+    protected final Comparison comparison;
 
-
-
-    public BaseFilter(String property, Object value) {
+    public BaseFilter(String property,Comparison operator,  Object... value) {
         this.property = property;
         this.value = value;
-    }
-
-    /**
-     * Equality is based on the property. Or, in other words no two Filter
-     * Objects can have the same property.
-     */
-    @Override
-    public boolean equals(Object o) {
-
-        if (o == this) {
-            return true;
-        }
-
-        if (!(o instanceof BaseFilter)) {
-            return false;
-        }
-
-        BaseFilter that = (BaseFilter) o;
-
-        return that.getProperty().equals(this.getProperty());
+        this.comparison = operator;
     }
 
     @Override
-    public int hashCode() {
-
-        int result = 17;
-        int prop = this.getProperty() == null ? 0 : this.getProperty().hashCode();
-        result = result * 37 + prop;
-        return result;
+    public Comparison getComparison() {
+        return comparison;
     }
-
 
     /**
      * @return The Bean (Or Map) attribute used to reduce the results.
@@ -59,17 +37,31 @@ public class BaseFilter implements Filter{
      * @return Will be used to reduce the results.
      */
     @Override
-    public Object getValue() {
+    public Object[] getValue() {
         return value;
     }
 
     @Override
     public String toString() {
-        ToStringBuilder builder = new ToStringBuilder(this);
-        builder.append("property", property);
-        builder.append("value", value.toString());
-        return builder.toString();
+        return "{" +
+                "property='" + property + '\'' +
+                ", value=" + Arrays.toString(value) +
+                ", comparison=" + comparison +
+                '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseFilter that = (BaseFilter) o;
+        return Objects.equals(property, that.property) && Arrays.equals(value, that.value) && comparison == that.comparison;
+    }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(property, comparison);
+        result = 31 * result + Arrays.hashCode(value);
+        return result;
+    }
 }

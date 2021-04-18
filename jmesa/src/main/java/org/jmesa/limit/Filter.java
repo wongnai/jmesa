@@ -15,10 +15,10 @@
  */
 package org.jmesa.limit;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.NotImplementedException;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.jmesa.core.filter.StringWildCardFilterMatcher;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -63,7 +63,13 @@ public interface Filter extends Serializable {
      */
     String getProperty();
 
-    Object getValue();
+    Object[] getValue();
+
+    /**
+     * since 4.3
+     * @return comparison operator
+     */
+    Comparison getComparison();
 
     /**
      * Filter factory
@@ -71,13 +77,29 @@ public interface Filter extends Serializable {
      * @param value
      * @return filter
      */
-    static Filter build(String property, Object value){
-        if(value instanceof String){
-            return new SingleValueFilter(property, (String) value);
-        }else if(value instanceof RangeFilter.Pair){
-            return new RangeFilter(property, (RangeFilter.Pair) value);
-        }else{
-            throw new NotImplementedException("Unknown type:"+value);
+    static Filter build(String property, Comparison operator,  Object... value){
+        switch (operator) {
+            case GT:
+            case IS:
+            case LT:
+            case GTE:
+            case LTE:
+            case IS_NOT:
+            case CONTAIN:
+                return new SingleValueFilter(property, operator,  value);
+            case IS_NULL:
+            case IS_NOT_NULL:
+                return new SingleValueFilter(property, operator, null);
+            case NOT_IN:
+            case IN:
+
+            case BETWEEN:
+            case NOT_BETWEEN:
+                return new RangeFilter(property, operator, value);
+            case EXISTS:
+            case NOT_EXISTS:
+            default:
+                throw new NotImplementedException("Unknown type:"+operator);
         }
     }
 

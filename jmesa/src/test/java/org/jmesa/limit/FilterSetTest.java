@@ -76,9 +76,9 @@ public class FilterSetTest {
     private FilterSet getFilterSet() {
 
         FilterSet filters = new FilterSet();
-        filters.addFilter(new SingleValueFilter("fullName", "George Washington"));
-        filters.addFilter(new SingleValueFilter("nickname", "Father Of His Country"));
-        filters.addFilter(new RangeFilter("age", new RangeFilter.Pair("20", "35")));
+        filters.addFilter(new SingleValueFilter("fullName", Comparison.IS, new Object[]{ "George Washington"}));
+        filters.addFilter(new SingleValueFilter("nickname",Comparison.IS,  new Object[]{ "Father Of His Country"}));
+        filters.addFilter(new RangeFilter("age", Comparison.BETWEEN, new Object[]{"20", "35"}));
         return filters;
     }
 }

@@ -15,6 +15,8 @@
  */
 package org.jmesa.core.filter;
 
+import org.jmesa.limit.Comparison;
+
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -41,23 +43,29 @@ public class StringWildCardFilterMatcher implements FilterMatcher {
     }
 
     @Override
-    public boolean evaluate(Object itemValue, Object filterValue) {
+    public boolean evaluate(Object itemValue, Comparison comparison, Object... filterValue) {
 
         if (filterValue == null) {
             return false;
         }
 
-        if (ignoreCases) {
-            filterValue = filterValue.toString().toLowerCase();
+        for (int i = 0; i < filterValue.length; i++) {
+
+            if (ignoreCases) {
+
+                filterValue[i] = filterValue[i].toString().toLowerCase();
+
+            }
+
+            Pattern filterPattern = createFilterPattern(filterValue[i].toString());
+
+            if (filterPattern == null) {
+                continue;
+            }
+
+            return filterPattern.matcher(String.valueOf(itemValue)).matches();
         }
-
-        Pattern filterPattern = createFilterPattern(filterValue.toString());
-
-        if (filterPattern == null) {
-            return false;
-        }
-
-        return filterPattern.matcher(String.valueOf(itemValue)).matches();
+        return false;
     }
 
     /**

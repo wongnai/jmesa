@@ -18,6 +18,7 @@ package org.jmesa.core.filter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.jmesa.limit.Comparison;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,16 +32,16 @@ public class StringFilterMatcherTest {
 
 		StringFilterMatcher match = new StringFilterMatcher();
 
-		boolean evaluate = match.evaluate(null, "geo");
+		boolean evaluate = match.evaluate(null, Comparison.CONTAIN, "geo");
 		assertFalse(evaluate);
 
-		evaluate = match.evaluate("george", null);
+		evaluate = match.evaluate("george",Comparison.CONTAIN, null);
 		assertFalse(evaluate);
 
-		evaluate = match.evaluate("george", "geo");
+		evaluate = match.evaluate("george", Comparison.CONTAIN, "geo");
 		assertTrue(evaluate);
 
-		evaluate = match.evaluate("George", "Geo");
+		evaluate = match.evaluate("George",Comparison.CONTAIN,  "Geo");
 		assertTrue(evaluate);
 	}
 }

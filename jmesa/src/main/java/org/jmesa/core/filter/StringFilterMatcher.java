@@ -16,6 +16,7 @@
 package org.jmesa.core.filter;
 
 import org.apache.commons.lang.StringUtils;
+import org.jmesa.limit.Comparison;
 
 /**
  * Will do a case insensitive string match.
@@ -26,10 +27,18 @@ import org.apache.commons.lang.StringUtils;
 public class StringFilterMatcher implements FilterMatcher {
 
     @Override
-    public boolean evaluate(Object itemValue, Object filterValue) {
+    public boolean evaluate(Object itemValue, Comparison comparison, Object... filterValue) {
 
+        if(itemValue==null && filterValue==null && comparison == Comparison.IS_NULL){
+            return true;
+        }
         String item = StringUtils.lowerCase(String.valueOf(itemValue));
-        String filter = StringUtils.lowerCase(String.valueOf(filterValue));
-        return StringUtils.contains(item, filter);
+        if(filterValue!=null) {
+            for (Object o : filterValue) {
+                String filter = StringUtils.lowerCase(String.valueOf(o));
+                return StringUtils.contains(item, filter);
+            }
+        }
+        return false;
     }
 }

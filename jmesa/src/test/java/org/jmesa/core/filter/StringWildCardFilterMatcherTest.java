@@ -18,6 +18,7 @@ package org.jmesa.core.filter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.jmesa.limit.Comparison;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,25 +36,25 @@ public class StringWildCardFilterMatcherTest {
 
         StringWildCardFilterMatcher match = new StringWildCardFilterMatcher();
 
-        boolean evaluate = match.evaluate(null, "geo");
+        boolean evaluate = match.evaluate(null, Comparison.CONTAIN, "geo");
         assertFalse(evaluate);
 
-        evaluate = match.evaluate("george", null);
+        evaluate = match.evaluate("george", Comparison.IS_NULL, null);
         assertFalse(evaluate);
 
-        evaluate = match.evaluate("george", "geo");
+        evaluate = match.evaluate("george", Comparison.CONTAIN,"geo");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("george", "g*");
+        evaluate = match.evaluate("george", Comparison.CONTAIN, "g*");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("washington", "g*");
+        evaluate = match.evaluate("washington",Comparison.CONTAIN, "g*");
         assertFalse(evaluate);
 
-        evaluate = match.evaluate("george", "g(");
+        evaluate = match.evaluate("george",Comparison.CONTAIN, "g(");
         assertFalse(evaluate);
 
-        evaluate = match.evaluate("George", "Geo");
+        evaluate = match.evaluate("George",Comparison.CONTAIN, "Geo");
         assertTrue(evaluate);
     }
 
@@ -64,13 +65,13 @@ public class StringWildCardFilterMatcherTest {
 
         boolean evaluate = false;
 
-        evaluate = match.evaluate("george", "george");
+        evaluate = match.evaluate("george", Comparison.CONTAIN, "george");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("george", "GEORGE");
+        evaluate = match.evaluate("george", Comparison.CONTAIN,"GEORGE");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("GEORGE", "george");
+        evaluate = match.evaluate("GEORGE", Comparison.CONTAIN,"george");
         assertTrue(evaluate);
 
     }
@@ -82,55 +83,55 @@ public class StringWildCardFilterMatcherTest {
 
         boolean evaluate = false;
 
-        evaluate = match.evaluate("george)", "g");
+        evaluate = match.evaluate("george)", Comparison.CONTAIN, "g");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("george)", "george");
+        evaluate = match.evaluate("george)", Comparison.CONTAIN, "george");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("george)", "george)");
+        evaluate = match.evaluate("george)", Comparison.CONTAIN, "george)");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("george)", "GEORGE)");
+        evaluate = match.evaluate("george)", Comparison.CONTAIN,"GEORGE)");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("ge)", "GE*)");
+        evaluate = match.evaluate("ge)", Comparison.CONTAIN,"GE*)");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("ge)", "GE*");
+        evaluate = match.evaluate("ge)", Comparison.CONTAIN,"GE*");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("george", "GE*RGE");
+        evaluate = match.evaluate("george",Comparison.CONTAIN, "GE*RGE");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("GEORGE", "ge?rge");
+        evaluate = match.evaluate("GEORGE", Comparison.CONTAIN,"ge?rge");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("GEORGE", "ge?r*e");
+        evaluate = match.evaluate("GEORGE", Comparison.CONTAIN,"ge?r*e");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("WASHINGTON", "w*s?i*g?on");
+        evaluate = match.evaluate("WASHINGTON", Comparison.CONTAIN,"w*s?i*g?on");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("WASHINGTON", "w*s?i*t?n");
+        evaluate = match.evaluate("WASHINGTON",Comparison.CONTAIN, "w*s?i*t?n");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("WASHINGTON", "w*s?i*g?n");
+        evaluate = match.evaluate("WASHINGTON", Comparison.CONTAIN,"w*s?i*g?n");
         assertFalse(evaluate);
 
-        evaluate = match.evaluate("WASHING", "w*s?i*g?");
+        evaluate = match.evaluate("WASHING", Comparison.CONTAIN,"w*s?i*g?");
         assertFalse(evaluate);
 
-        evaluate = match.evaluate("WASHINGTON", "w*s?i*g?");
+        evaluate = match.evaluate("WASHINGTON", Comparison.CONTAIN,"w*s?i*g?");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("WASHINGTON", "w*h?n*o?");
+        evaluate = match.evaluate("WASHINGTON",Comparison.CONTAIN, "w*h?n*o?");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("WASHINGTON", "w*h?n*o?*");
+        evaluate = match.evaluate("WASHINGTON", Comparison.CONTAIN,"w*h?n*o?*");
         assertTrue(evaluate);
 
-        evaluate = match.evaluate("GEORGE", "ge)rge");
+        evaluate = match.evaluate("GEORGE", Comparison.CONTAIN,"ge)rge");
         assertFalse(evaluate);
 
     }

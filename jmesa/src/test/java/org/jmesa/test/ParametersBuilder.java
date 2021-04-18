@@ -54,12 +54,11 @@ public class ParametersBuilder {
         parameters.addParameter(key, maxRows);
     }
 
-    public void addFilter(String property, String value) {
+    public void addFilter(String property, Object... value) {
 
         String key = prefixId + Action.FILTER.toParam() + property;
-        List<String> filterList = new ArrayList<>();
-        filterList.add(value);
-        parameters.addParameter(key, filterList);
+
+        parameters.addParameter(key, value.length==1? value[0] : value);
     }
 
     /**

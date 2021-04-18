@@ -64,14 +64,6 @@ import java.util.Objects;
 public final class RangeFilter extends BaseFilter implements Filter{
     private static  final Logger logger = LoggerFactory.getLogger(RangeFilter.class);
 
-    @Override
-    public String toString() {
-        return "RangeFilter{" +
-                "property='" + property + '\'' +
-                ", value=" + value +
-                '}';
-    }
-
     public static class Pair{
 
 
@@ -109,8 +101,6 @@ public final class RangeFilter extends BaseFilter implements Filter{
         public static final String ISO_DATETIME_TIME_ZONE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZ";
         public static final String DEFAULT_DATETIME_TIME_ZONE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-
-
         /**
          * ISO8601-like formatter for date with time zone.
          * The format used is <tt>yyyy-MM-ddZZ</tt>.
@@ -128,34 +118,6 @@ public final class RangeFilter extends BaseFilter implements Filter{
                 ISO_DATETIME_FORMAT,
                 ISO_DATETIME_TIME_ZONE_FORMAT
         };
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o){
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()){
-                return false;
-            }
-            Pair pair = (Pair) o;
-            return Objects.equals(startValueInclusive, pair.startValueInclusive) && Objects.equals(endValueExclusive, pair.endValueExclusive);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(startValueInclusive, endValueExclusive);
-        }
-
-        @Override
-        public String toString() {
-            return "[" +
-                    (startValueInclusive==null? null:
-                    "\"" + StringEscapeUtils.escapeJavaScript(startValueInclusive) + '\"') +
-                    ", " +
-                    (endValueExclusive==null ? null:
-                     "\""+StringEscapeUtils.escapeJavaScript(endValueExclusive) + '\"') +
-                    ']';
-        }
 
         public boolean inRange(Object itemValue) {
             if(itemValue instanceof Number){
@@ -190,15 +152,15 @@ public final class RangeFilter extends BaseFilter implements Filter{
         }
     }
 
-    public RangeFilter(String property, Pair value) {
-        super(property, value);
+    public RangeFilter(String property, Comparison comparison, Object[] value) {
+        super(property, comparison, value);
     }
 
     public String getStartValue() {
-        return ((Pair)value).startValueInclusive;
+        return (String)value[0];
     }
     public String getEndValue() {
-        return ((Pair)value).endValueExclusive;
+        return (String)value[1];
     }
 
 }

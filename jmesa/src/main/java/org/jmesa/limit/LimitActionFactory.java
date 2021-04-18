@@ -24,14 +24,15 @@ public interface LimitActionFactory {
      * @param filterObject string or list of string
      * @return null if format error
      */
-    default Filter buildFilter(String property, Object  filterObject){
+    default Filter buildFilter(String property, Comparison comparison, Object...  filterObject){
+        //TODO
         RangeFilter.Pair pair = LimitUtils.getPairValue(filterObject);
         if(pair!=null){
-            return  Filter.build(property, pair);
+            return  Filter.build(property, comparison, filterObject);
         }else {
             String value = LimitUtils.getValue(filterObject);
             if (StringUtils.isNotBlank(value)) {
-                return Filter.build(property, value);
+                return Filter.build(property,comparison, filterObject);
             }
         }
         return null;
