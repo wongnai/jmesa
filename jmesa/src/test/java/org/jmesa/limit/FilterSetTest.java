@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import java.security.Signature;
+import java.util.Arrays;
 
 /**
  * @since 2.0
@@ -57,19 +58,19 @@ public class FilterSetTest {
         FilterSet filterSet = getFilterSet();
         Filter filter = filterSet.getFilter("nickname");
         assertNotNull(filter);
-        assertEquals(filter.getValue(), "Father Of His Country");
+        assertEquals(filter.getValue()[0], "Father Of His Country");
     }
 
     @Test
     public void getInRange() {
 
         FilterSet filterSet = getFilterSet();
-        Object age = filterSet.getFilter("age").getValue();
+        Object[] age = filterSet.getFilter("age").getValue();
         assertNotNull(age);
-        assertEquals(age, new RangeFilter.Pair("20","35"));
+        assertTrue(Arrays.equals(age, new Object[]{"20","35"}));
 
-        assertTrue( ((RangeFilter.Pair)age).inRange(30));
-        assertFalse( ((RangeFilter.Pair)age).inRange(35));
+        assertTrue( new RangeFilter.Pair(age[0].toString(), age[1].toString()).inRange(30));
+        assertFalse( new RangeFilter.Pair(age[0].toString(), age[1].toString()).inRange(35));
 
     }
 

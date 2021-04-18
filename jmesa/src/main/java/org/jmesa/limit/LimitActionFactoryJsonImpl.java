@@ -155,11 +155,11 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
 
         Object o = data.get(Keys.FILTER);
         if (o instanceof Map) {
+
+            //TODO remove this
             Map<String, Object> map = (Map<String, Object>) o;
             for (String property : map.keySet()) {
                 Object v = map.get(property);
-                //comparison
-                // TODO
                 Filter filter = buildFilter(property,Comparison.CONTAIN, v);
                 if(filter!=null){
                     filterSet.addFilter(filter);
@@ -169,7 +169,7 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
             List<Object> list = (List<Object>) o;
             for (Object map : list) {
                 String property = (String) ((Map)map).get("key");
-                Comparison comparison = Comparison.valueOf( (String) ((Map)map).get("comparison").toString().toUpperCase());
+                Comparison comparison = Comparison.valueOf(((Map)map).get("comparison").toString().toUpperCase());
 
                 Object[] value =( (List) ((Map)map).get("value")).toArray();
 

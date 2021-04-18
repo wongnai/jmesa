@@ -90,7 +90,13 @@ public class DateFilterMatcher extends AbstractPatternFilterMatcher {
 
 
         String item = String.valueOf(itemValue);
-        String filter = String.valueOf(filterValue);
-        return StringUtils.contains(item, filter);
+        for(Object v : filterValue) {
+            String filter = String.valueOf(v);
+            boolean res = StringUtils.contains(item, filter);
+            if(res){
+                return res;
+            }
+        }
+        return false;
     }
 }

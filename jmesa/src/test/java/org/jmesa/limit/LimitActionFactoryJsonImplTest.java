@@ -80,12 +80,12 @@ class LimitActionFactoryJsonImplTest {
 
     @Test
     void pairValueTest(){
-        String s ="{\"maxRows\":20,\"page\":1,\"exportType\":\"json\",\"sort\":{},\"filter\":{\"key\":\"ExpirationDate\",\"comparison\":\"is\", \"value\":[\"2021-04-01 00:00:00\",null]}}";
+        String s ="{\"maxRows\":20,\"page\":1,\"exportType\":\"json\",\"sort\":{},\"filter\":[{\"key\":\"ExpirationDate\",\"comparison\":\"gte\", \"value\":[\"2021-04-01 00:00:00\"]}]}";
 
         LimitActionFactoryJsonImpl local = new LimitActionFactoryJsonImpl(id, s);
         FilterSet set = local.getFilterSet();
 
-       assertEquals("RangeFilter{property='ExpirationDate', value=[\"2021-04-01 00:00:00\", null]}", set.getFilter("ExpirationDate").toString());
+       assertEquals("{property='ExpirationDate', value=[2021-04-01 00:00:00], comparison=GTE}", set.getFilter("ExpirationDate").toString());
 
       //  System.out.println(set.toString());
     }
