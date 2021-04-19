@@ -212,7 +212,7 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
         String exportType = LimitUtils.getValue(data.get(Keys.EXPORT_TYPE));
 
         if (logger.isDebugEnabled()) {
-            logger.debug("Export Type: " + exportType == null ? "" : exportType);
+            logger.debug("Export Type: " + (exportType == null ? "" : exportType));
         }
 
         return exportType;

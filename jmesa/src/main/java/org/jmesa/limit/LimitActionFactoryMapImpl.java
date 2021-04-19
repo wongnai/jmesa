@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LimitActionFactoryMapImpl implements LimitActionFactory {
 
+    public static final int DEFAULT_MAX_ROWS = 20;
     private Logger logger = LoggerFactory.getLogger(LimitActionFactoryMapImpl.class);
 
     private final Map<?, ?> parameters;
@@ -66,7 +67,7 @@ public class LimitActionFactoryMapImpl implements LimitActionFactory {
             }
         }
 
-        return 0;
+        return DEFAULT_MAX_ROWS;
     }
 
     /**
