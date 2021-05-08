@@ -15,6 +15,8 @@
  */
 package org.jmesa.view.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jmesa.core.CoreContext;
 import org.jmesa.model.ExportTypes;
 import org.jmesa.test.AbstractTestCase;
@@ -113,5 +115,31 @@ public class JsonViewTest extends AbstractTestCase {
         String result = jsonView.escapeValue(value);
 
         assertTrue(result.equals("I have a \\\"quote\\\""));
+    }
+
+    @Test
+    void escapeValue() throws JsonProcessingException {
+
+        String value = "I have a 'quote'";
+
+        JsonView jsonView = new JsonView();
+
+        String result = jsonView.escapeValue(value);
+
+        assertTrue(result.equals("I have a \\\'quote\\\'"));
+        HashMap<Object, Object> map = new HashMap<>();
+
+        map.put("a", value);
+
+
+        ObjectMapper mapper = new ObjectMapper();
+       // String res = mapper.readValue(result, String.class);
+        String s = mapper.writeValueAsString(map);
+        String s1 = mapper.writeValueAsString(value);
+        System.out.println(result);
+        System.out.println(s);
+        System.out.println(s1);
+
+
     }
 }

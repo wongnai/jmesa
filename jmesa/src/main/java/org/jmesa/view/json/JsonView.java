@@ -116,8 +116,7 @@ public class JsonView extends AbstractExportView {
             return "";
         }
 
-        String stringval = String.valueOf(value);
-        return escapeJavascript(stringval);
+        return escapeJavascript(String.valueOf(value));
     }
 
     private String escapeJavascript(CharSequence t) {
@@ -142,8 +141,8 @@ public class JsonView extends AbstractExportView {
             // \v vertical tab
             // case '\\0x00b':
             //     return "\\v";
-            case '\'':
-                return "\\'";
+//            case '\'':
+//                return "\\\'";
             case '"':
                 return "\\\"";
            // case '&':

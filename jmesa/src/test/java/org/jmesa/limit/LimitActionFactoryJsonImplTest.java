@@ -1,13 +1,13 @@
 package org.jmesa.limit;
 
 import org.jmesa.model.ExportTypes;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LimitActionFactoryJsonImplTest {
 
@@ -63,6 +63,8 @@ class LimitActionFactoryJsonImplTest {
         assertEquals(true, set.getFilter("property1").getValue()[0]);
         assertEquals("abc", set.getFilter("property2").getValue()[0]);
         assertTrue(Arrays.equals(new Object[]{"10","100"}, set.getFilter("property3").getValue()));
+        assertTrue(Arrays.equals(new Object[]{"name1","name2","name3","name4"}, set.getFilter("name").getValue()));
+
     }
 
     @Test
