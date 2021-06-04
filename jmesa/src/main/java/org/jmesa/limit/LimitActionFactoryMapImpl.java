@@ -135,7 +135,7 @@ public class LimitActionFactoryMapImpl implements LimitActionFactory {
                     String position = StringUtils.substringBetween(parameter, prefixId + Action.SORT.toParam(), "_");
                     String property = StringUtils.substringAfter(parameter, prefixId + Action.SORT.toParam() + position + "_");
                     Order order = Order.valueOfParam(value);
-                    Sort sort = new Sort(new Integer(position), property, order);
+                    Sort sort = new Sort(Integer.parseInt(position), property, order);
                     sortSet.addSort(sort);
                 }
             }
@@ -153,7 +153,7 @@ public class LimitActionFactoryMapImpl implements LimitActionFactory {
         String exportType = LimitUtils.getValue(parameters.get(prefixId + Action.EXPORT.toParam()));
 
         if (logger.isDebugEnabled()) {
-            logger.debug("Export Type: " + exportType == null ? "" : exportType);
+            logger.debug("Export Type: " + (exportType == null ? "" : exportType));
         }
 
         return exportType;
@@ -166,7 +166,7 @@ public class LimitActionFactoryMapImpl implements LimitActionFactory {
         builder.append("id", id);
         builder.append("prefixId", prefixId);
         if (parameters != null) {
-            parameters.toString();
+            builder.append(parameters.toString());
         }
         return builder.toString();
     }

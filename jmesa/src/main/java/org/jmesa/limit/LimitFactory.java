@@ -224,7 +224,7 @@ public class LimitFactory {
      */
     public Limit createLimitAndRowSelect(int maxRows, int totalRows) {
 
-        Limit limit = createLimit();
+        Limit limit = createLimit(totalRows);
 
         if (limit.hasRowSelect()) {
             return limit;
