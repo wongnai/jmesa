@@ -26,12 +26,12 @@ public enum Comparison {
     GTE,
 
     /**
-     * <
+     * &lt;
      */
     LT,
 
     /**
-     * <=
+     * &lt;=
      */
     LTE,
 

@@ -324,19 +324,8 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
     	getWorksheetState().persistWorksheet(worksheet);
     }
 
-    /**
-     * <p>
-     * Get the Limit. If the Limit does not exist then one will be created. If you are manually
-     * sorting and filtering the table then as much of the Limit will be created as is possible. You
-     * still might need to set the totalRows on the facade, which will set it on the Limit.
-     * </p>
-     *
-     * <p>
-     * If using the State interface then be sure to set that on the facade before requesting the Limit.
-     * </p>
-     */
-    @Override
-    public Limit getLimit() {
+
+    public Limit getLimit(int totalRows) {
 
         if (limit != null) {
             return limit;
@@ -344,7 +333,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
 
         LimitFactory limitFactory = new LimitFactory(id, getWebContext());
         limitFactory.setState(getState());
-        this.limit = limitFactory.createLimit();
+        this.limit = limitFactory.createLimit(totalRows);
 
         if (items == null) {
             return limit;
@@ -372,6 +361,21 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
         }
 
         return limit;
+    }
+    /**
+     * <p>
+     * Get the Limit. If the Limit does not exist then one will be created. If you are manually
+     * sorting and filtering the table then as much of the Limit will be created as is possible. You
+     * still might need to set the totalRows on the facade, which will set it on the Limit.
+     * </p>
+     *
+     * <p>
+     * If using the State interface then be sure to set that on the facade before requesting the Limit.
+     * </p>
+     */
+    @Override
+    public Limit getLimit() {
+        return getLimit(0);
     }
 
     /**

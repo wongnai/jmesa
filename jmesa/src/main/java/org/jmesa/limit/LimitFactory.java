@@ -113,6 +113,10 @@ public class LimitFactory {
         this.state = state;
     }
 
+    public Limit createLimit() {
+        int defaultMaxRows = 10000000;
+        return createLimit(defaultMaxRows);
+    }
     /**
      * <p>
      * Create a Limit object that is populated with the FilterSet, SortSet, and Export. Be aware
@@ -131,7 +135,7 @@ public class LimitFactory {
      * should use the FilterSet to manually filter the table to figure out the totalRows.
      * </p>
      */
-    public Limit createLimit() {
+    public Limit createLimit(int totalRows) {
 
         Limit limit = getStateLimit();
 
@@ -150,13 +154,13 @@ public class LimitFactory {
         String exportType = limitActionFactoryMapImpl.getExportType();
         limit.setExportType(exportType);
 
-        int defaultMaxRows = 100000;
+
         try{
             RowSelect rowSelect = limit.getRowSelect();
             rowSelect.setMaxRows(limitActionFactoryMapImpl.getMaxRows());
             rowSelect.setPage(limitActionFactoryMapImpl.getPage());
         }catch (Exception e) {
-            limit.setRowSelect(createRowSelect(limitActionFactoryMapImpl.getMaxRows(), defaultMaxRows));
+            limit.setRowSelect(createRowSelect(limitActionFactoryMapImpl.getMaxRows(), totalRows));
         }
         if (state != null && !limit.hasExport()) {
             state.persistLimit(limit);

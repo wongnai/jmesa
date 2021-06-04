@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.3.3</version>
+    <version>4.3.4</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -49,7 +49,7 @@
         <!-- Frameworks versions - production use -->
         <bsfVersion>2.4.0</bsfVersion>
         <commonsBeanUtilsVersion>1.9.4</commonsBeanUtilsVersion>
-        <commonsCollectionsVersion>3.2</commonsCollectionsVersion>
+        <commonsCollectionsVersion>4.4</commonsCollectionsVersion>
         <commonsElVersion>1.0</commonsElVersion>
         <commonsLangVersion>2.2</commonsLangVersion>
         <coreRendererVersion>R8</coreRendererVersion>
@@ -58,7 +58,7 @@
         <itextVersion>5.5.13.2</itextVersion>
         <jodaVersion>1.6</jodaVersion>
         <jxlVersion>2.6.10</jxlVersion>
-        <poiVersion>3.17</poiVersion>
+        <poiVersion>4.1.2</poiVersion>
         <portletApiVersion>2.0</portletApiVersion>
         <rhinoVersion>1.7.13</rhinoVersion>
         <servletApiVersion>4.0.1</servletApiVersion>
@@ -279,8 +279,8 @@
             <version>${commonsBeanUtilsVersion}</version>
         </dependency>
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
             <version>${commonsCollectionsVersion}</version>
         </dependency>
         <dependency>
