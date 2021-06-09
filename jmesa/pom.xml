@@ -52,8 +52,6 @@
         <commonsCollectionsVersion>4.4</commonsCollectionsVersion>
         <commonsElVersion>1.0</commonsElVersion>
         <commonsLangVersion>2.2</commonsLangVersion>
-        <coreRendererVersion>R8</coreRendererVersion>
-<!--        <groovyVersion>1.0</groovyVersion>-->
         <gsonVersion>2.8.6</gsonVersion>
         <itextVersion>5.5.13.2</itextVersion>
         <jodaVersion>1.6</jodaVersion>
@@ -392,17 +390,7 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.xhtmlrenderer</groupId>
-            <artifactId>core-renderer</artifactId>
-            <version>${coreRendererVersion}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>bcprov-jdk14</artifactId>
-                    <groupId>bouncycastle</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
         <dependency>
             <groupId>com.itextpdf</groupId>

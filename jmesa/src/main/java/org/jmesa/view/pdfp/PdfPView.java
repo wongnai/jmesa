@@ -15,33 +15,32 @@
  */
 package org.jmesa.view.pdfp;
 
-import static org.jmesa.view.ViewUtils.isRowEven;
-
-import java.awt.Color;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.component.Row;
-
-import com.lowagie.text.Font;
-import static com.lowagie.text.Font.NORMAL;
-import static com.lowagie.text.Font.BOLD;
-import static com.lowagie.text.FontFactory.HELVETICA;
-import static com.lowagie.text.FontFactory.getFont;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.BaseFont;
-import static com.lowagie.text.pdf.BaseFont.NOT_EMBEDDED;
-import static com.lowagie.text.pdf.BaseFont.createFont;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import org.jmesa.view.AbstractExportView;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-import static org.jmesa.view.ExportConstants.PDF_FONT_NAME;
-import static org.jmesa.view.ExportConstants.PDF_FONT_ENCODING;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.List;
+
+import static com.itextpdf.text.Font.BOLD;
+import static com.itextpdf.text.Font.NORMAL;
+import static com.itextpdf.text.FontFactory.HELVETICA;
+import static com.itextpdf.text.FontFactory.getFont;
+import static com.itextpdf.text.pdf.BaseFont.NOT_EMBEDDED;
+import static com.itextpdf.text.pdf.BaseFont.createFont;
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.jmesa.view.ExportConstants.PDF_FONT_ENCODING;
+import static org.jmesa.view.ExportConstants.PDF_FONT_NAME;
+import static org.jmesa.view.ViewUtils.isRowEven;
 
 /**
  * A PDF view that uses the iText PdfPTable.
@@ -50,28 +49,28 @@ import org.slf4j.LoggerFactory;
  * @author Ismail Seyfi
  */
 public class PdfPView extends AbstractExportView {
-		
-    private Logger logger = LoggerFactory.getLogger(PdfPView.class);
 
-    private Color evenCellBackgroundColor;
-    private Color oddCellBackgroundColor;
-    private Color headerBackgroundColor;
-    private Color headerFontColor;
-    private Color captionFontColor;
-    private String captionAlignment;
+    private static final Logger logger = LoggerFactory.getLogger(PdfPView.class);
+
+    private BaseColor evenCellBackgroundColor;
+    private BaseColor oddCellBackgroundColor;
+    private BaseColor headerBackgroundColor;
+    private BaseColor headerFontColor;
+    private BaseColor captionFontColor;
+    private int captionAlignment;
 
     public PdfPView() {
-		
-        this.evenCellBackgroundColor = new Color(227, 227, 227);
-        this.oddCellBackgroundColor = new Color(255, 255, 255);
-        this.headerBackgroundColor = new Color(114, 159, 207);
-        this.headerFontColor = new Color(255, 255, 255);
-        this.captionFontColor = new Color(0, 0, 0);
-        this.captionAlignment = "center";
+
+        this.evenCellBackgroundColor = new BaseColor(227, 227, 227);
+        this.oddCellBackgroundColor = BaseColor.WHITE;
+        this.headerBackgroundColor = new BaseColor(114, 159, 207);
+        this.headerFontColor = BaseColor.WHITE;
+        this.captionFontColor = BaseColor.BLACK;
+        this.captionAlignment = Element.ALIGN_CENTER;
     }
 
-    public Paragraph getTableCaption() throws Exception {
-		
+    public Paragraph getTableCaption() {
+
         Paragraph p = new Paragraph(getTable().getCaption(), getFont(HELVETICA, 18, BOLD, getCaptionFontColor()));
         p.setAlignment(getCaptionAlignment());
         return p;
@@ -79,7 +78,7 @@ public class PdfPView extends AbstractExportView {
 
     @Override
     public PdfPTable render() {
-		
+
         PdfPTable pdfpTable = new PdfPTable(getTable().getRow().getColumns().size());
         pdfpTable.setSpacingBefore(3);
 
@@ -88,8 +87,7 @@ public class PdfPView extends AbstractExportView {
         List<Column> columns = row.getColumns();
 
         // build table headers
-        for (Iterator<Column> iter = columns.iterator(); iter.hasNext();) {
-            Column column = iter.next();
+        for (Column column : columns) {
             PdfPCell cell = new PdfPCell(new Paragraph(column.getTitle(), getHeaderCellFont()));
             cell.setPadding(3.0f);
             cell.setBackgroundColor(getHeaderBackgroundColor());
@@ -104,9 +102,7 @@ public class PdfPView extends AbstractExportView {
 
             columns = row.getColumns();
 
-            for (Iterator<Column> iter = columns.iterator(); iter.hasNext();) {
-                Column column = iter.next();
-
+            for (Column column : columns) {
                 String property = column.getProperty();
                 Object value = column.getCellEditor().getValue(item, property, rowcount);
                 PdfPCell cell = new PdfPCell(new Paragraph(value == null ? "" : String.valueOf(value), getCellFont()));
@@ -125,33 +121,33 @@ public class PdfPView extends AbstractExportView {
         return pdfpTable;
     }
 
-    public String getCaptionAlignment() {
-		
+    public int getCaptionAlignment() {
+
         return captionAlignment;
     }
 
-    public void setCaptionAlignment(String captionAlignment) {
-		
+    public void setCaptionAlignment(int captionAlignment) {
+
         this.captionAlignment = captionAlignment;
     }
 
-    public Color getCaptionFontColor() {
-		
+    public BaseColor getCaptionFontColor() {
+
         return captionFontColor;
     }
 
-    public void setCaptionFontColor(Color captionFontColor) {
-		
+    public void setCaptionFontColor(BaseColor captionFontColor) {
+
         this.captionFontColor = captionFontColor;
     }
 
-    public Color getHeaderBackgroundColor() {
-		
+    public BaseColor getHeaderBackgroundColor() {
+
         return headerBackgroundColor;
     }
 
-    public void setHeaderBackgroundColor(Color headerBackgroundColor) {
-		
+    public void setHeaderBackgroundColor(BaseColor headerBackgroundColor) {
+
         this.headerBackgroundColor = headerBackgroundColor;
     }
 
@@ -167,17 +163,17 @@ public class PdfPView extends AbstractExportView {
      * </p>
      */
     public Font getHeaderCellFont() {
-		
+
         return getFontWithColor(getHeaderFontColor());
     }
 
-    public Color getHeaderFontColor() {
-		
+    public BaseColor getHeaderFontColor() {
+
         return headerFontColor;
     }
 
-    public void setHeaderFontColor(Color headerFontColor) {
-		
+    public void setHeaderFontColor(BaseColor headerFontColor) {
+
         this.headerFontColor = headerFontColor;
     }
 
@@ -192,32 +188,32 @@ public class PdfPView extends AbstractExportView {
      * </p>
      */
     public Font getCellFont() {
-		
+
         return getFontWithColor(null);
     }
 
-    public Color getEvenCellBackgroundColor() {
-		
+    public BaseColor getEvenCellBackgroundColor() {
+
         return evenCellBackgroundColor;
     }
 
-    public void setEvenCellBackgroundColor(Color evenCellBackgroundColor) {
-		
+    public void setEvenCellBackgroundColor(BaseColor evenCellBackgroundColor) {
+
         this.evenCellBackgroundColor = evenCellBackgroundColor;
     }
 
-    public Color getOddCellBackgroundColor() {
-		
+    public BaseColor getOddCellBackgroundColor() {
+
         return oddCellBackgroundColor;
     }
 
-    public void setOddCellBackgroundColor(Color oddCellBackgroundColor) {
-		
+    public void setOddCellBackgroundColor(BaseColor oddCellBackgroundColor) {
+
         this.oddCellBackgroundColor = oddCellBackgroundColor;
     }
 
-    private Font getFontWithColor(Color color) {
-		
+    private Font getFontWithColor(BaseColor color) {
+
         String fontName = getCoreContext().getPreference(PDF_FONT_NAME);
         String fontEncoding = getCoreContext().getPreference(PDF_FONT_ENCODING);
         if (isNotBlank(fontName) && isNotBlank(fontEncoding)) {
