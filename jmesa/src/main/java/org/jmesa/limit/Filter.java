@@ -16,7 +16,6 @@
 package org.jmesa.limit;
 
 import org.apache.commons.lang.NotImplementedException;
-import org.jmesa.core.filter.StringWildCardFilterMatcher;
 
 import java.io.Serializable;
 
@@ -55,6 +54,7 @@ import java.io.Serializable;
  *
  * @since 2.0
  * @author Jeff Johnston
+ * @author xwx
  */
 public interface Filter extends Serializable {
 
@@ -86,13 +86,13 @@ public interface Filter extends Serializable {
             case LTE:
             case IS_NOT:
             case CONTAIN:
+            case START_WITH:
                 return new SingleValueFilter(property, operator,  value);
             case IS_NULL:
             case IS_NOT_NULL:
                 return new SingleValueFilter(property, operator, null);
             case NOT_IN:
             case IN:
-
             case BETWEEN:
             case NOT_BETWEEN:
                 return new RangeFilter(property, operator, value);

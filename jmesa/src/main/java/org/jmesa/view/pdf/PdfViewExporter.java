@@ -15,23 +15,21 @@
  */
 package org.jmesa.view.pdf;
 
-import java.io.ByteArrayInputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
 import org.jmesa.view.AbstractViewExporter;
 import org.jmesa.web.HttpServletRequestSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xhtmlrenderer.util.XRLog;
-import org.xhtmlrenderer.resource.FSEntityResolver;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+//import org.xhtmlrenderer.pdf.ITextRenderer;
+//import org.xhtmlrenderer.util.XRLog;
+//import org.xhtmlrenderer.resource.FSEntityResolver;
 
 /**
  * @since 2.2
@@ -63,35 +61,42 @@ public class PdfViewExporter extends AbstractViewExporter implements HttpServlet
 
         responseHeaders();
 
-        System.setProperty("xr.util-logging.loggingEnabled", "false");
-        System.setProperty("xr.util-logging.java.util.logging.ConsoleHandler.level", "WARN");
-        System.setProperty("xr.util-logging..level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.config.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.exception.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.general.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.init.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.load.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.load.xml-entities.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.match.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.cascade.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.css-parse.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.layout.level", "WARN");
-        System.setProperty("xr.util-logging.plumbing.render.level", "WARN");
+//        System.setProperty("xr.util-logging.loggingEnabled", "false");
+//        System.setProperty("xr.util-logging.java.util.logging.ConsoleHandler.level", "WARN");
+//        System.setProperty("xr.util-logging..level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.config.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.exception.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.general.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.init.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.load.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.load.xml-entities.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.match.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.cascade.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.css-parse.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.layout.level", "WARN");
+//        System.setProperty("xr.util-logging.plumbing.render.level", "WARN");
+//
+//        XRLog.setLoggingEnabled(false);
 
-        XRLog.setLoggingEnabled(false);
-
-        ITextRenderer renderer = new ITextRenderer();
-
-        DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        FSEntityResolver er= FSEntityResolver.instance();
-        builder.setEntityResolver(er);
-        Document doc = builder.parse(new ByteArrayInputStream(contents));
-
-        renderer.setDocument(doc, getBaseUrl());
-        renderer.layout();
+//        ITextRenderer renderer = new ITextRenderer();
+//
+//        DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+//        FSEntityResolver er= FSEntityResolver.instance();
+//        builder.setEntityResolver(er);
+//        Document doc = builder.parse(new ByteArrayInputStream(contents));
+//
+//        renderer.setDocument(doc, getBaseUrl());
+//        renderer.layout();
         HttpServletResponse response = getHttpServletResponse();
-        renderer.createPDF(response.getOutputStream());
+//        renderer.createPDF(response.getOutputStream());
+        ConverterProperties properties = new ConverterProperties();
+        properties.setBaseUri(getBaseUrl());
+        properties.setCharset("UTF-8");
+        HtmlConverter.convertToPdf(new ByteArrayInputStream(contents), response.getOutputStream(),
+                properties);
+
+
     }
 
     /**

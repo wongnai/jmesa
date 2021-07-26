@@ -1,0 +1,39 @@
+{
+  "filterSets":[
+    {
+      "filterSets":[
+        {
+          "filters":[
+            {
+              "key":"geoip_data.country_name",
+              "comparison":"is",
+              "value":"United Kingdom"
+            },
+            {
+              "key":"manual_tag_ids",
+              "comparison":"in",
+              "value":"4794247"
+            }
+          ],
+          "operator":"and"
+        },
+        {
+          "filters":[
+            {
+              "key":"custom_data.Region",
+              "comparison":"is",
+              "value":"GB"
+            },
+            {
+              "key":"manual_tag_ids",
+              "comparison":"in",
+              "value":"4794247"
+            }
+          ],
+          "operator":"and"
+        }
+      ],
+      "operator":"or"
+    }
+  ]
+}

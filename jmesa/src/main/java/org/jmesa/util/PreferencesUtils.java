@@ -32,7 +32,7 @@ public class PreferencesUtils {
         }
         try {
             Class<?> clazz = Class.forName(className);
-            return (T)clazz.newInstance();
+            return (T)clazz.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
             throw new IllegalStateException("The class " + className + " does not exist");
         }
@@ -46,7 +46,7 @@ public class PreferencesUtils {
         }
         try {
             Class<?> clazz = Class.forName(className);
-            return (T)clazz.newInstance();
+            return (T)clazz.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
             throw new IllegalStateException("The class " + className + " does not exist");
         }

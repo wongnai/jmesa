@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.3.5</version>
+    <version>4.4.0</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -53,7 +53,8 @@
         <commonsElVersion>1.0</commonsElVersion>
         <commonsLangVersion>2.2</commonsLangVersion>
         <gsonVersion>2.8.6</gsonVersion>
-        <itextVersion>5.5.13.2</itextVersion>
+<!--        <itextVersion>5.5.13.2</itextVersion>-->
+        <itextVersion>7.1.15</itextVersion>
         <jodaVersion>1.6</jodaVersion>
         <jxlVersion>2.6.10</jxlVersion>
         <poiVersion>4.1.2</poiVersion>
@@ -241,10 +242,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${springFrameworkVersion}</version>
-            <!--
-            TODO should move spring mock object from src to test
             <scope>test</scope>
-            -->
             <optional>true</optional>
         </dependency>
 
@@ -392,12 +390,27 @@
 
 
         <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+<!--        <dependency>-->
+<!--            <groupId>com.itextpdf</groupId>-->
+<!--            <artifactId>itextpdf</artifactId>-->
+<!--            <version>${itextVersion}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
+            <artifactId>html2pdf</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>font-asian</artifactId>
             <version>${itextVersion}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>com.itextpdf.tool</groupId>-->
+<!--            <artifactId>xmlworker</artifactId>-->
+<!--            <version>${itextVersion}</version>-->
+<!--        </dependency>-->
 
         <!-- JSP tag needs -->
         <dependency>

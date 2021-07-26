@@ -2,6 +2,7 @@ package org.jmesa.limit;
 
 /**
  * Used for filters
+ * @author xwx
  * since 4.3
  */
 public enum Comparison {
@@ -75,5 +76,11 @@ public enum Comparison {
     /**
      * like concat('%', value, '%')
      */
-    CONTAIN
+    CONTAIN,
+
+    /**
+     * like concat(value, '%')
+     */
+    START_WITH,
+
 }

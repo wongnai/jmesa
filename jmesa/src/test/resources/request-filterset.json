@@ -1,0 +1,35 @@
+{
+  "id": "table-id",
+  "action": "",
+  "maxRows": 500,
+  "page": 123,
+  "filterSet": {
+    "filter":
+    [
+    {
+      "key": "property1",
+      "comparison": "is",
+      "value": [
+        true
+      ]
+    },
+    {
+      "key": "property2",
+      "comparison": "is",
+      "value": [
+        "abc"
+      ]
+    }],
+    "operator":"and"
+    }
+  ,{"key":"property3","comparison":"between","value":["10", "100"]}
+  ,{"key":"name","comparison":"in","value":["name1", "name2","name3","name4"]}
+  ,{"key":"id","comparison":"gte","value":[5]}
+      ]
+  ],
+  "sort":{
+  "property1":"asc",
+  "property2":"desc"
+},
+  "exportType":"json"
+}

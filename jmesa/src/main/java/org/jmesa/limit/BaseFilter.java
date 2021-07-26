@@ -1,8 +1,5 @@
 package org.jmesa.limit;
 
-import org.apache.commons.lang.NotImplementedException;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -52,8 +49,12 @@ public class BaseFilter implements Filter{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         BaseFilter that = (BaseFilter) o;
         return Objects.equals(property, that.property) && Arrays.equals(value, that.value) && comparison == that.comparison;
     }

@@ -33,8 +33,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -126,7 +125,7 @@ public class JsonViewTest extends AbstractTestCase {
 
         String result = jsonView.escapeValue(value);
 
-        assertTrue(result.equals("I have a \\\'quote\\\'"));
+        assertEquals(result, "I have a 'quote'");
         HashMap<Object, Object> map = new HashMap<>();
 
         map.put("a", value);

@@ -15,12 +15,14 @@
  */
 package org.jmesa.view.pdfp;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import org.jmesa.view.AbstractViewExporter;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import org.jmesa.view.AbstractViewExporter;
-import com.lowagie.text.pdf.PdfWriter;
+import java.io.OutputStream;
 
 /**
  * A PDF view that uses the iText PdfPTable.
@@ -39,17 +41,14 @@ public class PdfPViewExporter extends AbstractViewExporter {
 
     @Override
     public void export(OutputStream out) throws Exception {
-        com.lowagie.text.Document document = new com.lowagie.text.Document();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        com.itextpdf.kernel.pdf.PdfDocument pdfDoc = new com.itextpdf.kernel.pdf.PdfDocument(new PdfWriter(out));
+        Document document = new Document(pdfDoc);
 
-        PdfWriter.getInstance(document, baos);
-        document.open();
         PdfPView pdfView = (PdfPView) getView();
         document.add(pdfView.getTableCaption());
         document.add(pdfView.render());
         document.close();
         responseHeaders();
-        baos.writeTo(out);
         out.flush();
     }
 

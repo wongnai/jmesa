@@ -15,6 +15,7 @@
  */
 package org.jmesa.model;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
@@ -194,7 +195,7 @@ public class TableModelUtils {
 
                 Column column = new Column(entry.getKey());
                 column.title(title);
-                CellEditor cellEditor = (CellEditor)cellEditorClass.newInstance();
+                CellEditor cellEditor = (CellEditor)cellEditorClass.getDeclaredConstructor().newInstance();
                 column.cellEditor(cellEditor);
 
                 if (properties.containsKey("pattern") && cellEditor instanceof PatternSupport) {
@@ -206,6 +207,10 @@ public class TableModelUtils {
                 throw new RuntimeException("Cannot create instance of " + cellEditorFQN + " for column " + title, e);
             } catch (InstantiationException e) {
                 throw new RuntimeException("Failed to create instance of " + cellEditorFQN + " for column " + title, e);
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
             }
 
         }

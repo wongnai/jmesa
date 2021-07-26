@@ -23,6 +23,7 @@ import org.jmesa.core.President;
 import org.jmesa.core.PresidentDao;
 import org.jmesa.core.preference.Preferences;
 import org.jmesa.core.preference.PropertiesPreferences;
+import org.jmesa.limit.Action;
 import org.jmesa.limit.Limit;
 import org.jmesa.limit.LimitFactory;
 import org.jmesa.limit.RowSelect;
@@ -41,8 +42,8 @@ public abstract class AbstractTestCase {
     protected static final int MAX_ROWS = 12;
 
     protected WebContext createWebContext() {
-
         MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(ID+"_"+ Action.MAX_ROWS.toParam(), MAX_ROWS+"");
         return new HttpServletRequestWebContext(request);
     }
 

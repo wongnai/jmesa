@@ -15,12 +15,11 @@
  */
 package org.jmesa.limit;
 
-import java.io.Serializable;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * <p>
@@ -33,16 +32,33 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author Jeff Johnston
  */
 public class FilterSet implements Serializable {
-
     private Set<Filter> filters;
+    private Set<FilterSet> filterSets;
+    private Operator operator;
 
     public FilterSet() {
-
         filters = new HashSet<>();
+        filterSets = new HashSet<>();
+        operator = Operator.AND;
+    }
+
+    public Set<FilterSet> getFilterSets() {
+        return filterSets;
+    }
+
+    public void setFilterSets(Set<FilterSet> filterSets) {
+        this.filterSets = filterSets;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
+
+    public void setOperator(Operator operator) {
+        this.operator = operator;
     }
 
     public boolean isFilterable() {
-
         return isFiltered();
     }
 
@@ -58,7 +74,6 @@ public class FilterSet implements Serializable {
      * @return The set of Filter objects.
      */
     public Collection<Filter> getFilters() {
-
         return filters;
     }
 
@@ -98,7 +113,6 @@ public class FilterSet implements Serializable {
         return Arrays.stream(v).map(k -> k.toString()).collect(Collectors.joining(","));
     }
 
-
     /**
      * @param filter The Filter to add to the set.
      */
@@ -122,5 +136,26 @@ public class FilterSet implements Serializable {
         }
 
         return builder.toString();
+    }
+
+    enum Operator{
+        /**
+         * while set use AND operation
+         */
+        AND("and"),
+        /**
+         * or use OR between all filters.
+         */
+        OR("or");
+        String value;
+
+        Operator(final String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return  value;
+        }
     }
 }

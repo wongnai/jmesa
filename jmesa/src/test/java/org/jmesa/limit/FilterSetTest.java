@@ -20,8 +20,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.apache.commons.compress.utils.IOUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.security.Signature;
 import java.util.Arrays;
 
@@ -81,5 +89,25 @@ public class FilterSetTest {
         filters.addFilter(new SingleValueFilter("nickname",Comparison.IS,  new Object[]{ "Father Of His Country"}));
         filters.addFilter(new RangeFilter("age", Comparison.BETWEEN, new Object[]{"20", "35"}));
         return filters;
+    }
+
+    @Test
+    @DisplayName("test Nested FilterSet")
+    public void testPredicates() throws IOException {
+        String json = new String(IOUtils.toByteArray(this.getClass().getResourceAsStream("/predicates.json")));
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
+        objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+
+        SimpleModule module =
+                new SimpleModule("FilterDeserializerModule",
+                        new Version(1, 0, 0, null, "com.github.yujiaao","jmesa"));
+        module.addDeserializer(Filter.class, new FilterDeserializer());
+        objectMapper.registerModule(module);
+
+        FilterSet res = objectMapper.readValue(json, FilterSet.class);
+
+        System.out.println(res);
+
     }
 }
