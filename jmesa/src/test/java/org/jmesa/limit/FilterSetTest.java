@@ -15,6 +15,7 @@
  */
 package org.jmesa.limit;
 
+import static org.jmesa.limit.FilterDeserializer.configObjectMapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -96,14 +97,8 @@ public class FilterSetTest {
     public void testPredicates() throws IOException {
         String json = new String(IOUtils.toByteArray(this.getClass().getResourceAsStream("/predicates.json")));
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-        objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
 
-        SimpleModule module =
-                new SimpleModule("FilterDeserializerModule",
-                        new Version(1, 0, 0, null, "com.github.yujiaao","jmesa"));
-        module.addDeserializer(Filter.class, new FilterDeserializer());
-        objectMapper.registerModule(module);
+        configObjectMapper(objectMapper);
 
         FilterSet res = objectMapper.readValue(json, FilterSet.class);
 

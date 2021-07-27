@@ -1,9 +1,11 @@
 package org.jmesa.limit;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.jmesa.model.ExportTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -89,6 +91,22 @@ class LimitActionFactoryJsonImplTest {
 
        assertEquals("{property='ExpirationDate', value=[2021-04-01 00:00:00], comparison=GTE}", set.getFilter("ExpirationDate").toString());
 
-      //  System.out.println(set.toString());
+    }
+
+    @Test
+    void nestedFilterSets() throws IOException {
+        String json = new String(IOUtils.toByteArray(this.getClass().getResourceAsStream("/request-filterset.json")));
+
+
+        LimitActionFactoryJsonImpl local = new LimitActionFactoryJsonImpl(id, json);
+        FilterSet set = local.getFilterSet();
+
+        assertEquals("{filterSets=[{filters=[{property='property1', value=[true], comparison=IS}," +
+                        " {property='property2', value=[abc], comparison=IS}], operator=and}, " +
+                        "{filters=[{property='property3', value=[10, 100], comparison=BETWEEN}, " +
+                        "{property='name', value=[name1, name2, name3, name4], comparison=IN}, " +
+                        "{property='id', value=[5], comparison=GTE}], operator=or}], operator=and}",
+                set.toString());
+
     }
 }

@@ -23,6 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -52,9 +53,16 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
         public static final String ACTION = "action";
         public static final String MAX_ROWS = "maxRows";
         public static final String PAGE = "page";
-        public static final String FILTER = "filter";
+        public static final String FILTERS = "filters";
+        public static final String OLD_VERSION_FILTER = "filter";
+
         public static final String SORT = "sort";
         public static final String EXPORT_TYPE = "exportType";
+        public static final String FILTER_SETS ="filterSets";
+        public static final String OPERATOR = "operator";
+        public static final String KEY="key";
+        public static final String COMPARISON ="comparison";
+        public static final String VALUE ="value";
     }
 
     /**
@@ -153,7 +161,82 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
             return filterSet;
         }
 
-        Object o = data.get(Keys.FILTER);
+        Object o = data.get(Keys.OLD_VERSION_FILTER);
+        if(o!=null) {
+            oldExtractFilterSet(filterSet, o);
+        }else{
+            Object sets = data.get(Keys.FILTER_SETS);
+            if(sets!=null) {
+                extractFilterSet(filterSet, sets);
+                setOperator(filterSet, (Map) sets);
+            }
+        }
+        return filterSet;
+    }
+
+
+    private boolean isFilterSets(Object o){
+        return o instanceof Map && ((Map<String, Object>) o).containsKey(Keys.FILTER_SETS);
+    }
+    private Object getFilterSets(Object o){
+        return ((Map<String, Object>) o).get(Keys.FILTER_SETS);
+    }
+
+    private boolean isFilters(Object o){
+        return o instanceof Map && ((Map<String, Object>) o).containsKey(Keys.FILTERS);
+    }
+
+    private List<Object> getFilters(Object o){
+        Object res = ((Map<String, Object>) o).get(Keys.FILTERS);
+        if(res instanceof List){
+            return (List<Object>) res;
+        }
+        return Arrays.asList(res);
+    }
+
+    private void extractFilterSet(FilterSet filterSet, Object o) {
+        if(o instanceof List) {
+            List<Object> list = (List<Object>) o;
+            for (Object map : list) {
+                FilterSet subFilterSet =  new FilterSet();
+                extractFilterSet(subFilterSet, map);
+                filterSet.getFilterSets().add(subFilterSet);
+            }
+        }
+        if (isFilterSets(o)) {
+            extractFilterSet(filterSet, getFilterSets(o));
+        }else if(isFilters(o)){
+            extractedFilters(filterSet,getFilters(o));
+        }
+
+        if(o instanceof Map) {
+            setOperator(filterSet, (Map) o);
+        }
+    }
+
+    private void setOperator(FilterSet filterSet, Map o) {
+        if(o.containsKey(Keys.OPERATOR)) {
+            filterSet.setOperator(FilterSet.Operator.valueOf(o.get(Keys.OPERATOR).toString().toUpperCase()));
+        }
+    }
+
+    private void extractedFilters(FilterSet filterSet, List<Object> o) {
+        List<Object> list = o;
+        for (Object map : list) {
+            String property = (String) ((Map) map).get(Keys.KEY);
+            Comparison comparison = Comparison.valueOf(((Map) map).get(Keys.COMPARISON).toString().toUpperCase());
+
+            Object[] value = ((List) ((Map) map).get(Keys.VALUE)).toArray();
+
+            Filter filter = buildFilter(property, comparison, value);
+            if (filter != null) {
+                filterSet.addFilter(filter);
+            }
+        }
+    }
+
+
+    private void oldExtractFilterSet(FilterSet filterSet, Object o) {
         if (o instanceof Map) {
 
             //TODO remove this
@@ -166,22 +249,9 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
                 }
             }
         }else if(o instanceof List){
-            List<Object> list = (List<Object>) o;
-            for (Object map : list) {
-                String property = (String) ((Map)map).get("key");
-                Comparison comparison = Comparison.valueOf(((Map)map).get("comparison").toString().toUpperCase());
-
-                Object[] value =( (List) ((Map)map).get("value")).toArray();
-
-                Filter filter = buildFilter(property,comparison, value);
-                if(filter!=null){
-                    filterSet.addFilter(filter);
-                }
-            }
+            extractedFilters(filterSet, (List<Object>) o);
 
         }
-
-        return filterSet;
     }
 
     @Override

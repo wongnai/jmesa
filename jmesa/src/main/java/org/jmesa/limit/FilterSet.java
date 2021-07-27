@@ -36,9 +36,18 @@ public class FilterSet implements Serializable {
     private Set<FilterSet> filterSets;
     private Operator operator;
 
+    @Override
+    public String toString() {
+        return "{" +
+                (filters.isEmpty() ? "": "filters=" + filters+", ") +
+                (filterSets.isEmpty()? "": "filterSets=" + filterSets+", ") +
+                "operator=" + operator +
+                '}';
+    }
+
     public FilterSet() {
-        filters = new HashSet<>();
-        filterSets = new HashSet<>();
+        filters = new LinkedHashSet<>();
+        filterSets = new LinkedHashSet<>();
         operator = Operator.AND;
     }
 
@@ -123,19 +132,6 @@ public class FilterSet implements Serializable {
         }
 
         filters.add(filter);
-    }
-
-    @Override
-    public String toString() {
-
-        ToStringBuilder builder = new ToStringBuilder(this);
-
-        for (Iterator<Filter> iter = filters.iterator(); iter.hasNext();) {
-            Filter filter = iter.next();
-            builder.append(filter.toString());
-        }
-
-        return builder.toString();
     }
 
     enum Operator{
