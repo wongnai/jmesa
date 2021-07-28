@@ -134,7 +134,7 @@ public class FilterSet implements Serializable {
         filters.add(filter);
     }
 
-    enum Operator{
+    public enum Operator{
         /**
          * while set use AND operation
          */
