@@ -138,20 +138,20 @@ public class FilterSet implements Serializable {
         /**
          * while set use AND operation
          */
-        AND("and"),
+        AND,
         /**
          * or use OR between all filters.
          */
-        OR("or");
-        String value;
+        OR
 
-        Operator(final String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return  value;
-        }
+        // ; String value;
+//        Operator(final String value) {
+//            this.value = value;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return  value;
+//        }
     }
 }
