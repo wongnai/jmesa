@@ -17,7 +17,6 @@ package org.jmesa.view.json;
 
 import org.jmesa.view.AbstractViewExporter;
 
-import javax.servlet.ServletOutputStream;
 import java.io.OutputStream;
 
 /**

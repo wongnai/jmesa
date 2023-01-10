@@ -15,12 +15,13 @@
  */
 package org.jmesa.view.html.toolbar;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.jmesa.view.ViewUtils;
 import org.jmesa.view.component.Row;
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.view.html.HtmlConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @since 2.2

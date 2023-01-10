@@ -15,11 +15,11 @@
  */
 package org.jmesa.view.html;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Will build up an Html String piece by piece.

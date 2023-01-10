@@ -15,9 +15,9 @@
  */
 package org.jmesa.limit;
 
-import java.io.Serializable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import java.io.Serializable;
 
 /**
  * <p>

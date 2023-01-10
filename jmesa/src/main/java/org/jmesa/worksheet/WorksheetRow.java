@@ -15,14 +15,14 @@
  */
 package org.jmesa.worksheet;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jmesa.core.message.Messages;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.apache.commons.lang.StringUtils;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.jmesa.core.message.Messages;
 
 /**
  * <p>
@@ -42,7 +42,7 @@ import org.jmesa.core.message.Messages;
  * @author Jeff Johnston
  */
 public class WorksheetRow implements Serializable {
-		
+
     private Worksheet worksheet;
     private UniqueProperty uniqueProperty;
     private WorksheetRowStatus rowStatus;
@@ -52,12 +52,12 @@ public class WorksheetRow implements Serializable {
     private Map<String, WorksheetColumn> worksheetColumns = new LinkedHashMap<String, WorksheetColumn>();
 
     public WorksheetRow(UniqueProperty uniqueProperty) {
-		
+
         this.uniqueProperty = uniqueProperty;
     }
 
     public void setWorksheet(Worksheet worksheet) {
-		
+
         this.worksheet = worksheet;
     }
 
@@ -66,7 +66,7 @@ public class WorksheetRow implements Serializable {
      *         values.
      */
     public UniqueProperty getUniqueProperty() {
-		
+
         return uniqueProperty;
     }
 
@@ -76,7 +76,7 @@ public class WorksheetRow implements Serializable {
      * @param worksheetColumn The worksheet row column.
      */
     public void addColumn(WorksheetColumn worksheetColumn) {
-		
+
         worksheetColumns.put(worksheetColumn.getProperty(), worksheetColumn);
         worksheetColumn.setRow(this);
     }
@@ -86,7 +86,7 @@ public class WorksheetRow implements Serializable {
      * @return The worksheet row column.
      */
     public WorksheetColumn getColumn(String property) {
-		
+
         return worksheetColumns.get(property);
     }
 
@@ -94,7 +94,7 @@ public class WorksheetRow implements Serializable {
      * @return All the row columns in the worksheet.
      */
     public Collection<WorksheetColumn> getColumns() {
-		
+
         return worksheetColumns.values();
     }
 
@@ -104,7 +104,7 @@ public class WorksheetRow implements Serializable {
      * @param column The worksheet row column to remove.
      */
     public void removeColumn(WorksheetColumn column) {
-		
+
         worksheetColumns.remove(column.getProperty());
     }
 
@@ -112,7 +112,7 @@ public class WorksheetRow implements Serializable {
      * @return Get the row status.
      */
     public WorksheetRowStatus getRowStatus() {
-		
+
         return rowStatus;
     }
 
@@ -122,7 +122,7 @@ public class WorksheetRow implements Serializable {
      * @param rowStatus The row status.
      */
     public void setRowStatus(WorksheetRowStatus rowStatus) {
-		
+
         this.rowStatus = rowStatus;
     }
 
@@ -132,7 +132,7 @@ public class WorksheetRow implements Serializable {
      * @param error The text of what went wrong.
      */
     public void setError(String error) {
-		
+
         this.error = error;
     }
 
@@ -142,7 +142,7 @@ public class WorksheetRow implements Serializable {
      * @param key The error key to find in the messages.
      */
     public void setErrorKey(String key) {
-		
+
         setError(getMessages().getMessage(key));
     }
 
@@ -150,7 +150,7 @@ public class WorksheetRow implements Serializable {
      * @return The text error.
      */
     public String getError() {
-		
+
         return error;
     }
 
@@ -158,7 +158,7 @@ public class WorksheetRow implements Serializable {
      * @return Is true if an error is set on the row.
      */
     public boolean hasError() {
-		
+
         return StringUtils.isNotBlank(error);
     }
 
@@ -166,7 +166,7 @@ public class WorksheetRow implements Serializable {
      * Remove the error that was previously set.
      */
     public void removeError() {
-		
+
         this.error = null;
     }
 
@@ -178,7 +178,7 @@ public class WorksheetRow implements Serializable {
      * @return Is true if any of the row columns contain errors.
      */
     public boolean hasColumnErrors() {
-		
+
         for (WorksheetColumn worksheetColumn : worksheetColumns.values()) {
             boolean hasError = worksheetColumn.hasError();
             if (hasError) {
@@ -195,7 +195,7 @@ public class WorksheetRow implements Serializable {
      * @param item The backing worksheet item.
      */
 	public void setItem(Object item) {
-		
+
 		this.item = item;
 	}
 
@@ -203,18 +203,18 @@ public class WorksheetRow implements Serializable {
      * @return Get the backing worksheet item.
      */
 	public Object getItem() {
-		
+
 		return item;
 	}
 
     public Messages getMessages() {
-		
+
         return worksheet.getMessages();
     }
 
     @Override
     public String toString() {
-		
+
         ToStringBuilder builder = new ToStringBuilder(this);
         builder.append("uniqueProperty", uniqueProperty);
         builder.append("columns", worksheetColumns);

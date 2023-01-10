@@ -15,10 +15,10 @@
  */
 package org.jmesa.worksheet.editor;
 
-import static org.jmesa.worksheet.WorksheetUtils.isRowRemoved;
-
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.worksheet.WorksheetColumn;
+
+import static org.jmesa.worksheet.WorksheetUtils.isRowRemoved;
 
 /**
  * Defines a checkbox for the worksheet editor.

@@ -15,13 +15,14 @@
  */
 package org.jmesa.worksheet.editor;
 
-import static org.apache.commons.lang.StringEscapeUtils.escapeJavaScript;
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.worksheet.WorksheetColumn;
 
+import static org.apache.commons.text.StringEscapeUtils.escapeEcmaScript;
+
 /**
  * Defines autocomplete functionality for the worksheet editor.
- * 
+ *
  * @since 3.0.4
  * @author Jeff Johnston
  */
@@ -29,23 +30,27 @@ public class AutoCompleteWorksheetEditor extends InputWorksheetEditor {
 
     @Override
     protected String getWsColumn(WorksheetColumn worksheetColumn, Object item, String id, String property, String uniqueProperty, String uniqueValue, Object originalValue, Object changedValue) {
-        
+
         HtmlBuilder html = new HtmlBuilder();
 
         html.div().styleClass(getStyleClass(worksheetColumn)).close();
 
         html.input().type("text");
         html.name("autocomplete_" + property);
-        
+
         if (changedValue == null) {
             html.value(String.valueOf(originalValue));
         } else {
             html.value(String.valueOf(changedValue));
         }
-        
-        html.onblur("jQuery.jmesa.submitWorksheetColumn(this, '" + id + "','" + property + "','" + uniqueProperty + "','" + uniqueValue  + "','" + escapeJavaScript(originalValue == null ? "" : originalValue.toString()) + "','" + escapeJavaScript(changedValue == null ? "" : changedValue.toString()) + "');");
+
+        html.onblur("jQuery.jmesa.submitWorksheetColumn(this, '" + id
+                + "','" + property + "','"
+                + uniqueProperty + "','" + uniqueValue  + "','"
+                + escapeEcmaScript(originalValue == null ? "" : originalValue.toString()) + "','"
+                + escapeEcmaScript(changedValue == null ? "" : changedValue.toString()) + "');");
         html.end();
-        
+
         html.divEnd();
 
         return html.toString();

@@ -15,15 +15,16 @@
  */
 package org.jmesa.model;
 
-import java.util.Collection;
 import org.jmesa.limit.Limit;
+
+import java.util.Collection;
 
 /**
  * @since 3.0
  * @author Jeff Johnston
  */
 public interface PageItems {
-		
+
     public int getTotalRows(Limit limit);
     public Collection<?> getItems(Limit limit);
 }

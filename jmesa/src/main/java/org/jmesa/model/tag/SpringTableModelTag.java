@@ -15,11 +15,12 @@
  */
 package org.jmesa.model.tag;
 
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
 import org.jmesa.facade.TableFacade;
-import static org.jmesa.facade.TableFacadeFactory.createSpringTableFacade;
 import org.jmesa.web.JspPageSpringWebContext;
 import org.jmesa.web.SpringWebContext;
+
+import static org.jmesa.facade.TableFacadeFactory.createSpringTableFacade;
 
 /**
  * A way to get the Spring specific functionality.
@@ -31,13 +32,13 @@ public class SpringTableModelTag extends TableModelTag {
 
     @Override
     protected SpringWebContext getWebContext() {
-		
+
         return new JspPageSpringWebContext((PageContext) getJspContext());
     }
 
     @Override
     protected TableFacade createTableFacade() {
-		
+
         return createSpringTableFacade(getId(), getWebContext());
     }
 }

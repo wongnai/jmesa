@@ -24,7 +24,7 @@ import org.jmesa.view.editor.AbstractCellEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.el.*;
+import jakarta.el.*;
 import java.io.StringReader;
 import java.util.Map;
 

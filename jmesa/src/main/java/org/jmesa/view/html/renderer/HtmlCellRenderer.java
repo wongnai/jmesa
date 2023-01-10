@@ -16,9 +16,10 @@
 package org.jmesa.view.html.renderer;
 
 import org.jmesa.view.html.HtmlBuilder;
-import static org.jmesa.view.html.HtmlConstants.CELL_RENDERER_INCLUDE_ID;
 import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.view.renderer.AbstractCellRenderer;
+
+import static org.jmesa.view.html.HtmlConstants.CELL_RENDERER_INCLUDE_ID;
 
 /**
  * @since 2.0

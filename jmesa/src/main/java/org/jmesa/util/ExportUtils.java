@@ -15,33 +15,33 @@
  */
 package org.jmesa.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.view.View;
 
 /**
  * <p>
  * Utility class to work with the Exports.
  * </p>
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
 public class ExportUtils {
-		
+
     /**
      * Use the view caption for the export. If the caption is not defined then use a default.
-     * 
+     *
      * @param view The view to export.
      * @return The file name of export.
      */
     public static String exportFileName(View view) {
-		
+
         String caption = view.getTable().getCaption();
         if (StringUtils.isNotBlank(caption)) {
             StringUtils.replace(caption, " ", "_");
             return caption.toLowerCase();
-        } 
-        
+        }
+
         return "table-data";
     }
 }

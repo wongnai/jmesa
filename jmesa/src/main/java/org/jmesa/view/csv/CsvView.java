@@ -15,53 +15,52 @@
  */
 package org.jmesa.view.csv;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.renderer.CellRenderer;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class CsvView extends AbstractExportView {
-		
+
     private String delimiter;
 
     public CsvView() {}
 
     public CsvView(String delimiter) {
-		
+
         this.delimiter = delimiter;
     }
 
     protected String getDelimiter() {
-		
+
         return delimiter;
     }
 
     @Override
     public Object render() {
-		
+
         StringBuilder results = new StringBuilder();
 
         List<Column> columns = getTable().getRow().getColumns();
-        
+
         Iterator<Column> headerIterator = columns.iterator();
         while (headerIterator.hasNext()) {
             Column column = headerIterator.next();
             String title = column.getTitle();
             results.append("\"").append(escapeValue(title)).append("\"");
-            
+
             if (headerIterator.hasNext()) {
-                results.append(getDelimiter());                
+                results.append(getDelimiter());
             }
         }
         results.append("\r\n");
-        
+
         int rowcount = 0;
         for (Object item : getCoreContext().getPageItems()) {
             rowcount++;
@@ -72,9 +71,9 @@ public class CsvView extends AbstractExportView {
                 CellRenderer cellRenderer = column.getCellRenderer();
                 Object value = cellRenderer.render(item, rowcount);
                 results.append("\"").append(escapeValue(value)).append("\"");
-                
+
                 if (bodyIterator.hasNext()) {
-                    results.append(getDelimiter());                    
+                    results.append(getDelimiter());
                 }
             }
             results.append("\r\n");
@@ -82,13 +81,13 @@ public class CsvView extends AbstractExportView {
 
         return results.toString();
     }
-    
+
     String escapeValue(Object value) {
-        
+
         if (value == null) {
             return "";
         }
-        
+
         String stringval = String.valueOf(value);
         return stringval.replaceAll("\"", "\"\"");
     }

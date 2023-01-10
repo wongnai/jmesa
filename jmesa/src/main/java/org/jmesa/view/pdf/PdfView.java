@@ -15,10 +15,8 @@
  */
 package org.jmesa.view.pdf;
 
-import java.util.Iterator;
-import java.util.List;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.util.SupportUtils;
 import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
@@ -29,6 +27,9 @@ import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.view.html.component.HtmlRow;
 import org.jmesa.view.html.component.HtmlTable;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Use the Flying Saucer API to generate Pdf documents.
  *
@@ -36,14 +37,14 @@ import org.jmesa.view.html.component.HtmlTable;
  * @author Paul Horn
  */
 public class PdfView extends AbstractExportView {
-		
+
     private String cssLocation;
 
     /**
      * @return The stylesheet to use for this pdf.
      */
     public String getCssLocation() {
-		
+
         if (StringUtils.isEmpty(cssLocation)) {
             cssLocation = getCoreContext().getPreference("pdf.cssLocation");
         }
@@ -62,13 +63,13 @@ public class PdfView extends AbstractExportView {
      * @param cssLocation The path and name of the jmesa css file.
      */
     public void setCssLocation(String cssLocation) {
-		
+
         this.cssLocation = cssLocation;
     }
 
     @Override
     public Object render() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
 
         String contextPath = getWebContext().getContextPath();
@@ -125,7 +126,7 @@ public class PdfView extends AbstractExportView {
      * Decorate the cellEditors to escape xml values.
      */
     protected void decorateCellEditors() {
-		
+
         HtmlTable table = (HtmlTable) getTable();
         HtmlRow row = table.getRow();
         List<Column> columns = row.getColumns();
@@ -144,17 +145,17 @@ public class PdfView extends AbstractExportView {
      * Decorate the cell editor with one that can escape values.
      */
     private static class EscapeXmlCellEditor implements CellEditor {
-		
+
         private CellEditor cellEditor;
 
         public void setCellEditor(CellEditor cellEditor) {
-		
+
             this.cellEditor = cellEditor;
         }
 
         @Override
         public Object getValue(Object item, String property, int rowcount) {
-		
+
             Object value = cellEditor.getValue(item, property, rowcount);
             if (value != null) {
                 return StringEscapeUtils.escapeXml(value.toString());

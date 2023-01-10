@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.jmesa.view.ExportConstants.PDF_FONT_ENCODING;
 import static org.jmesa.view.ExportConstants.PDF_FONT_NAME;
 import static org.jmesa.view.ViewUtils.isRowEven;

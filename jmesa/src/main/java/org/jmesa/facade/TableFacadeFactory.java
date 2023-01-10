@@ -15,15 +15,15 @@
  */
 package org.jmesa.facade;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jmesa.core.message.Messages;
 import org.jmesa.core.message.MessagesFactory;
 import org.jmesa.core.message.SpringMessages;
-import org.jmesa.web.*;
+import org.jmesa.web.HttpServletRequestSpringWebContext;
+import org.jmesa.web.SpringWebContext;
+import org.jmesa.web.WebContext;
 import org.springframework.context.i18n.LocaleContextHolder;
-
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * A factory to create TableFacade implementations.
@@ -59,16 +59,16 @@ public class TableFacadeFactory {
         return tableFacade;
     }
 
-    public static TableFacade createPortletTableFacade(String id, PortletRequest request) {
-
-        return createTableFacade(id, new PortletRequestWebContext(request));
-    }
-
-    public static TableFacade createSpringPortletTableFacade(String id, PortletRequest request) {
-
-        SpringWebContext springWebContext = new PortletRequestSpringWebContext(request);
-        return createSpringTableFacade(id, springWebContext);
-    }
+//    public static TableFacade createPortletTableFacade(String id, PortletRequest request) {
+//
+//        return createTableFacade(id, new PortletRequestWebContext(request));
+//    }
+//
+//    public static TableFacade createSpringPortletTableFacade(String id, PortletRequest request) {
+//
+//        SpringWebContext springWebContext = new PortletRequestSpringWebContext(request);
+//        return createSpringTableFacade(id, springWebContext);
+//    }
 
     public static TableFacade createSpringTableFacade(String id, HttpServletRequest request) {
 

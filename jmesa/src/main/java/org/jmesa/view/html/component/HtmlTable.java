@@ -15,7 +15,7 @@
  */
 package org.jmesa.view.html.component;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.view.component.Table;
 import org.jmesa.view.html.HtmlConstants;
 import org.jmesa.view.html.renderer.HtmlTableRenderer;
@@ -26,7 +26,7 @@ import org.jmesa.view.renderer.TableRenderer;
  * @author Jeff Johnston
  */
 public class HtmlTable extends Table {
-		
+
     private String theme;
     private String style;
     private String styleClass;
@@ -37,26 +37,26 @@ public class HtmlTable extends Table {
 
     @Override
     public HtmlRow getRow() {
-		
+
         return (HtmlRow) super.getRow();
     }
 
     @Override
     public HtmlTable caption(String caption) {
-		
+
         setCaption(caption);
         return this;
     }
 
     @Override
     public HtmlTable captionKey(String key) {
-		
+
     	setCaptionKey(key);
     	return this;
     }
 
     public String getTheme() {
-		
+
         if (StringUtils.isBlank(theme)) {
             return getCoreContext().getPreference(HtmlConstants.TABLE_COMPONENT_THEME);
         }
@@ -65,34 +65,34 @@ public class HtmlTable extends Table {
     }
 
     public void setTheme(String theme) {
-		
+
         this.theme = theme;
     }
 
     public HtmlTable theme(String theme) {
-		
+
     	setTheme(theme);
     	return this;
     }
 
     public String getStyle() {
-		
+
         return style;
     }
 
     public void setStyle(String style) {
-		
+
         this.style = style;
     }
 
     public HtmlTable style(String style) {
-		
+
         setStyle(style);
         return this;
     }
 
     public String getStyleClass() {
-		
+
         if (StringUtils.isBlank(styleClass)) {
             return getCoreContext().getPreference(HtmlConstants.TABLE_RENDERER_STYLE_CLASS);
         }
@@ -101,18 +101,18 @@ public class HtmlTable extends Table {
     }
 
     public void setStyleClass(String styleClass) {
-		
+
         this.styleClass = styleClass;
     }
 
     public HtmlTable styleClass(String styleClass) {
-		
+
         setStyleClass(styleClass);
         return this;
     }
 
     public String getBorder() {
-		
+
         if (StringUtils.isBlank(border)) {
             return "0";
         }
@@ -121,18 +121,18 @@ public class HtmlTable extends Table {
     }
 
     public void setBorder(String border) {
-		
+
         this.border = border;
     }
 
     public HtmlTable border(String border) {
-		
+
         setBorder(border);
         return this;
     }
 
     public String getCellpadding() {
-		
+
         if (StringUtils.isBlank(cellpadding)) {
             return "0";
         }
@@ -141,18 +141,18 @@ public class HtmlTable extends Table {
     }
 
     public void setCellpadding(String cellpadding) {
-		
+
         this.cellpadding = cellpadding;
     }
 
     public HtmlTable cellpadding(String cellpadding) {
-		
+
         setCellpadding(cellpadding);
         return this;
     }
 
     public String getCellspacing() {
-		
+
         if (StringUtils.isBlank(cellspacing)) {
             return "0";
         }
@@ -161,35 +161,35 @@ public class HtmlTable extends Table {
     }
 
     public void setCellspacing(String cellspacing) {
-		
+
         this.cellspacing = cellspacing;
     }
 
     public HtmlTable cellspacing(String cellspacing) {
-		
+
         setCellspacing(cellspacing);
         return this;
     }
 
     public String getWidth() {
-		
+
         return width;
     }
 
     public void setWidth(String width) {
-		
+
         this.width = width;
     }
-    
+
     public HtmlTable width(String width) {
-		
+
         setWidth(width);
         return this;
     }
 
     @Override
     public HtmlTableRenderer getTableRenderer() {
-		
+
         TableRenderer tableRenderer = super.getTableRenderer();
         if (tableRenderer == null) {
             HtmlTableRenderer htmlTableRenderer = new HtmlTableRenderer();

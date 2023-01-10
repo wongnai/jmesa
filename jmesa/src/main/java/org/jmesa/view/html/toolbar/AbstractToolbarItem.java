@@ -16,14 +16,16 @@
 package org.jmesa.view.html.toolbar;
 
 import org.jmesa.core.CoreContext;
-import static org.jmesa.view.html.HtmlConstants.*;
+
+import static org.jmesa.view.html.HtmlConstants.ON_INVOKE_ACTION;
+import static org.jmesa.view.html.HtmlConstants.ON_INVOKE_EXPORT_ACTION;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public abstract class AbstractToolbarItem implements ToolbarItem {
-		
+
     private final CoreContext coreContext;
 
     private String code;
@@ -36,111 +38,111 @@ public abstract class AbstractToolbarItem implements ToolbarItem {
     private String onInvokeExportAction;
 
     public AbstractToolbarItem(CoreContext coreContext) {
-     
+
         this.coreContext = coreContext;
     }
 
     public String getCode() {
-		
+
         return code;
     }
 
     public void setCode(String code) {
-		
+
         this.code = code;
     }
 
     public String getTooltip() {
-		
+
         return tooltip;
     }
 
     public void setTooltip(String tooltip) {
-		
+
         this.tooltip = tooltip;
     }
 
     public String getOnmouseout() {
-		
+
         return onmouseout;
     }
 
     public void setOnmouseout(String onmouseout) {
-		
+
         this.onmouseout = onmouseout;
     }
 
     public String getOnmouseover() {
-		
+
         return onmouseover;
     }
 
     public void setOnmouseover(String onmouseover) {
-		
+
         this.onmouseover = onmouseover;
     }
 
     public String getStyle() {
-		
+
         return style;
     }
 
     public void setStyle(String style) {
-		
+
         this.style = style;
     }
 
     public String getStyleClass() {
-		
+
         return styleClass;
     }
 
     public void setStyleClass(String styleClass) {
-		
+
         this.styleClass = styleClass;
     }
 
     public CoreContext getCoreContext() {
-        
+
         return coreContext;
     }
 
     public String getOnInvokeAction() {
-        
+
         if (onInvokeAction == null) {
             onInvokeAction = coreContext.getPreference(ON_INVOKE_ACTION);
         }
-		
+
         return onInvokeAction;
     }
 
     public void setOnInvokeAction(String onInvokeAction) {
-		
+
         this.onInvokeAction = onInvokeAction;
     }
 
     public String getOnInvokeActionJavaScript() {
-        
+
         return getOnInvokeAction() + "('" + coreContext.getLimit().getId() + "','" + getCode() + "')";
     }
-    
+
     public String getOnInvokeExportAction() {
-		
+
         if (onInvokeExportAction == null) {
             onInvokeExportAction = coreContext.getPreference(ON_INVOKE_EXPORT_ACTION);
         }
-		
+
         return onInvokeExportAction;
     }
 
     public void setOnInvokeExportAction(String onInvokeExportAction) {
-		
+
         this.onInvokeExportAction = onInvokeExportAction;
     }
 
     public String getOnInvokeExportActionJavaScript() {
-        
+
         return getOnInvokeExportAction() + "('" + coreContext.getLimit().getId() + "','" + getCode() + "')";
     }
-    
+
 }

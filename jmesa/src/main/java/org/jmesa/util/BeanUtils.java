@@ -15,9 +15,9 @@
  */
 package org.jmesa.util;
 
-import java.lang.reflect.Method;
-
 import org.apache.log4j.Logger;
+
+import java.lang.reflect.Method;
 
 /**
  * Utilities for java bean.

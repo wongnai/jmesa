@@ -15,7 +15,7 @@
  */
 package org.jmesa.core.filter;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.limit.Comparison;
 
 /**

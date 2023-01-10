@@ -15,18 +15,17 @@
  */
 package org.jmesa.worksheet.servlet;
 
-import static org.jmesa.core.message.MessagesFactory.getMessages;
-
-import java.io.IOException;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.jmesa.core.message.Messages;
 import org.jmesa.web.HttpServletRequestWebContext;
 import org.jmesa.web.WebContext;
 import org.jmesa.worksheet.WorksheetUpdater;
+
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+import static org.jmesa.core.message.MessagesFactory.getMessages;
 
 /**
  * The default invoker of the worksheet updater.
@@ -35,15 +34,15 @@ import org.jmesa.worksheet.WorksheetUpdater;
  * @author Jeff Johnston
  */
 public class WorksheetServlet extends HttpServlet {
-		
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-		
+
         WebContext webContext = new HttpServletRequestWebContext(request);
         Messages messages = getMessages(webContext);
         WorksheetUpdater worksheetUpdater = new WorksheetUpdater();
         String columnStatus = worksheetUpdater.update(messages, webContext);
-        
+
         try {
             response.getWriter().print(columnStatus);
         } catch (IOException e) {
@@ -53,7 +52,7 @@ public class WorksheetServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-		
+
         doGet(request, response);
     }
 }

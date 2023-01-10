@@ -15,16 +15,16 @@
  */
 package org.jmesa.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @version 2.4
  * @author Jeff Johnston
  */
 public class AssertUtils {
-		
+
     public static void notNull(String msg, Object obj) {
-		
+
         if (obj == null) {
             throw new IllegalArgumentException(msg);
         }

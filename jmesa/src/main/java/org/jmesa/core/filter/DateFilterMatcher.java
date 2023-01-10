@@ -15,8 +15,8 @@
  */
 package org.jmesa.core.filter;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.jmesa.limit.Comparison;
 import org.jmesa.limit.RangeFilter;
 import org.jmesa.web.WebContext;

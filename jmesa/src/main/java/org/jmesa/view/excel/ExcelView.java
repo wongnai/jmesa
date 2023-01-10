@@ -15,28 +15,25 @@
  */
 package org.jmesa.view.excel;
 
-import java.util.Collection;
-import java.util.List;
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.*;
 import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.component.Row;
 import org.jmesa.view.component.Table;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @since 2.1
  * @author jeff jie
  */
 public class ExcelView extends AbstractExportView {
-		
+
     @Override
     public Object render() {
-		
+
         HSSFWorkbook workbook = new HSSFWorkbook();
         Table table = this.getTable();
         String caption = table.getCaption();

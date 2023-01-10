@@ -15,11 +15,6 @@
  */
 package org.jmesa.view.html.toolbar;
 
-import java.util.ArrayList;
-import java.util.List;
-import static org.jmesa.view.html.HtmlConstants.*;
-import static org.jmesa.view.html.HtmlConstants.TOOLBAR_MAX_PAGE_NUMBERS;
-import static org.jmesa.view.html.HtmlUtils.totalPages;
 import org.jmesa.core.CoreContext;
 import org.jmesa.limit.Limit;
 import org.jmesa.limit.RowSelect;
@@ -27,6 +22,12 @@ import org.jmesa.view.html.HtmlConstants;
 import org.jmesa.view.html.HtmlUtils;
 import org.jmesa.web.WebContext;
 import org.jmesa.worksheet.Worksheet;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.jmesa.view.html.HtmlConstants.*;
+import static org.jmesa.view.html.HtmlUtils.totalPages;
 
 /**
  * @since 2.0

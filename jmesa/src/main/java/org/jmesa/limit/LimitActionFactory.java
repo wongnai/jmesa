@@ -1,6 +1,6 @@
 package org.jmesa.limit;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author xwx

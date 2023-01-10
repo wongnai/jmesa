@@ -15,43 +15,44 @@
  */
 package org.jmesa.worksheet;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Represents the unique property for the row.
- * 
+ *
  * @since 2.3
  * @author Jeff Johnston
  */
 public class UniqueProperty implements Serializable {
-		
+
     private final String name;
     private final String value;
 
     public UniqueProperty(String name, String value) {
-		
+
         this.name = name;
         this.value = value;
     }
 
     public String getName() {
-		
+
         return name;
     }
 
     public String getValue() {
-		
+
         return value;
     }
-    
+
     /**
      * Equality is based on the property. Or, in other words no two Filter
      * Objects can have the same property.
      */
     @Override
     public boolean equals(Object o) {
-		
+
         if (o == this) {
             return true;
         }
@@ -67,7 +68,7 @@ public class UniqueProperty implements Serializable {
 
     @Override
     public int hashCode() {
-		
+
         int result = 17;
         int val = this.getValue() == null ? 0 : this.getValue().hashCode();
         result = result * 37 + val;
@@ -76,7 +77,7 @@ public class UniqueProperty implements Serializable {
 
     @Override
     public String toString() {
-		
+
         ToStringBuilder builder = new ToStringBuilder(this);
         builder.append("name", name);
         builder.append("value", value);

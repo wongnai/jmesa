@@ -15,8 +15,9 @@
  */
 package org.jmesa.limit;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.Serializable;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * <p>
@@ -27,7 +28,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author Jeff Johnston
  */
 public class RowSelect implements Serializable {
-		
+
     private int page;
     private int maxRows;
     private int rowEnd;
@@ -35,7 +36,7 @@ public class RowSelect implements Serializable {
     private int totalRows;
 
     public RowSelect(int page, int maxRows, int totalRows) {
-		
+
         this.maxRows = maxRows;
         this.totalRows = totalRows;
         init(page);
@@ -45,7 +46,7 @@ public class RowSelect implements Serializable {
      * @return The current page that is being displayed.
      */
     public int getPage() {
-		
+
         return page;
     }
 
@@ -55,7 +56,7 @@ public class RowSelect implements Serializable {
      * @param page The page that should be displayed.
      */
     public void setPage(int page) {
-		
+
         init(page);
     }
 
@@ -63,7 +64,7 @@ public class RowSelect implements Serializable {
      * @return The first row to display.
      */
     public int getRowStart() {
-		
+
         return rowStart;
     }
 
@@ -71,7 +72,7 @@ public class RowSelect implements Serializable {
      * @return The last row to display.
      */
     public int getRowEnd() {
-		
+
         return rowEnd;
     }
 
@@ -79,7 +80,7 @@ public class RowSelect implements Serializable {
      * @return The maximum possible rows that could be displayed on one page.
      */
     public int getMaxRows() {
-		
+
         return maxRows;
     }
 
@@ -89,7 +90,7 @@ public class RowSelect implements Serializable {
      * @param maxRows The maxRows that should be displayed.
      */
     public void setMaxRows(int maxRows) {
-		
+
         this.maxRows = maxRows;
         init(page);
     }
@@ -98,7 +99,7 @@ public class RowSelect implements Serializable {
      * @return The total possible rows, including those that are paginated.
      */
     public int getTotalRows() {
-		
+
         return totalRows;
     }
 
@@ -108,13 +109,13 @@ public class RowSelect implements Serializable {
      * @param totalRows The totalRows that should be displayed.
      */
     public void setTotalRows(int totalRows) {
-		
+
         this.totalRows = totalRows;
         init(page);
     }
 
     private void init(int page) {
-		
+
         page = getValidPage(page, maxRows, totalRows);
 
         int rs = (page - 1) * maxRows;
@@ -134,7 +135,7 @@ public class RowSelect implements Serializable {
      * The page returned that is not greater than the pages that can display.
      */
     private int getValidPage(int page, int maxRows, int totalRows) {
-		
+
         while (!isValidPage(page, maxRows, totalRows)) {
             --page;
         }
@@ -146,7 +147,7 @@ public class RowSelect implements Serializable {
      * The problem arises if using the state feature and rows are deleted.
      */
     private boolean isValidPage(int page, int maxRows, int totalRows) {
-		
+
         if (page == 1) {
             return true;
         }
@@ -161,7 +162,7 @@ public class RowSelect implements Serializable {
 
     @Override
     public String toString() {
-		
+
         ToStringBuilder builder = new ToStringBuilder(this);
         builder.append("page", page);
         builder.append("maxRows", maxRows);

@@ -15,7 +15,7 @@
  */
 package org.jmesa.view.html.renderer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.view.ViewUtils;
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.view.html.HtmlConstants;
@@ -24,24 +24,23 @@ import org.jmesa.view.html.event.MouseRowEvent;
 import org.jmesa.view.html.event.RowEvent;
 import org.jmesa.view.renderer.AbstractRowRenderer;
 import org.jmesa.worksheet.Worksheet;
-import static org.jmesa.worksheet.WorksheetUtils.isRowRemoved;
-import static org.jmesa.worksheet.WorksheetUtils.hasRowError;
-import static org.jmesa.worksheet.WorksheetUtils.getRowError;
+
+import static org.jmesa.worksheet.WorksheetUtils.*;
 
 /**
  * @since 2.0
  * @author Jeff Johnston
  */
 public class HtmlRowRenderer extends AbstractRowRenderer {
-		
+
     @Override
     public HtmlRow getRow() {
-		
+
         return (HtmlRow) super.getRow();
     }
 
     protected String getStyleClass(int rowcount) {
-		
+
         HtmlRow row = getRow();
         String styleClass = row.getStyleClass();
         if (StringUtils.isNotBlank(styleClass)) {
@@ -56,7 +55,7 @@ public class HtmlRowRenderer extends AbstractRowRenderer {
     }
 
     protected String getStyleClass(Object item, int rowcount) {
-		
+
         Worksheet worksheet = getCoreContext().getWorksheet();
         HtmlRow row = getRow();
         if (isRowRemoved(worksheet, row, item)) {
@@ -76,7 +75,7 @@ public class HtmlRowRenderer extends AbstractRowRenderer {
      * @return The row events.
      */
     protected String getRowEvents(Object item, int rowcount) {
-		
+
         Worksheet worksheet = getCoreContext().getWorksheet();
         HtmlRow row = getRow();
         if (isRowRemoved(worksheet, row, item) ||
@@ -116,7 +115,7 @@ public class HtmlRowRenderer extends AbstractRowRenderer {
 
     @Override
     public Object render(Object item, int rowcount) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.tr(1);
 

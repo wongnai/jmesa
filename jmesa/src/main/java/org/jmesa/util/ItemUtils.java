@@ -15,40 +15,40 @@
  */
 package org.jmesa.util;
 
-import java.util.Collection;
-import java.util.Map;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+import java.util.Map;
+
 /**
  * General utilities to process the Collecton of Beans or the Collection of
  * Maps. Most methods wrap or add value to the commons Beanutils.
- * 
+ *
  * @since 2.1
  * @author Jeff Johnston
  */
 public class ItemUtils {
-		
+
     private static final Logger logger = LoggerFactory.getLogger(ItemUtils.class);
 
     public static final String JMESA_ITEM = "jmesa-item";
 
     private ItemUtils() {
-        
+
         // hide constructor
     }
 
     /**
      * Get the value from the Bean or Map by property.
-     * 
+     *
      * @param item The Bean or Map.
      * @param property The Bean attribute or Map key.
      * @return The value from the Bean or Map.
      */
     public static Object getItemValue(Object item, String property) {
-		
+
         Object itemValue = null;
 
         try {
@@ -79,7 +79,7 @@ public class ItemUtils {
 
     /**
      * Get the Class for the property.
-     * 
+     *
      * @param items The Collection of Beans or Maps.
      * @param property The Bean attribute or Map key.
      * @return The Class for the property.

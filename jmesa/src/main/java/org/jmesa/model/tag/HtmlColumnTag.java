@@ -15,22 +15,6 @@
  */
 package org.jmesa.model.tag;
 
-import static org.jmesa.model.tag.TagUtils.getColumnCellEditor;
-import static org.jmesa.model.tag.TagUtils.getColumnCellRenderer;
-import static org.jmesa.model.tag.TagUtils.getColumnFilterEditor;
-import static org.jmesa.model.tag.TagUtils.getColumnFilterRenderer;
-import static org.jmesa.model.tag.TagUtils.getColumnHeaderEditor;
-import static org.jmesa.model.tag.TagUtils.getColumnHeaderRenderer;
-import static org.jmesa.model.tag.TagUtils.getColumnSortOrder;
-import static org.jmesa.model.tag.TagUtils.getColumnWorksheetEditor;
-import static org.jmesa.model.tag.TagUtils.getColumnExportEditor;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Collection;
-import java.util.Map;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.JspFragment;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
 import org.jmesa.core.CoreContext;
 import org.jmesa.util.ItemUtils;
 import org.jmesa.view.editor.CellEditor;
@@ -43,14 +27,24 @@ import org.jmesa.view.renderer.FilterRenderer;
 import org.jmesa.view.renderer.HeaderRenderer;
 import org.jmesa.worksheet.editor.WorksheetEditor;
 
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.JspFragment;
+import jakarta.servlet.jsp.tagext.SimpleTagSupport;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Map;
+
+import static org.jmesa.model.tag.TagUtils.*;
+
 /**
  * Represents an HtmlColumn.
- * 
+ *
  * @since 2.1
  * @author jeff jie
  */
 public class HtmlColumnTag extends SimpleTagSupport {
-		
+
     private String property;
     private String title;
     private String titleKey;
@@ -81,42 +75,42 @@ public class HtmlColumnTag extends SimpleTagSupport {
     private String exportEditor;
 
     public String getProperty() {
-		
+
         return property;
     }
 
     public void setProperty(String property) {
-		
+
         this.property = property;
     }
 
     public String getTitle() {
-		
+
         return title;
     }
 
     public void setTitle(String title) {
-		
+
         this.title = title;
     }
 
     public String getTitleKey() {
-		
+
         return titleKey;
     }
 
     public void setTitleKey(String titleKey) {
-		
+
         this.titleKey = titleKey;
     }
 
     public Boolean isSortable() {
-		
+
         return sortable;
     }
 
     public void setSortable(Boolean sortable) {
-		
+
         this.sortable = sortable;
     }
 
@@ -125,7 +119,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @return The sort order for the column.
      */
     public String getSortOrder() {
-		
+
         return sortOrder;
     }
 
@@ -134,25 +128,25 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @param sortOrder The order array.
      */
     public void setSortOrder(String sortOrder) {
-		
+
         this.sortOrder = sortOrder;
     }
 
     public Boolean isFilterable() {
-		
+
         return filterable;
     }
 
     public void setFilterable(Boolean filterable) {
-		
+
         this.filterable = filterable;
     }
-    
+
     /**
      * @since 2.3
      */
     public Boolean isEditable() {
-		
+
         return editable;
     }
 
@@ -160,27 +154,27 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.3
      */
     public void setEditable(Boolean editable) {
-		
+
         this.editable = editable;
     }
 
     public String getWorksheetEditor() {
-		
+
         return worksheetEditor;
     }
 
     public void setWorksheetEditor(String worksheetEditor) {
-		
+
         this.worksheetEditor = worksheetEditor;
     }
 
     public String getWidth() {
-		
+
         return width;
     }
 
     public void setWidth(String width) {
-		
+
         this.width = width;
     }
 
@@ -188,7 +182,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public String getCellRenderer() {
-		
+
         return cellRenderer;
     }
 
@@ -196,7 +190,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public void setCellRenderer(String cellRenderer) {
-		
+
         this.cellRenderer = cellRenderer;
     }
 
@@ -204,7 +198,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public String getFilterRenderer() {
-		
+
         return filterRenderer;
     }
 
@@ -212,7 +206,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public void setFilterRenderer(String filterRenderer) {
-		
+
         this.filterRenderer = filterRenderer;
     }
 
@@ -220,7 +214,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public String getHeaderRenderer() {
-		
+
         return headerRenderer;
     }
 
@@ -228,7 +222,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public void setHeaderRenderer(String headerRenderer) {
-		
+
         this.headerRenderer = headerRenderer;
     }
 
@@ -236,7 +230,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2.1
      */
     public String getStyle() {
-		
+
         return style;
     }
 
@@ -244,7 +238,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2.1
      */
     public void setStyle(String style) {
-		
+
         this.style = style;
     }
 
@@ -252,7 +246,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2.1
      */
     public String getStyleClass() {
-		
+
         return styleClass;
     }
 
@@ -260,7 +254,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2.1
      */
     public void setStyleClass(String styleClass) {
-		
+
         this.styleClass = styleClass;
     }
 
@@ -268,7 +262,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public String getFilterStyle() {
-		
+
         return filterStyle;
     }
 
@@ -276,7 +270,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public void setFilterStyle(String filterStyle) {
-		
+
         this.filterStyle = filterStyle;
     }
 
@@ -284,7 +278,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public String getFilterClass() {
-		
+
         return filterClass;
     }
 
@@ -292,7 +286,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public void setFilterClass(String filterClass) {
-		
+
         this.filterClass = filterClass;
     }
 
@@ -300,7 +294,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public String getHeaderStyle() {
-		
+
         return headerStyle;
     }
 
@@ -308,7 +302,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public void setHeaderStyle(String headerStyle) {
-		
+
         this.headerStyle = headerStyle;
     }
 
@@ -316,7 +310,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public String getHeaderClass() {
-		
+
         return headerClass;
     }
 
@@ -324,27 +318,27 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.2
      */
     public void setHeaderClass(String headerClass) {
-		
+
         this.headerClass = headerClass;
     }
 
     public String getPattern() {
-		
+
         return pattern;
     }
 
     public void setPattern(String pattern) {
-		
+
         this.pattern = pattern;
     }
 
     public String getCellEditor() {
-		
+
         return cellEditor;
     }
 
     public void setCellEditor(String cellEditor) {
-		
+
         this.cellEditor = cellEditor;
     }
 
@@ -353,7 +347,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @return The header editor for the column.
      */
     public String getHeaderEditor() {
-		
+
         return headerEditor;
     }
 
@@ -362,7 +356,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @param headerEditor The header editor to use.
      */
     public void setHeaderEditor(String headerEditor) {
-		
+
         this.headerEditor = headerEditor;
     }
 
@@ -371,7 +365,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @return The filter editor for the column.
      */
     public String getFilterEditor() {
-		
+
         return filterEditor;
     }
 
@@ -380,7 +374,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @param filterEditor The filter editor to use.
      */
     public void setFilterEditor(String filterEditor) {
-		
+
         this.filterEditor = filterEditor;
     }
 
@@ -388,7 +382,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.6.7
      */
     public String getWorksheetValidation() {
-		
+
         return worksheetValidation;
     }
 
@@ -397,7 +391,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @param worksheetValidation The worksheet validation to use.
      */
     public void setWorksheetValidation(String worksheetValidation) {
-		
+
         this.worksheetValidation = worksheetValidation;
     }
 
@@ -405,7 +399,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 2.6.7
      */
     public String getCustomWorksheetValidation() {
-		
+
         return customWorksheetValidation;
     }
 
@@ -414,7 +408,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @param customWorksheetValidation The custom worksheet validation to use.
      */
     public void setCustomWorksheetValidation(String customWorksheetValidation) {
-		
+
         this.customWorksheetValidation = customWorksheetValidation;
     }
 
@@ -423,7 +417,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      */
 
     public String getErrorMessageKey() {
-		
+
         return errorMessageKey;
     }
 
@@ -433,7 +427,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      */
 
     public void setErrorMessageKey(String errorMessageKey) {
-		
+
         this.errorMessageKey = errorMessageKey;
     }
 
@@ -442,7 +436,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      */
 
     public String getErrorMessage() {
-		
+
         return errorMessage;
     }
 
@@ -452,16 +446,16 @@ public class HtmlColumnTag extends SimpleTagSupport {
      */
 
     public void setErrorMessage(String errorMessage) {
-		
+
         this.errorMessage = errorMessage;
     }
 
-    
+
     /**
      * @since 4.0
      */
     public String getExportEditor() {
-    
+
         return exportEditor;
     }
 
@@ -469,7 +463,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 4.0
      */
     public void setExportEditor(String exportEditor) {
-    
+
         this.exportEditor = exportEditor;
     }
 
@@ -477,26 +471,26 @@ public class HtmlColumnTag extends SimpleTagSupport {
      * @since 4.0
      */
     public Boolean isExportable() {
-        
+
         return exportable;
     }
-    
+
     /**
      * @since 4.0
      */
     public void setExportable(Boolean exportable) {
-        
+
         this.exportable = exportable;
     }
 
-    
+
     /**
      * The column to use. If the column does not exist then one will be created.
      */
     private HtmlColumn getHtmlColumn() {
-		
+
         HtmlColumn htmlColumn = new HtmlColumn(getProperty());
-        
+
         htmlColumn.setTitle(getTitle());
         htmlColumn.setTitleKey(getTitleKey());
         htmlColumn.setSortable(isSortable());
@@ -513,22 +507,22 @@ public class HtmlColumnTag extends SimpleTagSupport {
         htmlColumn.setHeaderClass(getHeaderClass());
 
         // cell
-        
+
         CellRenderer cr = getColumnCellRenderer(htmlColumn, getCellRenderer());
         if (cr != null) {
-            htmlColumn.setCellRenderer(cr);            
+            htmlColumn.setCellRenderer(cr);
         }
 
         TableModelTag facadeTag = (TableModelTag) findAncestorWithClass(this, TableModelTag.class);
         boolean hasBody = getJspBody() != null;
         CoreContext coreContext = facadeTag.getTableFacade().getCoreContext();
-        
+
         CellEditor ce = getColumnCellEditor(htmlColumn, getCellEditor(), getPattern(), hasBody, coreContext);
         htmlColumn.setCellEditor(ce);
 
         CellEditor ee = getColumnExportEditor(htmlColumn, getExportEditor(), getPattern(), hasBody, coreContext);
         htmlColumn.setExportEditor(ee);
-        
+
         // filter
 
         FilterRenderer fr = getColumnFilterRenderer(htmlColumn, getFilterRenderer());
@@ -538,26 +532,26 @@ public class HtmlColumnTag extends SimpleTagSupport {
 
         FilterEditor fe = getColumnFilterEditor(htmlColumn, getFilterEditor());
         if (fe != null) {
-            htmlColumn.setFilterEditor(fe);            
+            htmlColumn.setFilterEditor(fe);
         }
 
         // header
 
         HeaderRenderer hr = getColumnHeaderRenderer(htmlColumn, getHeaderRenderer());
         if (hr != null) {
-            htmlColumn.setHeaderRenderer(hr);            
+            htmlColumn.setHeaderRenderer(hr);
         }
 
         HeaderEditor he = getColumnHeaderEditor(htmlColumn, getHeaderEditor());
         if (he != null) {
-            htmlColumn.setHeaderEditor(he);            
+            htmlColumn.setHeaderEditor(he);
         }
-        
+
         // worksheet
 
         WorksheetEditor we = getColumnWorksheetEditor(htmlColumn, getWorksheetEditor());
         if (we != null) {
-            htmlColumn.setWorksheetEditor(we);            
+            htmlColumn.setWorksheetEditor(we);
         }
 
         return htmlColumn;
@@ -566,11 +560,11 @@ public class HtmlColumnTag extends SimpleTagSupport {
     /**
      * If a ColumnTag body is defined then use it as the current page item value. If it is not
      * defined then get the page item value from the regular bean by using the property
-     * 
+     *
      * @return The item to use.
      */
     private Object getValue() throws JspException, IOException {
-		
+
         TableModelTag facadeTag = (TableModelTag) findAncestorWithClass(this, TableModelTag.class);
         String var = facadeTag.getVar();
         Object item = getJspContext().getAttribute(var);
@@ -591,7 +585,7 @@ public class HtmlColumnTag extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException, IOException {
-		
+
         TableModelTag facadeTag = (TableModelTag) findAncestorWithClass(this, TableModelTag.class);
         Collection<Map<String, Object>> pageItems = facadeTag.getPageItems();
         if (pageItems.size() == 1) {

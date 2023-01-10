@@ -16,7 +16,6 @@
 package org.jmesa.core.filter;
 
 import org.apache.commons.collections.Predicate;
-import org.jmesa.limit.Comparison;
 import org.jmesa.limit.Filter;
 import org.jmesa.limit.FilterSet;
 import org.jmesa.util.ItemUtils;

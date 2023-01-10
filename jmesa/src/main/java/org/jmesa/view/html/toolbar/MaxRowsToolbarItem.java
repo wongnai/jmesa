@@ -15,12 +15,12 @@
  */
 package org.jmesa.view.html.toolbar;
 
-import static org.jmesa.view.html.HtmlConstants.TOOLBAR_MAX_ROWS_DROPLIST_INCREMENTS;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.core.CoreContext;
 import org.jmesa.limit.Limit;
 import org.jmesa.view.html.HtmlBuilder;
+
+import static org.jmesa.view.html.HtmlConstants.TOOLBAR_MAX_ROWS_DROPLIST_INCREMENTS;
 
 /**
  * @since 2.0

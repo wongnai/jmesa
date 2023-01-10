@@ -15,28 +15,25 @@
  */
 package org.jmesa.view.excel;
 
-import java.util.Collection;
-import java.util.List;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.component.Row;
 import org.jmesa.view.component.Table;
 import org.springframework.util.StringUtils;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @since 4.0.3
  * @author Jeff Johnston
  */
 public class Excel2007View extends AbstractExportView {
-		
+
     @Override
     public Object render() {
-		
+
         XSSFWorkbook workbook = new XSSFWorkbook();
         Table table = this.getTable();
         String caption = table.getCaption();

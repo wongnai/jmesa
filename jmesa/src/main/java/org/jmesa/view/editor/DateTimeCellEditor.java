@@ -15,12 +15,13 @@
  */
 package org.jmesa.view.editor;
 
-import java.util.Locale;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.util.ItemUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Locale;
 
 /**
  * An editor to work with Joda Time dates. Just send in a valid date pattern and the date will be formated.
@@ -29,11 +30,11 @@ import org.slf4j.LoggerFactory;
  * @author Jeff Johnston
  */
 public class DateTimeCellEditor extends DateCellEditor {
-		
+
     private final Logger logger = LoggerFactory.getLogger(DateTimeCellEditor.class);
 
     public DateTimeCellEditor() {
-		
+
         // default constructor
     }
 
@@ -41,7 +42,7 @@ public class DateTimeCellEditor extends DateCellEditor {
      * @param pattern The pattern to use.
      */
     public DateTimeCellEditor(String pattern) {
-		
+
         setPattern(pattern);
     }
 
@@ -50,7 +51,7 @@ public class DateTimeCellEditor extends DateCellEditor {
      */
     @Override
     public Object getValue(Object item, String property, int rowcount) {
-		
+
         Object itemValue = null;
 
         try {

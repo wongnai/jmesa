@@ -15,38 +15,39 @@
  */
 package org.jmesa.model;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
 import org.jmesa.web.SpringWebContext;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @since 3.0
  * @author Jeff Johnston
  */
 public class SpringTableModel extends TableModel {
-		
+
     public SpringTableModel(String id, HttpServletRequest request) {
-		
+
         TableFacade tableFacade = TableFacadeFactory.createSpringTableFacade(id, request);
         super.setTableFacade(tableFacade);
     }
 
     public SpringTableModel(String id, HttpServletRequest request, HttpServletResponse response) {
-		
+
         TableFacade tableFacade = TableFacadeFactory.createSpringTableFacade(id, request, response);
         super.setTableFacade(tableFacade);
     }
-    
+
     public SpringTableModel(String id, SpringWebContext springWebContext) {
-		
+
         TableFacade tableFacade = TableFacadeFactory.createSpringTableFacade(id, springWebContext);
         super.setTableFacade(tableFacade);
     }
 
     public SpringTableModel(String id, SpringWebContext springWebContext, HttpServletResponse response) {
-		
+
         TableFacade tableFacade = TableFacadeFactory.createSpringTableFacade(id, springWebContext, response);
         super.setTableFacade(tableFacade);
     }

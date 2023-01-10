@@ -15,23 +15,18 @@
  */
 package org.jmesa.view.html.editor;
 
-import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
-import static org.apache.commons.lang.StringEscapeUtils.escapeJavaScript;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jmesa.limit.Filter;
 import org.jmesa.limit.Limit;
 import org.jmesa.util.ItemUtils;
 import org.jmesa.view.editor.AbstractFilterEditor;
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.view.html.component.HtmlColumn;
+
+import java.util.*;
+
+import static org.apache.commons.text.StringEscapeUtils.escapeHtml4;
+import static org.apache.commons.text.StringEscapeUtils.escapeEcmaScript;
 
 /**
  * Create a droplist for the filter.
@@ -64,8 +59,8 @@ public class DroplistFilterEditor extends AbstractFilterEditor {
         html.close();
 
         for (Option option : getOptions()) {
-            String value = escapeJavaScript(escapeHtml(option.getValue()));
-            String label = escapeJavaScript(escapeHtml(option.getLabel()));
+            String value = escapeEcmaScript(escapeHtml4(option.getValue()));
+            String label = escapeEcmaScript(escapeHtml4(option.getLabel()));
 
             html.option().value(value);
             if (value.equalsIgnoreCase(filterValue)){

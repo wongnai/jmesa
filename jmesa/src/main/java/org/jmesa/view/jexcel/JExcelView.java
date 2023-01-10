@@ -15,27 +15,21 @@
  */
 package org.jmesa.view.jexcel;
 
-import java.io.OutputStream;
-import java.util.Collection;
-import java.util.List;
-
 import jxl.Workbook;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
 import jxl.format.Colour;
-import jxl.write.Label;
 import jxl.write.Number;
-import jxl.write.WritableCell;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableFont;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-
-import org.apache.commons.lang.StringUtils;
+import jxl.write.*;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.view.AbstractExportView;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.component.Row;
 import org.jmesa.view.component.Table;
+
+import java.io.OutputStream;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -46,17 +40,17 @@ import org.jmesa.view.component.Table;
  * @author Paul Horn
  */
 public class JExcelView extends AbstractExportView {
-		
+
     private OutputStream outputStream;
 
     public void setOutputStream(OutputStream outputStream) {
-		
+
         this.outputStream = outputStream;
     }
 
     @Override
     public Object render() {
-		
+
         try {
             Table table = getTable();
             WritableWorkbook workbook = Workbook.createWorkbook(outputStream);

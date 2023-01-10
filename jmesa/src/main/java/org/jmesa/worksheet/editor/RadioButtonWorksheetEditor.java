@@ -15,41 +15,41 @@
  */
 package org.jmesa.worksheet.editor;
 
-import static org.jmesa.worksheet.WorksheetUtils.isRowRemoved;
-
 import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.worksheet.WorksheetColumn;
 
+import static org.jmesa.worksheet.WorksheetUtils.isRowRemoved;
+
 /**
  * Defines a radio button for the worksheet editor.
- * 
+ *
  * @since 4.0
  * @author Jason Ward
  */
 
 public class RadioButtonWorksheetEditor extends InputWorksheetEditor {
-    
+
     @Override
     public String getValueForWorksheet(Object item, String property, int rowcount) {
 
         Object value = super.getValueForWorksheet(item, property, rowcount);
         return value == null ? Boolean.FALSE.toString() : String.valueOf(value);
     }
-    
+
     @Override
     protected String getWsColumn(WorksheetColumn worksheetColumn, Object item, String id, String property, String uniqueProperty, String uniqueValue, Object originalValue, Object changedValue) {
 
         HtmlBuilder html = new HtmlBuilder();
-        
+
         html.div().styleClass(getStyleClass(worksheetColumn)).close();
-        
+
         html.input().type("radio").name(property);
 
         boolean isChecked = originalValue != null && Boolean.parseBoolean(originalValue.toString());
         if (isChecked) {
             html.checked();
         }
-        
+
         String unCheckFunction = "unCheckRadio_" + property.replace(".", "_") + "()";
         if (isRowRemoved(getCoreContext().getWorksheet(), getColumn().getRow(), item)) {
             html.disabled();
@@ -69,9 +69,9 @@ public class RadioButtonWorksheetEditor extends InputWorksheetEditor {
             html.scriptEnd();
             html.br();
         }
-        
+
         html.divEnd();
-        
+
         return html.toString();
     }
 

@@ -15,10 +15,11 @@
  */
 package org.jmesa.view.html;
 
-import java.util.List;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.editor.CellEditor;
 import org.jmesa.view.editor.GroupCellEditor;
+
+import java.util.List;
 
 /**
  * Will go through all the columns and decorate the cell editor with a cell editor that enables
@@ -28,13 +29,13 @@ import org.jmesa.view.editor.GroupCellEditor;
  * @author Jeff Johnston
  */
 public class GroupColumnsHtmlView extends HtmlView {
-		
+
     /**
      * Go through and decorate all the column cell editors.
      */
     @Override
     public Object render() {
-		
+
         List<Column> columns = getTable().getRow().getColumns();
         for (Column column : columns) {
             CellEditor decoratedCellEditor = column.getCellEditor();

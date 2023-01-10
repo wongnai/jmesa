@@ -15,7 +15,7 @@
  */
 package org.jmesa.view.html.toolbar;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.core.CoreContext;
 import org.jmesa.view.html.HtmlBuilder;
 
@@ -24,66 +24,66 @@ import org.jmesa.view.html.HtmlBuilder;
  * @author Jeff Johnston
  */
 public abstract class AbstractImageToolbarItem extends AbstractToolbarItem {
-		
+
     private String image;
     private String imageStyleClass;
     private String disabledImage;
     private String alt;
 
     public AbstractImageToolbarItem(CoreContext coreContext) {
-     
+
         super(coreContext);
     }
 
     public String getDisabledImage() {
-		
+
         return disabledImage;
     }
 
     public void setDisabledImage(String disabledImage) {
-		
+
         this.disabledImage = disabledImage;
     }
 
     public String getImage() {
-		
+
         return image;
     }
 
     public void setImage(String image) {
-		
+
         this.image = image;
     }
 
     public String getAlt() {
-		
+
         return alt;
     }
 
     public void setAlt(String alt) {
-		
+
         this.alt = alt;
     }
-    
+
     public String getImageStyleClass() {
-    
+
         return imageStyleClass;
     }
 
     public void setImageStyleClass(String imageStyleClass) {
-    
+
         this.imageStyleClass = imageStyleClass;
     }
 
     public String disabled() {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.img().src(getDisabledImage()).styleClass(getStyleClass()).style(getStyle()).alt(getAlt()).end();
         return html.toString();
     }
 
     public String enabled(String action) {
-		
+
         HtmlBuilder html = new HtmlBuilder();
         html.a().href();
         html.quote();

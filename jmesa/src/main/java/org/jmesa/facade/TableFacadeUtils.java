@@ -15,11 +15,8 @@
  */
 package org.jmesa.facade;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jmesa.core.CoreContext;
 import org.jmesa.util.SupportUtils;
 import org.jmesa.view.component.Column;
@@ -30,17 +27,17 @@ import org.jmesa.view.editor.FilterEditor;
 import org.jmesa.view.editor.HeaderEditor;
 import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.view.html.component.HtmlRow;
-import org.jmesa.view.renderer.CellRenderer;
-import org.jmesa.view.renderer.FilterRenderer;
-import org.jmesa.view.renderer.HeaderRenderer;
-import org.jmesa.view.renderer.RowRenderer;
-import org.jmesa.view.renderer.TableRenderer;
+import org.jmesa.view.renderer.*;
 import org.jmesa.web.WebContext;
 import org.jmesa.worksheet.Worksheet;
 import org.jmesa.worksheet.WorksheetRow;
 import org.jmesa.worksheet.editor.WorksheetEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Utilities for the TableFacade.

@@ -15,24 +15,25 @@
  */
 package org.jmesa.view.html.editor;
 
-import org.jmesa.view.editor.*;
-import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 import org.jmesa.util.ItemUtils;
+import org.jmesa.view.editor.AbstractCellEditor;
+
+import static org.apache.commons.text.StringEscapeUtils.escapeHtml4;
 
 /**
  * The default html cell editor that includes escape characters.
  *
  * @since 2.4
- * @author frode.reinertsen 
+ * @author frode.reinertsen
  */
 public class HtmlCellEditor extends AbstractCellEditor {
-		
+
     @Override
     public Object getValue(Object item, String property, int rowcount) {
-		
+
         Object itemValue = ItemUtils.getItemValue(item, property);
         if (itemValue != null) {
-            itemValue = escapeHtml(itemValue.toString());
+            itemValue = escapeHtml4(itemValue.toString());
         }
         return itemValue;
     }

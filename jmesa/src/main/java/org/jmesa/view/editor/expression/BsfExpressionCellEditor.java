@@ -15,13 +15,14 @@
  */
 package org.jmesa.view.editor.expression;
 
-import static org.jmesa.util.AssertUtils.notNull;
-import org.jmesa.view.editor.*;
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
 import org.jmesa.core.CoreContext;
+import org.jmesa.view.editor.AbstractCellEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.jmesa.util.AssertUtils.notNull;
 
 /**
  *  Uses the BSF engine to evaluate expressions.
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author bgould
  */
 public class BsfExpressionCellEditor extends AbstractCellEditor {
-		
+
     private Logger logger = LoggerFactory.getLogger(BsfExpressionCellEditor.class);
 
     private final Language language;
@@ -38,12 +39,12 @@ public class BsfExpressionCellEditor extends AbstractCellEditor {
     private final Object template;
 
     public BsfExpressionCellEditor(Expression expression) {
-		
+
         this(expression.getLanguage(), expression.getVar(), expression.getTemplate());
     }
 
     public BsfExpressionCellEditor(Language language, String var, Object template) {
-		
+
         notNull("The language is required.", language);
         this.language = language;
 
@@ -60,7 +61,7 @@ public class BsfExpressionCellEditor extends AbstractCellEditor {
 
     @Override
     public Object getValue(Object item, String property, int rowcount) {
-		
+
         Object result = null;
 
         BSFManager manager = getBsfManager();
@@ -81,7 +82,7 @@ public class BsfExpressionCellEditor extends AbstractCellEditor {
      * Cache the manager on a per-table basis to insure thread safety.
      */
     protected BSFManager getBsfManager() {
-		
+
         CoreContext ctx = getCoreContext();
         BSFManager manager = (BSFManager) ctx.getAttribute("org.jmesa.BSFManager");
         if (manager == null) {

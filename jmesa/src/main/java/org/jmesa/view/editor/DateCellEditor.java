@@ -15,27 +15,27 @@
  */
 package org.jmesa.view.editor;
 
-import java.util.Date;
-import java.util.Locale;
-import org.apache.commons.lang.StringUtils;
-
-import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.jmesa.util.ItemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * An editor to work with dates. Just send in a valid date pattern and the date will be formated.
- * 
+ *
  * @since 2.0
  * @author Jeff Johnston
  */
 public class DateCellEditor extends AbstractPatternCellEditor {
-		
+
     private Logger logger = LoggerFactory.getLogger(DateCellEditor.class);
 
     public DateCellEditor() {
-		
+
         // default constructor
     }
 
@@ -43,7 +43,7 @@ public class DateCellEditor extends AbstractPatternCellEditor {
      * @param pattern The pattern to use.
      */
     public DateCellEditor(String pattern) {
-		
+
         setPattern(pattern);
     }
 
@@ -52,7 +52,7 @@ public class DateCellEditor extends AbstractPatternCellEditor {
      */
     @Override
     public Object getValue(Object item, String property, int rowcount) {
-		
+
         Object itemValue = null;
 
         try {

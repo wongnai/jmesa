@@ -15,8 +15,6 @@
  */
 package org.jmesa.limit;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;

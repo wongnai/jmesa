@@ -15,23 +15,23 @@
  */
 package org.jmesa.view.editor;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import org.jmesa.util.ItemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * An editor to work with numbers. Just send in a valid number pattern and the number will be
  * formated.
- * 
+ *
  * @since 2.2
  * @author Jeff Johnston
  */
 public class NumberCellEditor extends AbstractPatternCellEditor {
-		
+
     private Logger logger = LoggerFactory.getLogger(NumberCellEditor.class);
 
     public NumberCellEditor() {}
@@ -40,7 +40,7 @@ public class NumberCellEditor extends AbstractPatternCellEditor {
      * @param pattern The pattern to use.
      */
     public NumberCellEditor(String pattern) {
-		
+
         setPattern(pattern);
     }
 
@@ -49,7 +49,7 @@ public class NumberCellEditor extends AbstractPatternCellEditor {
      */
     @Override
     public Object getValue(Object item, String property, int rowcount) {
-		
+
         Object itemValue = null;
 
         try {
