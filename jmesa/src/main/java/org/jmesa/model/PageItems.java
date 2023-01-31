@@ -25,6 +25,6 @@ import java.util.Collection;
  */
 public interface PageItems {
 
-    public int getTotalRows(Limit limit);
-    public Collection<?> getItems(Limit limit);
+    int getTotalRows(Limit limit);
+    Collection<?> getItems(Limit limit);
 }

@@ -52,7 +52,7 @@ import org.jmesa.view.html.HtmlView;
 import org.jmesa.view.html.toolbar.Toolbar;
 import org.jmesa.view.jexcel.JExcelView;
 import org.jmesa.view.jexcel.JExcelViewExporter;
-import org.jmesa.view.json.JsonView;
+import org.jmesa.view.json.JsonViewAlter;
 import org.jmesa.view.json.JsonViewExporter;
 import org.jmesa.view.pdf.PdfView;
 import org.jmesa.view.pdf.PdfViewExporter;
@@ -765,7 +765,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
         } else if (exportType.equals(ExportTypes.PDFP)) {
             exportView= new PdfPView();
         } else if (exportType.equals(ExportTypes.JSON)) {
-            exportView= new JsonView();
+            exportView= new JsonViewAlter();
         } else {
             throw new IllegalStateException("Not a valid export type.");
         }
