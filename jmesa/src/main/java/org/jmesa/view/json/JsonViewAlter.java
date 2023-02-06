@@ -61,7 +61,7 @@ public class JsonViewAlter extends AbstractExportView {
         ObjectMapper objectMapper = new ObjectMapper();
         results.append("\n\"paging\":")
                 .append(objectMapper.writeValueAsString(limit.getRowSelect()));
-        results.append("\n\"total\":")
+        results.append("\n,\"total\":")
                 .append(objectMapper.writeValueAsString(limit.getRowSelect().getTotalRows()));
     }
 

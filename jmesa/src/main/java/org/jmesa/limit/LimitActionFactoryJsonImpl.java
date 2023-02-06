@@ -35,36 +35,9 @@ import java.util.Map;
  */
 public class LimitActionFactoryJsonImpl implements LimitActionFactory {
 
-    public static final class Action {
-        public static final String CLEAR_FILTER = "clear_filter";
-        public static final String CLEAR_WORKSHEET = "clear_worksheet";
-        public static final String SAVE_WORKSHEET = "save_worksheet";
-        public static final String FILTER_WORKSHEET = "filter_worksheet";
-        public static final String ADD_WORKSHEET_ROW = "add_worksheet_row";
-    }
-
-    private Logger logger = LoggerFactory.getLogger(LimitActionFactoryJsonImpl.class);
-
     private final String id;
+    private Logger logger = LoggerFactory.getLogger(LimitActionFactoryJsonImpl.class);
     private Map<String, Object> data;
-
-    public static final class Keys {
-        public static final String ID = "id";
-        public static final String ACTION = "action";
-        public static final String MAX_ROWS = "maxRows";
-        public static final String PAGE = "page";
-        public static final String FILTERS = "filters";
-        public static final String OLD_VERSION_FILTER = "filter";
-
-        public static final String SORT = "sort";
-        public static final String EXPORT_TYPE = "exportType";
-        public static final String FILTER_SETS ="filterSets";
-        public static final String OPERATOR = "operator";
-        public static final String KEY="key";
-        public static final String COMPARISON ="comparison";
-        public static final String VALUE ="value";
-    }
-
     /**
      * json format
      * {
@@ -106,7 +79,6 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
         this.id = id;
         this.data = data;
     }
-
 
     @Override
     public String getId() {
@@ -162,11 +134,11 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
         }
 
         Object o = data.get(Keys.OLD_VERSION_FILTER);
-        if(o!=null) {
+        if (o != null) {
             oldExtractFilterSet(filterSet, o);
-        }else{
+        } else {
             Object sets = data.get(Keys.FILTER_SETS);
-            if(sets!=null) {
+            if (sets != null) {
                 extractFilterSet(filterSet, sets);
                 setOperator(filterSet, (Map) sets);
             }
@@ -174,48 +146,48 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
         return filterSet;
     }
 
-
-    private boolean isFilterSets(Object o){
+    private boolean isFilterSets(Object o) {
         return o instanceof Map && ((Map<String, Object>) o).containsKey(Keys.FILTER_SETS);
     }
-    private Object getFilterSets(Object o){
+
+    private Object getFilterSets(Object o) {
         return ((Map<String, Object>) o).get(Keys.FILTER_SETS);
     }
 
-    private boolean isFilters(Object o){
+    private boolean isFilters(Object o) {
         return o instanceof Map && ((Map<String, Object>) o).containsKey(Keys.FILTERS);
     }
 
-    private List<Object> getFilters(Object o){
+    private List<Object> getFilters(Object o) {
         Object res = ((Map<String, Object>) o).get(Keys.FILTERS);
-        if(res instanceof List){
+        if (res instanceof List) {
             return (List<Object>) res;
         }
         return Arrays.asList(res);
     }
 
     private void extractFilterSet(FilterSet filterSet, Object o) {
-        if(o instanceof List) {
+        if (o instanceof List) {
             List<Object> list = (List<Object>) o;
             for (Object map : list) {
-                FilterSet subFilterSet =  new FilterSet();
+                FilterSet subFilterSet = new FilterSet();
                 extractFilterSet(subFilterSet, map);
                 filterSet.getFilterSets().add(subFilterSet);
             }
         }
         if (isFilterSets(o)) {
             extractFilterSet(filterSet, getFilterSets(o));
-        }else if(isFilters(o)){
-            extractedFilters(filterSet,getFilters(o));
+        } else if (isFilters(o)) {
+            extractedFilters(filterSet, getFilters(o));
         }
 
-        if(o instanceof Map) {
+        if (o instanceof Map) {
             setOperator(filterSet, (Map) o);
         }
     }
 
     private void setOperator(FilterSet filterSet, Map o) {
-        if(o.containsKey(Keys.OPERATOR)) {
+        if (o.containsKey(Keys.OPERATOR)) {
             filterSet.setOperator(FilterSet.Operator.valueOf(o.get(Keys.OPERATOR).toString().toUpperCase()));
         }
     }
@@ -235,7 +207,6 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
         }
     }
 
-
     private void oldExtractFilterSet(FilterSet filterSet, Object o) {
         if (o instanceof Map) {
 
@@ -243,12 +214,12 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
             Map<String, Object> map = (Map<String, Object>) o;
             for (String property : map.keySet()) {
                 Object v = map.get(property);
-                Filter filter = buildFilter(property,Comparison.CONTAIN, v);
-                if(filter!=null){
+                Filter filter = buildFilter(property, Comparison.CONTAIN, v);
+                if (filter != null) {
                     filterSet.addFilter(filter);
                 }
             }
-        }else if(o instanceof List){
+        } else if (o instanceof List) {
             extractedFilters(filterSet, (List<Object>) o);
 
         }
@@ -263,6 +234,16 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
             Map<String, Object> map = (Map<String, Object>) o;
             for (String property : map.keySet()) {
                 String value = LimitUtils.getValue(map.get(property));
+                if (StringUtils.isNotBlank(value)) {
+                    Order order = Order.valueOfParam(value);
+                    sortSet.addSort(property, order);
+                }
+            }
+        } else if (o instanceof List) {
+            List<Map<String, String>> list = (List) o;
+            for (Map<String, String> map : list) {
+                String property = LimitUtils.getValue(map.get(Keys.FIELD));
+                String value = LimitUtils.getValue(map.get(Keys.ORDER));
                 if (StringUtils.isNotBlank(value)) {
                     Order order = Order.valueOfParam(value);
                     sortSet.addSort(property, order);
@@ -297,6 +278,35 @@ public class LimitActionFactoryJsonImpl implements LimitActionFactory {
             builder.append(data.toString());
         }
         return builder.toString();
+    }
+
+    public static final class Action {
+        public static final String CLEAR_FILTER = "clear_filter";
+        public static final String CLEAR_WORKSHEET = "clear_worksheet";
+        public static final String SAVE_WORKSHEET = "save_worksheet";
+        public static final String FILTER_WORKSHEET = "filter_worksheet";
+        public static final String ADD_WORKSHEET_ROW = "add_worksheet_row";
+    }
+
+    public static final class Keys {
+        public static final String ID = "id";
+        public static final String ACTION = "action";
+        public static final String MAX_ROWS = "maxRows";
+        public static final String PAGE = "page";
+        public static final String FILTERS = "filters";
+        public static final String OLD_VERSION_FILTER = "filter";
+
+        public static final String SORT = "sort";
+        public static final String EXPORT_TYPE = "exportType";
+        public static final String FILTER_SETS = "filterSets";
+        public static final String OPERATOR = "operator";
+        public static final String KEY = "key";
+        public static final String COMPARISON = "comparison";
+        public static final String VALUE = "value";
+
+        public static final String FIELD = "field";
+        public static final String ORDER = "order";
+
     }
 
 }

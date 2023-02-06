@@ -36,7 +36,7 @@ public class SortSet implements Serializable {
 
     public SortSet() {
 
-        sorts = new ArrayList<Sort>();
+        sorts = new ArrayList<>();
     }
 
     public boolean isSortable() {
