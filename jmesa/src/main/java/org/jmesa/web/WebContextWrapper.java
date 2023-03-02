@@ -156,7 +156,7 @@ public class WebContextWrapper implements WebContext {
     }
 
     @Override
-    public void setParameterMap(Map<?, ?> parameterMap) {
+    public void setParameterMap(Map<String, Object> parameterMap) {
 
         getWebContext().setParameterMap(parameterMap);
     }

@@ -39,6 +39,10 @@ public class JsonViewExporter extends AbstractViewExporter {
         out.write(contents);
         out.flush();
     }
+    @Override
+    public Object exportDirect() {
+        return getView().render();
+    }
 
     @Override
     protected String getContextType() {

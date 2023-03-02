@@ -48,6 +48,11 @@ public class PdfViewExporter extends AbstractViewExporter implements HttpServlet
     }
 
     @Override
+    public Object exportDirect(){
+        throw  new UnsupportedOperationException();
+    }
+
+    @Override
     public void export(OutputStream out) throws Exception {
 
         String string = (String) getView().render();

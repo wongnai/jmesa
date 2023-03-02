@@ -36,6 +36,11 @@ public class Excel2007ViewExporter extends AbstractViewExporter {
     }
 
     @Override
+    public Object exportDirect() {
+        return this.getView().render();
+    }
+
+    @Override
     protected String getContextType() {
 
         return "application/vnd.ms-excel;charset=UTF-8";

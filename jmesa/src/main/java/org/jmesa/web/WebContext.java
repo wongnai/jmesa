@@ -43,7 +43,7 @@ public interface WebContext {
 
     Map<?, ?> getParameterMap();
 
-    void setParameterMap(Map<?, ?> parameterMap);
+    void setParameterMap(Map<String, Object> parameterMap);
 
     Object getRequestAttribute(String name);
 

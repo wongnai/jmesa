@@ -52,6 +52,11 @@ public class PdfPViewExporter extends AbstractViewExporter {
     }
 
     @Override
+    public Object exportDirect(){
+        throw  new UnsupportedOperationException();
+    }
+
+    @Override
     protected String getContextType() {
         return "application/pdf";
     }

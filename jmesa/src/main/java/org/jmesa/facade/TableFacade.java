@@ -66,11 +66,13 @@ import org.jmesa.worksheet.state.WorksheetState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static org.apache.xmlbeans.impl.common.XBeanDebug.LOG;
 import static org.jmesa.facade.TableFacadeExceptions.*;
 import static org.jmesa.facade.TableFacadeUtils.filterWorksheetItems;
 import static org.jmesa.facade.TableFacadeUtils.isClearingWorksheet;
@@ -111,6 +113,8 @@ import static org.jmesa.limit.LimitConstants.LIMIT_ROWSELECT_MAXROWS;
  */
 public class TableFacade implements WorksheetSupport, ContextSupport {
 
+    private Map<String, Object> responseContext;
+    private Map<String, Object> requestParameters;
     private Logger logger = LoggerFactory.getLogger(TableFacade.class);
 
     private final String id;
@@ -168,6 +172,12 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
         this.id = id;
         this.request = request;
         this.response = response;
+    }
+
+    public TableFacade(String id, Map<String, Object> request, Map<String, Object> response) {
+        this.id = id;
+        this.requestParameters = request;
+        this.responseContext = response;
     }
 
     public String getId() {
@@ -392,7 +402,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
         Limit l = getLimit();
 
         if (l.hasExport()) {
-            rowSelect = new RowSelect(1, totalRows, totalRows);
+            rowSelect = new RowSelect(1, getMaxRows(), totalRows);
         } else {
             LimitFactory limitFactory = new LimitFactory(id, getWebContext());
             rowSelect = limitFactory.createRowSelect(getMaxRows(), totalRows);
@@ -800,7 +810,7 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
     /**
      * Generate the view.
      *
-     * @return An html generated table will return the String markup. An export will be written out
+     * @return A html generated table will return the String markup. An export will be written out
      *         to the response and this method will return null.
      */
     public String render() {
@@ -813,14 +823,21 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
         }
 
         String exportType = l.getExportType();
-        renderExport(exportType, v);
 
+        Object obj = renderExport(exportType, v);
+        if(response==null) {
+            if(obj instanceof String) {
+                return (String) obj;
+            }else{
+                LOG.error("TODO: when exporting excel file or pdf file directly");
+            }
+        }
         return null;
     }
 
-    protected void renderExport(String exportType, View view) {
+    protected Object renderExport(String exportType, View view) {
 
-        validateResponseIsNotNull(response);
+        validateResponseIsNotNull(response, responseContext);
 
         try {
             ViewExporter ve = viewExporter;
@@ -865,13 +882,20 @@ public class TableFacade implements WorksheetSupport, ContextSupport {
                 ve.setFileName(exportFileName);
 
               //added by xwx
-                String userAgent = request.getHeader("User-Agent");
-                ((AbstractViewExporter)ve).setUserAgent(userAgent);
+                if(request!=null) {
+                    String userAgent = request.getHeader("User-Agent");
+                    ((AbstractViewExporter) ve).setUserAgent(userAgent);
+                }
 
-                ve.export();
+                if(response==null) {
+                    return ve.exportDirect();
+                }else {
+                    ve.export();
+                }
             }
         } catch (Exception e) {
             logger.error("Not able to perform the " + exportType + " export.", e);
         }
+        return null;
     }
 }

@@ -50,6 +50,12 @@ public class JExcelViewExporter extends AbstractViewExporter {
     }
 
     @Override
+    public Object exportDirect(){
+        throw  new UnsupportedOperationException();
+    }
+
+
+    @Override
     protected String getContextType() {
         return "application/vnd.ms-excel;charset=UTF-8";
     }

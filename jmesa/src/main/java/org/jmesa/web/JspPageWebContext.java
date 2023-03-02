@@ -101,7 +101,7 @@ public class JspPageWebContext implements WebContext {
     }
 
     @Override
-    public void setParameterMap(Map<?, ?> parameterMap) {
+    public void setParameterMap(Map<String, Object> parameterMap) {
 
         this.parameterMap = parameterMap;
     }

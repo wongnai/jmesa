@@ -50,6 +50,7 @@ public class TableModel{
 
     private String id;
     private HttpServletRequest request;
+    private Map<String, Object> requestParameters;
     private Collection<?> items;
     private PageItems pageItems;
     private AllItems allItems;
@@ -90,6 +91,12 @@ public class TableModel{
 
         this.id = id;
         this.request = request;
+        this.tableFacade = new TableFacade(id, request, response);
+    }
+
+    public TableModel(String id, Map<String, Object> request, Map<String, Object> response){
+        this.id = id;
+        this.requestParameters = request;
         this.tableFacade = new TableFacade(id, request, response);
     }
 
@@ -268,8 +275,15 @@ public class TableModel{
             return  limit.getExportType();
         }
 
-        LimitActionFactoryMapImpl actionFactory = new LimitActionFactoryMapImpl(id, request.getParameterMap());
+        LimitActionFactoryMapImpl actionFactory = new LimitActionFactoryMapImpl(id, getParameterMap());
         return actionFactory.getExportType();
+    }
+
+    private Map<String, ?> getParameterMap() {
+        if(request!=null)
+            return request.getParameterMap();
+        return
+            requestParameters;
     }
 
     /**

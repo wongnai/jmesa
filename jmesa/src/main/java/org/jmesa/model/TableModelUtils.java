@@ -205,9 +205,7 @@ public class TableModelUtils {
                 throw new RuntimeException("Cannot create instance of " + cellEditorFQN + " for column " + title, e);
             } catch (InstantiationException e) {
                 throw new RuntimeException("Failed to create instance of " + cellEditorFQN + " for column " + title, e);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
 

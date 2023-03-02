@@ -29,6 +29,13 @@ public interface ViewExporter {
     void export() throws Exception;
 
     /**
+     * for json & csv just return the string representation
+     * for excel it will return the XSSFWorkbook
+     * @return
+     */
+    Object exportDirect();
+
+    /**
      * @since 4.1
      * @param out output file etc. to that stream
      * @throws Exception any error

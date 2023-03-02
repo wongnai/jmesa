@@ -55,7 +55,6 @@ public class SupportUtils {
      * @param request The object to be injected.
      */
     public static void setHttpServletRequest(Object obj, HttpServletRequest request) {
-
         if ((obj instanceof HttpServletRequestSupport) && ((HttpServletRequestSupport) obj).getHttpServletRequest() == null) {
             ((HttpServletRequestSupport) obj).setHttpServletRequest(request);
         }

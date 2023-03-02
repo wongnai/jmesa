@@ -112,9 +112,8 @@ final class TableFacadeExceptions {
         }
     }
 
-    static void validateResponseIsNotNull(Object response) {
-
-        if (response == null) {
+    static void validateResponseIsNotNull(Object response, Object mapResponse) {
+        if (response == null && mapResponse == null) {
             throw new IllegalStateException("The HttpServletResponse is null. You need to call the " +
                     "TableFacade constructor (or factory) with the response object.");
         }

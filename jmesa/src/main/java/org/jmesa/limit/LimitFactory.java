@@ -15,6 +15,7 @@
  */
 package org.jmesa.limit;
 
+import com.bixuebihui.jmesa.entry.Query;
 import org.jmesa.limit.state.State;
 import org.jmesa.web.WebContext;
 
@@ -99,14 +100,17 @@ public class LimitFactory {
     }
 
     public LimitFactory(String id, String json) {
-
         this.limitActionFactoryMapImpl = new LimitActionFactoryJsonImpl(id, json);
     }
 
     public LimitFactory(String id, Map<String, Object> json) {
-
         this.limitActionFactoryMapImpl = new LimitActionFactoryJsonImpl(id, json);
     }
+
+    public LimitFactory(String id, Query query) {
+        this.limitActionFactoryMapImpl = new LimitActionFactoryQueryImpl(id, query);
+    }
+
 
     public void setState(State state) {
 
@@ -231,7 +235,7 @@ public class LimitFactory {
         }
 
         if (limit.hasExport()) {
-            RowSelect rowSelect = new RowSelect(1, totalRows, totalRows);
+            RowSelect rowSelect = new RowSelect(1, maxRows, totalRows);
             limit.setRowSelect(rowSelect);
         } else {
             RowSelect rowSelect = createRowSelect(maxRows, totalRows);

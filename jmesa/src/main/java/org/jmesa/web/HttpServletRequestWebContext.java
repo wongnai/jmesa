@@ -32,7 +32,7 @@ public class HttpServletRequestWebContext implements WebContext {
 
     private final HttpServletRequest request;
     private final ServletContext ctx;
-    private Map<?, ?> parameterMap;
+    private Map<String, Object> parameterMap;
     private Locale locale;
 
     public HttpServletRequestWebContext(HttpServletRequest request, ServletContext ctx) {
@@ -44,7 +44,7 @@ public class HttpServletRequestWebContext implements WebContext {
     public HttpServletRequestWebContext(HttpServletRequest request) {
 
         this.request = request;
-        HttpSession session= request.getSession();
+        HttpSession session= request==null? null : request.getSession();
         if(session!=null) {
             this.ctx = session.getServletContext();
         }else{
@@ -56,7 +56,7 @@ public class HttpServletRequestWebContext implements WebContext {
      * @param map
      * @since 4.1
      */
-    public HttpServletRequestWebContext(Map<String, String[]> map) {
+    public HttpServletRequestWebContext(Map<String, Object> map) {
         this.request = null;
         this.ctx = null;
         this.parameterMap = map;
@@ -141,27 +141,29 @@ public class HttpServletRequestWebContext implements WebContext {
     }
 
     @Override
-    public void setParameterMap(Map<?, ?> parameterMap) {
-
+    public void setParameterMap(Map<String, Object> parameterMap) {
         this.parameterMap = parameterMap;
     }
 
     @Override
     public Object getRequestAttribute(String name) {
-
-        return request.getAttribute(name);
+        if(request!=null)
+            return request.getAttribute(name);
+        return parameterMap.get(name);
     }
 
     @Override
     public void setRequestAttribute(String name, Object value) {
-
-        request.setAttribute(name, value);
+        if(request!=null)
+            request.setAttribute(name, value);
+        else parameterMap.put(name, value);
     }
 
     @Override
     public void removeRequestAttribute(String name) {
-
-        request.removeAttribute(name);
+        if(request!=null)
+            request.removeAttribute(name);
+        else parameterMap.remove(name);
     }
 
     @Override
@@ -176,17 +178,21 @@ public class HttpServletRequestWebContext implements WebContext {
 
     @Override
     public void setSessionAttribute(String name, Object value) {
-        HttpSession session= request.getSession();
-        if(session!=null) {
-            session.setAttribute(name, value);
+        if(request!=null) {
+            HttpSession session = request.getSession();
+            if (session != null) {
+                session.setAttribute(name, value);
+            }
         }
     }
 
     @Override
     public void removeSessionAttribute(String name) {
-        HttpSession session= request.getSession();
-        if(session!=null) {
-            session.removeAttribute(name);
+        if(request!=null) {
+            HttpSession session = request.getSession();
+            if (session != null) {
+                session.removeAttribute(name);
+            }
         }
     }
 
@@ -203,7 +209,7 @@ public class HttpServletRequestWebContext implements WebContext {
             return locale;
         }
 
-        return request.getLocale();
+        return request==null? Locale.getDefault(): request.getLocale();
     }
 
     @Override
@@ -216,14 +222,17 @@ public class HttpServletRequestWebContext implements WebContext {
 
     @Override
     public String getContextPath() {
-
-        return request.getContextPath();
+        if(request!=null) {
+            return request.getContextPath();
+        }
+        return "";
     }
 
     @Override
     public String getRealPath(String path) {
-
-        return ctx.getRealPath(path);
+        if(ctx!=null)
+            return ctx.getRealPath(path);
+        return path;
     }
 
     @Override

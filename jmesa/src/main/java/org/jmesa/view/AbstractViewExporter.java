@@ -22,6 +22,7 @@ import org.jmesa.util.DownloadFileNameEncoder;
 import org.jmesa.web.HttpServletResponseSupport;
 
 import java.nio.charset.Charset;
+import java.util.Map;
 
 import static org.jmesa.view.ExportConstants.ENCODING;
 
@@ -35,11 +36,12 @@ public abstract class AbstractViewExporter implements ViewExporter, CoreContextS
     private String fileName;
     private CoreContext coreContext;
     private HttpServletResponse response;
+    private Map<String, ?> responseMap;
 	private String userAgent;
 
     public void responseHeaders()
             throws Exception {
-        assert response != null;
+        if (response == null) return;
 
         response.setContentType(getContextType());
         String encoding = getEncoding();
@@ -107,12 +109,10 @@ public abstract class AbstractViewExporter implements ViewExporter, CoreContextS
 
     @Override
     public void setHttpServletResponse(HttpServletResponse response) {
-
         this.response = response;
     }
 
     protected String getEncoding() {
-
         String encoding = coreContext.getPreference(ENCODING);
         if (encoding == null) {
             encoding = Charset.defaultCharset().name();

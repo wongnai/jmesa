@@ -34,6 +34,11 @@ public class ExcelViewExporter extends AbstractViewExporter {
     }
 
     @Override
+    public Object exportDirect() {
+        return this.getView().render();
+    }
+
+    @Override
     public void export(OutputStream out) throws Exception {
         HSSFWorkbook workbook = (HSSFWorkbook) this.getView().render();
         workbook.write(out);
