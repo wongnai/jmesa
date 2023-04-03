@@ -15,7 +15,7 @@
  */
 package org.jmesa.model.tag;
 
-import jakarta.servlet.jsp.tagext.SimpleTagSupport;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.jmesa.core.CoreContext;
 import org.jmesa.core.filter.FilterMatcherMap;

@@ -16,7 +16,7 @@
 package org.jmesa.facade;
 
 import java.util.Collection;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.jmesa.core.President;
 import org.jmesa.core.PresidentDao;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

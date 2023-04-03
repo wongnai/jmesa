@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.5.8</version>
+    <version>4.4.3</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -60,10 +60,10 @@
         <poiVersion>5.2.2</poiVersion>
 <!--        <portletApiVersion>3.0.1</portletApiVersion>-->
         <rhinoVersion>1.7.14</rhinoVersion>
-        <servletApiVersion>5.0.0</servletApiVersion>
-        <servletJspApiVersion>3.1.0</servletJspApiVersion>
+        <servletApiVersion>4.0.1</servletApiVersion>
+        <servletJspApiVersion>2.3.3</servletJspApiVersion>
         <slf4jVersion>2.0.5</slf4jVersion>
-        <springFrameworkVersion>6.0.3</springFrameworkVersion>
+        <springFrameworkVersion>4.3.29.RELEASE</springFrameworkVersion>
         <tagsoupVersion>1.2.1</tagsoupVersion>
         <!-- Frameworks versions - testing use -->
         <junitVersion>5.9.0</junitVersion>
@@ -277,40 +277,19 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.servlet</groupId>-->
-<!--            <artifactId>jakarta.servlet-api</artifactId>-->
-<!--            <version>${servletApiVersion}</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>6.0.0</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servletApiVersion}</version>
             <scope>provided</scope>
         </dependency>
 
-
-
         <dependency>
-            <groupId>jakarta.servlet.jsp</groupId>
-            <artifactId>jakarta.servlet.jsp-api</artifactId>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
             <version>${servletJspApiVersion}</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.el</artifactId>
-            <version>4.0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.expressly</groupId>
-            <artifactId>expressly</artifactId>
-            <version>5.0.0</version>
         </dependency>
 
 
@@ -433,10 +412,11 @@
             <artifactId>gson</artifactId>
             <version>${gsonVersion}</version>
         </dependency>
+
         <dependency>
-            <groupId>jakarta.mail</groupId>
-            <artifactId>jakarta.mail-api</artifactId>
-            <version>2.1.0</version>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
         </dependency>
 
         <dependency>
@@ -450,12 +430,10 @@
             <version>${jacksonVersion}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.el -->
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.el</artifactId>
-            <version>4.0.2</version>
-<!--            <scope>test</scope>-->
+            <artifactId>javax.el</artifactId>
+            <version>${javax-el-implVersion}</version>
         </dependency>
 
 
@@ -575,28 +553,27 @@
                         </dependencies>
                     </plugin>
 
-
-                    <plugin>
-                        <groupId>org.jsonschema2pojo</groupId>
-                        <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                        <version>1.1.1</version>
-                        <configuration>
-                            <sourceDirectory>${basedir}/src/test/resources/schemas</sourceDirectory>
-                            <serializable>true</serializable>
-                            <includeAdditionalProperties>false</includeAdditionalProperties>
-                            <targetPackage>com.bixuebihui.jmesa.entry</targetPackage>
-                            <useLongIntegers>true</useLongIntegers>
-                            <sourceType>json</sourceType>
-                            <outputDirectory>${basedir}/src/main/java</outputDirectory>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+<!--                    <plugin>-->
+<!--                        <groupId>org.jsonschema2pojo</groupId>-->
+<!--                        <artifactId>jsonschema2pojo-maven-plugin</artifactId>-->
+<!--                        <version>1.1.1</version>-->
+<!--                        <configuration>-->
+<!--                            <sourceDirectory>${basedir}/src/test/resources/schemas</sourceDirectory>-->
+<!--                            <serializable>true</serializable>-->
+<!--                            <includeAdditionalProperties>false</includeAdditionalProperties>-->
+<!--                            <targetPackage>com.bixuebihui.jmesa.entry</targetPackage>-->
+<!--                            <useLongIntegers>true</useLongIntegers>-->
+<!--                            <sourceType>json</sourceType>-->
+<!--                            <outputDirectory>${basedir}/src/main/java</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <goals>-->
+<!--                                    <goal>generate</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
 
                 </plugins>
             </build>

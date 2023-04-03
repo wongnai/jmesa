@@ -15,7 +15,7 @@
  */
 package org.jmesa.view.jexcel;
 
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import jxl.write.WritableWorkbook;
 import org.jmesa.view.AbstractViewExporter;
 

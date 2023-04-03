@@ -17,7 +17,7 @@ package org.jmesa.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.WorksheetSupport;
 import org.jmesa.limit.Limit;

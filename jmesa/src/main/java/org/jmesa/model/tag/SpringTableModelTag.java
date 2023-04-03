@@ -15,10 +15,12 @@
  */
 package org.jmesa.model.tag;
 
-import jakarta.servlet.jsp.PageContext;
+
 import org.jmesa.facade.TableFacade;
 import org.jmesa.web.JspPageSpringWebContext;
 import org.jmesa.web.SpringWebContext;
+
+import javax.servlet.jsp.PageContext;
 
 import static org.jmesa.facade.TableFacadeFactory.createSpringTableFacade;
 

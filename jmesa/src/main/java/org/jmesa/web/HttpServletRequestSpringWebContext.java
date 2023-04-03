@@ -18,7 +18,7 @@ package org.jmesa.web;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jeff Johnston

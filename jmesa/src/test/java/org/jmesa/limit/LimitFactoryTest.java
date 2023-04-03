@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jmesa.test.Parameters;
 import org.jmesa.test.ParametersAdapter;

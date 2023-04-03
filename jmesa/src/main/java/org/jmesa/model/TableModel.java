@@ -33,8 +33,8 @@ import org.jmesa.view.html.toolbar.Toolbar;
 import org.jmesa.web.WebContext;
 import org.jmesa.worksheet.Worksheet;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

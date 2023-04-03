@@ -15,8 +15,8 @@
  */
 package org.jmesa.facade;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.jmesa.core.message.Messages;
 import org.jmesa.core.message.MessagesFactory;
 import org.jmesa.core.message.SpringMessages;

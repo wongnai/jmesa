@@ -15,7 +15,7 @@
  */
 package org.jmesa.web;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Support to handle the HttpServletRequest.

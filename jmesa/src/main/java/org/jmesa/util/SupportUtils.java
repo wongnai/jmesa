@@ -34,8 +34,8 @@ import org.jmesa.web.HttpServletResponseSupport;
 import org.jmesa.web.WebContext;
 import org.jmesa.web.WebContextSupport;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 /**
  * Utility to first check to see if the object being inspected is an instance of the support class.
  * If it is then will do a check to see if the object to be injected is already set. If it is not
