@@ -36,6 +36,7 @@ public class LimitActionFactoryQueryImpl implements LimitActionFactory {
     private final String id;
     private Logger logger = LoggerFactory.getLogger(LimitActionFactoryQueryImpl.class);
     private Query data;
+
     /**
      * json format
      * {
@@ -65,7 +66,7 @@ public class LimitActionFactoryQueryImpl implements LimitActionFactory {
     /**
      * @return table id.
      */
-     @Override
+    @Override
     public String getId() {
         return id;
     }
@@ -110,14 +111,14 @@ public class LimitActionFactoryQueryImpl implements LimitActionFactory {
 
         FilterSet filterSet = new FilterSet();
 
-        if(data.getFilterSet() != null) {
+        if (data.getFilterSet() != null) {
             return data.getFilterSet();
         }
 
         List<Filter> sets = data.getFilter().stream().map(filter ->
                 new BaseFilter(filter.getKey(),
-                Comparison.valueOf(filter.getComparison()),
-                filter.getValue().toArray())).collect(Collectors.toList());
+                        Comparison.valueOf(filter.getComparison()),
+                        filter.getValue().toArray())).collect(Collectors.toList());
 
         extractFilterSet(filterSet, sets);
         filterSet.setOperator(FilterSet.Operator.AND);
@@ -138,8 +139,12 @@ public class LimitActionFactoryQueryImpl implements LimitActionFactory {
         List<Sort> sort = data.getSort();
 
         AtomicInteger atom = new AtomicInteger();
-        sort.forEach(s -> sortSet.addSort(new org.jmesa.limit.Sort(atom.getAndIncrement(),
-                s.getField(), Order.valueOfParam(s.getOrder().toLowerCase()))));
+        sort.forEach(s -> {
+            if (s != null && s.getOrder() != null) {
+                sortSet.addSort(new org.jmesa.limit.Sort(atom.getAndIncrement(),
+                        s.getField(), Order.valueOfParam(s.getOrder().toLowerCase())));
+            }
+        });
 
 
         return sortSet;
