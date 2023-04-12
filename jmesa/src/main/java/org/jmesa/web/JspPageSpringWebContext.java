@@ -15,12 +15,10 @@
  */
 package org.jmesa.web;
 
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.servlet.jsp.PageContext;
-
+import jakarta.servlet.jsp.PageContext;
 
 /**
  * @author Jeff Johnston

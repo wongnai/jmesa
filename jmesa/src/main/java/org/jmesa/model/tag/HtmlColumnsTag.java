@@ -24,7 +24,7 @@ import org.jmesa.view.html.component.HtmlColumnsGenerator;
 import org.jmesa.view.html.component.HtmlRow;
 import org.jmesa.web.WebContext;
 
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

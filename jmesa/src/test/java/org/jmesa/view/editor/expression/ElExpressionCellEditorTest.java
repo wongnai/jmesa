@@ -18,7 +18,7 @@ package org.jmesa.view.editor.expression;
 import org.jmesa.view.editor.*;
 import java.util.HashMap;
 import java.util.Map;
-import javax.el.*;
+import jakarta.el.*;
 
 import org.jmesa.test.AbstractTestCase;
 import org.junit.jupiter.api.Test;

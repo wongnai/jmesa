@@ -15,10 +15,9 @@
  */
 package org.jmesa.web;
 
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.jsp.PageContext;
 import java.io.Writer;
 import java.util.Locale;
 import java.util.Map;
