@@ -576,27 +576,27 @@
                     </plugin>
 
 
-                    <plugin>
-                        <groupId>org.jsonschema2pojo</groupId>
-                        <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                        <version>1.1.1</version>
-                        <configuration>
-                            <sourceDirectory>${basedir}/src/test/resources/schemas</sourceDirectory>
-                            <serializable>true</serializable>
-                            <includeAdditionalProperties>false</includeAdditionalProperties>
-                            <targetPackage>com.bixuebihui.jmesa.entry</targetPackage>
-                            <useLongIntegers>true</useLongIntegers>
-                            <sourceType>json</sourceType>
-                            <outputDirectory>${basedir}/src/main/java</outputDirectory>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+<!--                    <plugin>-->
+<!--                        <groupId>org.jsonschema2pojo</groupId>-->
+<!--                        <artifactId>jsonschema2pojo-maven-plugin</artifactId>-->
+<!--                        <version>1.1.1</version>-->
+<!--                        <configuration>-->
+<!--                            <sourceDirectory>${basedir}/src/test/resources/schemas</sourceDirectory>-->
+<!--                            <serializable>true</serializable>-->
+<!--                            <includeAdditionalProperties>false</includeAdditionalProperties>-->
+<!--                            <targetPackage>com.bixuebihui.jmesa.entry</targetPackage>-->
+<!--                            <useLongIntegers>true</useLongIntegers>-->
+<!--                            <sourceType>json</sourceType>-->
+<!--                            <outputDirectory>${basedir}/src/main/java</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <goals>-->
+<!--                                    <goal>generate</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
 
                 </plugins>
             </build>

@@ -81,7 +81,7 @@ public class LimitFactoryTest {
 		assertTrue(rowSelect.getTotalRows() > 0);
 	}
 
-	private Map<?, ?> getParameters() {
+	private Map<String, Object>  getParameters() {
 
 		HashMap<String, Object> results = new HashMap<String, Object>();
 		ParametersAdapter parametersAdapter = new ParametersAdapter(results);
