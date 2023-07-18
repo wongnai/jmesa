@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.4.4</version>
+    <version>4.4.5</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -54,7 +54,7 @@
         <commonsLangVersion>2.6</commonsLangVersion>
         <gsonVersion>2.10</gsonVersion>
 <!--        <itextVersion>5.5.13.2</itextVersion>-->
-        <itextVersion>7.1.15</itextVersion>
+        <itextVersion>7.1.17</itextVersion>
         <jodaVersion>2.12.2</jodaVersion>
         <jxlVersion>2.6.12</jxlVersion>
         <poiVersion>5.2.2</poiVersion>
@@ -63,7 +63,7 @@
         <servletApiVersion>4.0.1</servletApiVersion>
         <servletJspApiVersion>2.3.3</servletJspApiVersion>
         <slf4jVersion>2.0.5</slf4jVersion>
-        <springFrameworkVersion>4.3.29.RELEASE</springFrameworkVersion>
+        <springFrameworkVersion>4.3.30.RELEASE</springFrameworkVersion>
         <tagsoupVersion>1.2.1</tagsoupVersion>
         <!-- Frameworks versions - testing use -->
         <junitVersion>5.9.0</junitVersion>
@@ -378,7 +378,7 @@
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>html2pdf</artifactId>
-            <version>3.0.4</version>
+            <version>4.0.5</version>
         </dependency>
         <dependency>
             <groupId>com.itextpdf</groupId>

@@ -88,7 +88,7 @@ public class JsonViewTest extends AbstractTestCase {
         assertNotNull(json);
     }
 
-    private Map<?, ?> getParameters() {
+    private Map<String, Object> getParameters() {
 
         Map<String, Object> results = new HashMap<>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);
