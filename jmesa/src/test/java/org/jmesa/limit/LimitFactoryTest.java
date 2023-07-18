@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jmesa.test.Parameters;
 import org.jmesa.test.ParametersAdapter;
@@ -81,7 +81,7 @@ public class LimitFactoryTest {
 		assertTrue(rowSelect.getTotalRows() > 0);
 	}
 
-	private Map<String, Object>  getParameters() {
+	private Map<String, Object> getParameters() {
 
 		HashMap<String, Object> results = new HashMap<String, Object>();
 		ParametersAdapter parametersAdapter = new ParametersAdapter(results);

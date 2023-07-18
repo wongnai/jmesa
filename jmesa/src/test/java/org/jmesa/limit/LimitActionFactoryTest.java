@@ -80,7 +80,7 @@ public class LimitActionFactoryTest {
         assertTrue(sortSet.getSorts().size() == 2);
     }
 
-    private static Map<String, ?> getParameters() {
+    private static Map<String, Object> getParameters() {
 
         HashMap<String, Object> results = new HashMap<String, Object>();
         ParametersBuilder builder = new ParametersBuilder(ID, new ParametersAdapter(results));

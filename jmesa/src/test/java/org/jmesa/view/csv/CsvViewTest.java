@@ -84,7 +84,7 @@ public class CsvViewTest extends AbstractTestCase {
         assertNotNull(csv);
     }
 
-    private Map<?, ?> getParameters() {
+    private Map<String, Object> getParameters() {
 
         Map<String, Object> results = new HashMap<String, Object>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(results);

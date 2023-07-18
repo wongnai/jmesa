@@ -78,7 +78,7 @@ public class CoreContextTest {
 		assertNotNull(coreContext);
 	}
 
-	private Map<?, ?> getParameters() {
+	private Map<String, Object> getParameters() {
 
 		HashMap<String, Object> results = new HashMap<>();
 		ParametersAdapter parametersAdapter = new ParametersAdapter(results);

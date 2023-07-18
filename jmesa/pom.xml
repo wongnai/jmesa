@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.5.9</version>
+    <version>4.5.10</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -54,7 +54,7 @@
         <commonsLangVersion>2.6</commonsLangVersion>
         <gsonVersion>2.10</gsonVersion>
 <!--        <itextVersion>5.5.13.2</itextVersion>-->
-        <itextVersion>7.1.15</itextVersion>
+        <itextVersion>7.1.17</itextVersion>
         <jodaVersion>2.12.2</jodaVersion>
         <jxlVersion>2.6.12</jxlVersion>
         <poiVersion>5.2.2</poiVersion>
