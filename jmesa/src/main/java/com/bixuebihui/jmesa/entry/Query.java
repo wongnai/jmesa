@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.jmesa.limit.FilterSet;
 
-import javax.annotation.processing.Generated;
+
+//import javax.annotation.processing.Generated;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
         "filter",
         "filterSet"
 })
-@Generated("jsonschema2pojo")
+//@Generated("jsonschema2pojo")
 public class Query implements Serializable {
 
     private final static long serialVersionUID = 8752072127684749495L;

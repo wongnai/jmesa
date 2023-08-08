@@ -15,6 +15,8 @@
  */
 package org.jmesa.limit;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -150,7 +152,10 @@ public final class RangeFilter extends BaseFilter implements Filter{
         }
     }
 
-    public RangeFilter(String property, Comparison comparison, Object[] value) {
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public RangeFilter(@JsonProperty("property") String property,
+                       @JsonProperty("comparison")  Comparison comparison,
+                       @JsonProperty("value")  Object[] value) {
         super(property, comparison, value);
     }
 

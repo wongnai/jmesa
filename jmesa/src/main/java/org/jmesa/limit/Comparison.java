@@ -81,6 +81,12 @@ public enum Comparison {
     /**
      * like concat(value, '%')
      */
-    START_WITH,
+    START_WITH;
 
+
+    // UPDATE: implicitly already the default so override not needed in this case
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

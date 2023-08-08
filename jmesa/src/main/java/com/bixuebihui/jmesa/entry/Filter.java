@@ -4,7 +4,7 @@ package com.bixuebihui.jmesa.entry;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.processing.Generated;
+//import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "comparison",
     "value"
 })
-@Generated("jsonschema2pojo")
+//@Generated("jsonschema2pojo")
 public class Filter implements Serializable
 {
 

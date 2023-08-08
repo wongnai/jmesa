@@ -15,6 +15,8 @@
  */
 package org.jmesa.limit;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.io.Serializable;
@@ -56,6 +58,28 @@ import java.io.Serializable;
  * @author Jeff Johnston
  * @author xwx
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As.EXISTING_PROPERTY, property = "comparison", visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = SingleValueFilter.class, names = {"GT",
+                "IS",
+                "LT",
+                "GTE",
+                "LTE",
+                "IS_NOT",
+                "CONTAIN",
+                "START_WITH",
+                "IS_NULL",
+                "IS_NOT_NULL",
+                "EXISTS",
+                "NOT_EXISTS"
+        }),
+        @JsonSubTypes.Type(value = RangeFilter.class, names = {
+                "NOT_IN",
+                "IN",
+                "BETWEEN",
+                "NOT_BETWEEN",
+        })
+})
 public interface Filter extends Serializable {
 
     /**

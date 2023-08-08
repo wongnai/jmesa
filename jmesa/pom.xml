@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.5.10</version>
+    <version>4.5.11</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>
@@ -63,7 +63,7 @@
         <servletApiVersion>5.0.0</servletApiVersion>
         <servletJspApiVersion>3.1.0</servletJspApiVersion>
         <slf4jVersion>2.0.5</slf4jVersion>
-        <springFrameworkVersion>6.0.3</springFrameworkVersion>
+        <springFrameworkVersion>6.0.11</springFrameworkVersion>
         <tagsoupVersion>1.2.1</tagsoupVersion>
         <!-- Frameworks versions - testing use -->
         <junitVersion>5.9.0</junitVersion>

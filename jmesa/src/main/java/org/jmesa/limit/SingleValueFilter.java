@@ -15,6 +15,9 @@
  */
 package org.jmesa.limit;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * <p>
  * An immutable class that is used to reduce the rows that are returned for a
@@ -53,8 +56,12 @@ package org.jmesa.limit;
  */
 public final class SingleValueFilter extends BaseFilter implements Filter{
 
-    public SingleValueFilter(String property,Comparison op, Object[] value) {
-        super(property, op, value);
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public SingleValueFilter(@JsonProperty("property") String property,
+                             @JsonProperty("comparison")  Comparison comparison,
+                             @JsonProperty("value")  Object[] value) {
+        super(property, comparison, value);
     }
+
 
 }
