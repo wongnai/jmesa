@@ -17,11 +17,14 @@ package org.jmesa.limit;
 
 import com.bixuebihui.jmesa.entry.Query;
 import com.bixuebihui.jmesa.entry.Sort;
+import org.apache.commons.compress.utils.Sets;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -111,9 +114,9 @@ public class LimitActionFactoryQueryImpl implements LimitActionFactory {
 
         FilterSet filterSet = new FilterSet();
 
-        if (data.getFilterSet() != null) {
-            return data.getFilterSet();
-        }
+//        if (data.getFilterSet() != null) {
+//            return data.getFilterSet();
+//        }
 
         List<Filter> sets = data.getFilter().stream().map(filter ->
                 new BaseFilter(filter.getKey(),
@@ -123,8 +126,13 @@ public class LimitActionFactoryQueryImpl implements LimitActionFactory {
         extractFilterSet(filterSet, sets);
         filterSet.setOperator(FilterSet.Operator.AND);
 
+        HashSet<FilterSet> set = Sets.newHashSet();
+        set.add(data.getFilterSet());
+        filterSet.setFilterSets(set);
+
         return filterSet;
     }
+
 
 
     private void extractFilterSet(FilterSet filterSet, List<Filter> filters) {

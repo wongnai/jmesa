@@ -140,7 +140,11 @@ public class FilterSet implements Serializable {
         /**
          * or use OR between all filters.
          */
-        OR
+        OR,
+        /**
+         * not use any operation
+         */
+        NOT
 
         // ; String value;
 //        Operator(final String value) {
