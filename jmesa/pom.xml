@@ -10,7 +10,7 @@
 
     <groupId>com.github.yujiaao</groupId>
     <artifactId>jmesa</artifactId>
-    <version>4.5.12</version>
+    <version>4.5.13</version>
     <packaging>jar</packaging>
 
     <name>jmesa</name>

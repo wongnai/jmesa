@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
  * @author Jeff Johnston
  */
 public class FilterSet implements Serializable {
-    private Set<Filter> filters;
-    private Set<FilterSet> filterSets;
+    private List<Filter> filters;
+    private List<FilterSet> filterSets;
     private Operator operator;
 
     @Override
@@ -44,16 +44,16 @@ public class FilterSet implements Serializable {
     }
 
     public FilterSet() {
-        filters = new LinkedHashSet<>();
-        filterSets = new LinkedHashSet<>();
+        filters = new ArrayList<>();
+        filterSets = new ArrayList<>();
         operator = Operator.AND;
     }
 
-    public Set<FilterSet> getFilterSets() {
+    public List<FilterSet> getFilterSets() {
         return filterSets;
     }
 
-    public void setFilterSets(Set<FilterSet> filterSets) {
+    public void setFilterSets(List<FilterSet> filterSets) {
         this.filterSets = filterSets;
     }
 

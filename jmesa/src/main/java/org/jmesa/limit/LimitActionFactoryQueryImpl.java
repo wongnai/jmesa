@@ -22,9 +22,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -126,9 +124,7 @@ public class LimitActionFactoryQueryImpl implements LimitActionFactory {
         extractFilterSet(filterSet, sets);
         filterSet.setOperator(FilterSet.Operator.AND);
 
-        HashSet<FilterSet> set = Sets.newHashSet();
-        set.add(data.getFilterSet());
-        filterSet.setFilterSets(set);
+        filterSet.setFilterSets(Collections.singletonList(data.getFilterSet()));
 
         return filterSet;
     }
