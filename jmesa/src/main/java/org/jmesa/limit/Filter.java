@@ -117,6 +117,7 @@ public interface Filter extends Serializable {
                 return new SingleValueFilter(property, operator, null);
             case NOT_IN:
             case IN:
+                return new InFilter(property, operator, value);
             case BETWEEN:
             case NOT_BETWEEN:
                 return new RangeFilter(property, operator, value);

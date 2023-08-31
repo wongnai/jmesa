@@ -25,7 +25,10 @@ public interface LimitActionFactory {
      * @return null if format error
      */
     default Filter buildFilter(String property, Comparison comparison, Object...  filterObject){
-        //TODO
+        if(comparison==Comparison.IN || comparison==Comparison.NOT_IN){
+            return Filter.build(property,comparison, filterObject);
+        }
+
         RangeFilter.Pair pair = LimitUtils.getPairValue(filterObject);
         if(pair!=null){
             return  Filter.build(property, comparison, filterObject);
